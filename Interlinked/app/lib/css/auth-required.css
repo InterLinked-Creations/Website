@@ -1,0 +1,49 @@
+.auth-required-content.hidden,
+.signin-required.hidden {
+    display: none;
+}
+
+.signin-required {
+    width: 100%;
+    padding-bottom: calc(20vh - 15vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.signin-message {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 1vw;
+    padding: 3vw;
+    max-width: 30vw;
+    color: white;
+}
+
+.signin-message h2 {
+    font-size: 2vw;
+    margin-bottom: 1.5vw;
+    color: #4c9aff;
+}
+
+.signin-message p {
+    font-size: 1.2vw;
+    margin-bottom: 2vw;
+}
+
+.signin-btn {
+    background: linear-gradient(135deg, #4c9aff 0%, #2c5aff 100%);
+    border: none;
+    border-radius: 2vw;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2vw;
+    font-weight: bold;
+    padding: 0.8vw 2vw;
+    transition: all 0.3s;
+}
+
+.signin-btn:hover {
+    background: linear-gradient(135deg, #2c5aff 0%, #4c9aff 100%);
+    transform: scale(1.05);
+}

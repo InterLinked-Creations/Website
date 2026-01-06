@@ -1,0 +1,830 @@
+/* Page Content Styles */
+.content-page {
+    padding: 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+#home-page {
+    padding: 0;
+}
+
+.content-page.hidden {
+    display: none;
+}
+
+.page-header {
+    margin-bottom: 2vw;
+}
+
+.page-header h1 {
+    font-size: 2.5vw;
+    color: white;
+    text-shadow: 0 0 1vw rgba(0, 0, 0, 0.5);
+}
+
+/* Search Page */
+.search-container {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 2vw;
+}
+
+.search-container input {
+    flex: 1;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    border: none;
+    font-size: 1.2vw;
+}
+
+.search-container button {
+    padding: 1vw 2vw;
+    background-color: #4a6cff;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+}
+
+.search-results {
+    padding-bottom: 20vw;
+    color: white;
+    font-size: 1.2vw;
+}
+
+/* Library Page */
+.library-categories {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 2vw;
+}
+
+.category-tab {
+    padding: 1vw 2vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1.2vw;
+}
+
+.category-tab.active {
+    background-color: #4a6cff;
+}
+
+.library-content {
+    padding-bottom: 20vw;
+    color: white;
+    font-size: 1.2vw;
+}
+
+/* Settings Page */
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.settings-group {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2vw;
+    border-radius: 1vw;
+}
+
+.settings-group h2 {
+    color: white;
+    font-size: 1.8vw;
+    margin-bottom: 1.5vw;
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-size: 1.2vw;
+    padding: 1vw 0;
+    border-bottom: 0.1vw solid rgba(255, 255, 255, 0.1);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item select {
+    padding: 0.5vw;
+    border-radius: 0.3vw;
+    background-color: #333;
+    color: white;
+    border: 0.1vw solid #555;
+}
+
+/* Friends Page */
+.friends-container {
+    display: flex;
+    padding-bottom: 2vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 1vw;
+    overflow: hidden;
+}
+
+.friends-sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.friend-invite-section {
+    padding: 1vw;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+    border-bottom: 0.1vw solid rgba(255, 255, 255, 0.1);
+}
+
+.friend-invite-btn {
+    padding: 0.8vw 1vw;
+    background-color: #4a6cff;
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    cursor: pointer;
+    font-size: 1vw;
+    white-space: nowrap;
+}
+
+.friend-invite-btn.chat-main-btn {
+    background-color: #30cc5a;
+    margin-left: 0.5vw;
+}
+
+.friend-invite-input {
+    flex: 1;
+    padding: 0.8vw;
+    border-radius: 0.5vw;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1vw;
+}
+
+.invite-list-btn {
+    width: 2.5vw;
+    height: 2.5vw;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 0.5vw;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.invite-icon {
+    font-size: 1.2vw;
+    color: white;
+}
+
+.invite-count {
+    position: absolute;
+    top: -0.5vw;
+    right: -0.5vw;
+    background-color: #ff4a4a;
+    color: white;
+    width: 1.5vw;
+    height: 1.5vw;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8vw;
+    font-weight: bold;
+}
+
+.friends-list {
+    flex: 1;
+    padding: 1vw;
+    overflow-y: auto;
+    color: white;
+}
+
+.no-friends-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 4vw 2vw;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.8vw;
+    margin-top: 2vw;
+}
+
+.no-friends-message p {
+    font-size: 1.2vw;
+    margin: 0.5vw 0;
+}
+
+.no-friends-message p:first-child {
+    font-weight: bold;
+    font-size: 1.4vw;
+    margin-bottom: 1vw;
+}
+
+/* Friend Invites Styles */
+.friend-invites-container {
+    max-height: 60vh;
+    overflow-y: auto;
+    margin: 1vw 0;
+    padding: 1vw;
+}
+
+.invite-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 0.8vw;
+    padding: 1.5vw;
+    margin-bottom: 1vw;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.2s;
+}
+
+.invite-card:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+.invite-card.fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.invite-header {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 1.5vw;
+    align-items: center;
+}
+
+.invite-avatar {
+    width: 5vw;
+    height: 5vw;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.invite-info {
+    flex: 1;
+}
+
+.invite-username {
+    font-weight: bold;
+    font-size: 1.3vw;
+    margin-bottom: 0.5vw;
+    color: white;
+}
+
+.invite-message {
+    font-size: 1vw;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.invite-actions {
+    display: flex;
+    gap: 1vw;
+}
+
+.invite-btn {
+    flex: 1;
+    padding: 0.8vw;
+    border: none;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.invite-btn.accept {
+    background-color: rgb(0, 150, 70);
+    color: white;
+}
+
+.invite-btn.accept:hover {
+    background-color: rgb(0, 130, 60);
+}
+
+.invite-btn.decline {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.invite-btn.decline:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.no-invites-message {
+    text-align: center;
+    padding: 2vw;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.2vw;
+}
+
+.friend-status {
+    font-size: 1vw;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 1vw 0;
+    font-weight: bold;
+}
+
+.empty-list-message {
+    font-size: 1vw;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+    padding: 0.8vw 0.5vw;
+    margin-bottom: 1vw;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5vw;
+    text-align: center;
+}
+
+.friend-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 0.8vw;
+    padding: 1vw;
+    margin-bottom: 1vw;
+    transition: background-color 0.5s, transform 0.3s, box-shadow 0.3s;
+}
+
+.friend-card.online {
+    border-left: 0.3vw solid #4eff7a;
+}
+
+.friend-card.offline {
+    border-left: 0.3vw solid #808080;
+}
+
+@keyframes statusPulse {
+    0% {
+        background-color: rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+    }
+    50% {
+        background-color: rgba(78, 255, 122, 0.15);
+        transform: scale(1.03);
+        box-shadow: 0 0 15px rgba(78, 255, 122, 0.3);
+    }
+    100% {
+        background-color: rgba(255, 255, 255, 0.05);
+        transform: scale(1);
+    }
+}
+
+.friend-card.status-change {
+    animation: statusPulse 2s ease;
+}
+
+.friend-card-header {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 1vw;
+}
+
+.friend-avatar {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.friend-info {
+    flex: 1;
+}
+
+.friend-name {
+    font-weight: bold;
+    font-size: 1.2vw;
+    margin-bottom: 0.3vw;
+}
+
+.friend-status-info {
+    font-size: 0.9vw;
+    margin-bottom: 0.3vw;
+}
+
+.friend-status-info.online {
+    color: #4eff7a;
+}
+
+.friend-status-info.offline {
+    color: #c1c1c1;
+}
+
+.friend-current-game, .friend-last-game {
+    font-size: 0.9vw;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.friend-actions {
+    display: flex;
+    gap: 0.5vw;
+}
+
+.friend-action-btn {
+    flex: 1;
+    padding: 0.5vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.5vw;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9vw;
+    transition: background-color 0.2s;
+}
+
+.friend-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.friend-action-btn.chat-btn {
+    background-color: #4a6cff;
+}
+
+.friend-action-btn.chat-btn:hover {
+    background-color: #3a5bef;
+}
+
+/* Styles for chat dialog instead */
+
+.chat-header {
+    padding: 1.5vw;
+    border-bottom: 0.1vw solid rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 1.5vw;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Notifications Page */
+.notifications-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 1vw;
+    padding: 2vw;
+}
+
+.notification-filters {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 2vw;
+}
+
+.filter-btn {
+    padding: 0.8vw 1.5vw;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.5vw;
+    color: white;
+    cursor: pointer;
+}
+
+.filter-btn.active {
+    background-color: #4a6cff;
+}
+
+.notifications-list {
+    padding-bottom: 20vw;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Help Page */
+.help-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.help-section {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2vw;
+    border-radius: 1vw;
+    color: white;
+}
+
+.help-section h2 {
+    font-size: 1.8vw;
+    margin-bottom: 1.5vw;
+}
+
+.faq-item {
+    padding: 1vw 0;
+    border-bottom: 0.1vw solid rgba(255, 255, 255, 0.1);
+}
+
+.faq-question {
+    font-weight: bold;
+    margin-bottom: 0.5vw;
+    font-size: 1.2vw;
+}
+
+.faq-answer {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.1vw;
+}
+
+.support-link {
+    color: #4a6cff;
+    text-decoration: none;
+    font-size: 1.2vw;
+}
+
+.support-link:hover {
+    text-decoration: underline;
+}
+
+/* Chat Dialog Overlay */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.overlay.hidden {
+    display: none;
+}
+
+/* Chat Dialog */
+.chat-dialog-content {
+    height: 80vh;
+}
+
+.chat-dialog-controls {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    display: flex;
+    gap: 1vw;
+    z-index: 10;
+}
+
+.chat-dialog-close {
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+}
+
+.chat-dialog-mute {
+    font-size: 1.6vw;
+    color: #808080;
+    cursor: pointer;
+    padding-top: 0.2vw;
+    transition: color 0.2s ease;
+}
+
+.chat-dialog-mute.muted {
+    color: #ff8080;
+}
+
+.chat-sidebar {
+    width: 6vw;
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 1vw 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+}
+
+.chat-friend-avatar {
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+}
+
+.chat-friend-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.chat-friend-avatar:hover {
+    transform: scale(1.05);
+}
+
+.chat-friend-avatar.active {
+    position: relative;
+}
+
+.chat-friend-avatar.active::after {
+    content: '';
+    position: absolute;
+    top: -0.2vw;
+    left: -0.2vw;
+    right: -0.2vw;
+    bottom: -0.2vw;
+    border: 0.2vw solid #4a6cff;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.chat-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-dialog-header {
+    padding: 1vw;
+    border-bottom: 0.1vw solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.chat-dialog-avatar {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+}
+
+.chat-dialog-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.chat-dialog-username {
+    color: white;
+    font-size: 1.5vw;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-dialog-game-status {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9vw;
+    margin-top: 0.2vw;
+}
+
+.chat-dialog-messages {
+    padding: 1vw;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.message {
+    display: flex;
+    flex-direction: column;
+    max-width: 60%;
+    padding: 1vw;
+    border-radius: 1vw;
+    word-wrap: anywhere;
+}
+
+.message.friend {
+    align-self: flex-start;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-bottom-left-radius: 0;
+}
+
+.message.user {
+    align-self: flex-end;
+    background-color: #4a6cff;
+    color: white;
+    border-bottom-right-radius: 0;
+}
+
+.message-content {
+    font-size: 1vw;
+    margin-bottom: 0.3vw;
+}
+
+.message-time {
+    align-self: flex-end;
+    font-size: 0.8vw;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.chat-dialog-input input {
+    flex: 1;
+    padding: 1vw;
+    border-radius: 0.5vw;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1vw;
+}
+
+.send-message-btn {
+    padding: 0 1.5vw;
+    background-color: #4a6cff;
+    border: none;
+    border-radius: 0.5vw;
+    color: white;
+    cursor: pointer;
+}
+
+/* Friend Profile Overlay */
+.profile-content {
+    background-color: rgba(30, 30, 40, 0.95);
+    border-radius: 1vw;
+    width: 40vw;
+    padding: 2vw;
+    position: relative;
+    box-shadow: 0 0 2vw rgba(0, 0, 0, 0.5);
+}
+
+.profile-close {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 2vw;
+    margin-bottom: 2vw;
+}
+
+.profile-avatar {
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+}
+
+.profile-username {
+    color: white;
+    font-size: 2vw;
+    margin-bottom: 0.5vw;
+}
+
+.profile-status {
+    font-size: 1vw;
+}
+
+.profile-status.online {
+    color: #4eff7a;
+}
+
+.profile-status.offline {
+    color: #808080;
+}
+
+.profile-details {
+    padding: 2vw;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 1vw;
+    margin-bottom: 2vw;
+}
+
+.profile-privacy-notice {
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-size: 1.2vw;
+}
+
+.profile-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-action-btn {
+    padding: 1vw 2vw;
+    background-color: #4a6cff;
+    border: none;
+    border-radius: 0.5vw;
+    color: white;
+    font-size: 1.2vw;
+    cursor: pointer;
+}

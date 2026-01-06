@@ -1,0 +1,452 @@
+* {
+    font-size: 1vw;
+}
+body {
+    background: rgb(100, 100, 100);
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+/************** SIDE BAR SECTION **************/
+/* The sidebar menu */
+#sidebar {
+    width: 5vw;
+    background: rgb(50, 50, 50);
+    position: fixed;
+    height: 100vh;
+    overflow: visible;
+    border-right: black 0.1vw solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 100;
+}
+
+/* The account logo on the top of the sidebar */
+#account {
+    width: 4vw;
+    padding-bottom: 4vw;
+    background: url(../avatars/Colors/FillBlack.png);
+    background-size: 100% 100%;
+    border-radius: 500px;
+    margin: 0.5vw;
+    margin-bottom: 3vw;
+    transition: scale 0.1s;
+}
+#account:hover {
+    scale: 1.1;
+}
+#account:active {
+    scale: 1.05;
+}
+
+/* Sidebar navigation links */
+.sideNav {
+    width: 5vw;
+    padding-bottom: 5.5vw;
+    background: rgb(45, 45, 45);
+    border-bottom: black 0.1vw solid;
+    border-top: black 0.1vw solid;
+    overflow: visible;
+    position: relative;
+}
+.sideNav:hover {
+    background: rgb(60, 60, 60);
+}
+.sideNav:active {
+    background: rgb(30, 30, 30);
+}
+
+/* The lower navigation links */
+.lowerNav {
+    width: 3vw;
+    padding-bottom: 3vw;
+    background: url(../icons/button.png);
+    background-size: 100% 100%;
+    border-radius: 500px;
+    margin: 1vw;
+    margin-bottom: 0;
+    overflow: visible;
+    position: relative;
+}
+.lowerNav:hover {
+    box-shadow: blue 0 0 0 0.2vw inset;
+}
+.lowerNav:active {
+    box-shadow: orange 0 0 0 0.2vw inset;
+}
+
+/* Active navigation state */
+.sideNav.active {
+    background: rgb(70, 70, 70);
+    box-shadow: inset 0.3vw 0 0 #4a6cff;
+}
+
+.lowerNav.active {
+    box-shadow: #4a6cff 0 0 0 0.2vw inset;
+}
+
+
+/* Container for top content (account and main navigation) */
+.top-content {
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+}
+
+/* Container for bottom navigation */
+.bottom-content {
+    display: flex;
+    flex-direction: column;
+    background: rgb(30, 30, 30);
+    padding-bottom: 1vw;
+    overflow: visible;
+}
+
+/************** TOOLTIP SECTION **************/
+/* Tooltip styling */
+.tooltip {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    background: rgb(22, 22, 22);
+    color: white;
+    padding: 0.5vw 1vw;
+    border-radius: 0.3vw;
+    font-size: 0.9vw;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: opacity 0.2s;
+    box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    margin-left: 1.5vw;
+    border: rgb(0, 0, 221) 0.22vw solid;
+}
+
+.lowerNav .tooltip {
+    font-size: 0.8vw;
+    padding: 0.4vw 0.8vw;
+    margin-left: 1.7vw;
+}
+
+/* Tooltip arrow */
+.tooltip::before {
+    content: '';
+    position: absolute;
+    left: -1.2vw;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 0.8vw 0.8vw 0.8vw 0;
+    border-style: solid;
+    border-color: transparent rgb(227, 140, 0) transparent transparent;
+    animation: arrowBounce 1s infinite;
+}
+
+/* Position tooltips relative to their parent */
+.sideNav, .lowerNav {
+    position: relative;
+}
+
+/* Show tooltip on hover */
+.sideNav:hover .tooltip,
+.lowerNav:hover .tooltip {
+    opacity: 1;
+}
+
+/************** MAIN CONTENT SECTION **************/
+#main-content {
+    margin-left: 5.1vw;
+    position: absolute;
+    width: 94.8vw;
+}
+
+.ribbon-label {
+    font-size: 1vw;
+    font-weight: bold;
+    margin: 3vw 0 0.4vw 1vw;
+}
+.game-ribbon {
+    display: flex;
+    overflow-x: auto;
+    padding: 1vw;
+    gap: 1vw;
+    background: rgb(45, 45, 45);
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 38, 255, 0.5);
+}
+.game-card {
+    position: relative;
+    min-width: 10vw;
+    height: 15vw;
+    border-radius: 0.5vw;
+    overflow: hidden;
+    cursor: pointer;
+    transition: scale 0.1s;
+    background: rgb(70, 70, 70);
+    flex-shrink: 0;
+}
+.game-card:hover {
+    scale: 1.05;
+}
+.game-card:active {
+    scale: 0.95;
+}
+.game-card-image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+.game-card-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding-bottom: 0.5vw;
+    padding-top: 0.5vw;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    text-align: center;
+}
+.game-card-title p {
+    margin: 0;
+    padding: 0;
+    font-size: 0.8vw;
+    font-weight: bold;
+}
+
+.game-card:hover .game-card-title {
+    background: rgba(0, 0, 0, 0.9);
+}
+.game-card:active .game-card-title {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* Custom scrollbar styling */
+.game-ribbon::-webkit-scrollbar {
+    height: 0.5vw;
+}
+
+.game-ribbon::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 0.25vw;
+}
+
+.game-ribbon::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 0.25vw;
+}
+
+.game-ribbon::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* Game Overlay Styles */
+#game-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+#game-overlay.hidden {
+    display: none;
+}
+
+.overlay-content {
+    background-color: rgb(45, 45, 45);
+    border-radius: 1vw;
+    width: 80%;
+    max-width: 80vw;
+    max-height: 85vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 0.5vw 2vw rgba(0, 0, 0, 0.5);
+}
+
+.overlay-close {
+    position: absolute;
+    top: 1vw;
+    right: 1vw;
+    font-size: 2vw;
+    color: white;
+    cursor: pointer;
+    width: 2vw;
+    height: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s;
+}
+
+.overlay-close:hover {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.game-details-container {
+    display: flex;
+    padding: 2vw;
+    gap: 2vw;
+}
+
+.game-cover {
+    flex: 0 0 25%;
+}
+
+.game-cover img {
+    width: 100%;
+    border-radius: 0.5vw;
+    box-shadow: 0 0.2vw 1vw rgba(0, 0, 0, 0.4);
+}
+
+.game-info {
+    flex: 1;
+}
+
+.game-info h1 {
+    margin-top: 0;
+    font-size: 2vw;
+    color: white;
+}
+
+.game-meta {
+    color: #aaa;
+    margin-bottom: 1vw;
+}
+
+.game-rating {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5vw;
+}
+
+.stars {
+    color: gold;
+    font-size: 1.3vw;
+    margin-right: 0.5vw;
+}
+
+#game-rating-number {
+    color: white;
+    font-weight: bold;
+}
+
+#game-description {
+    color: #ddd;
+    line-height: 1.6;
+    margin-bottom: 2vw;
+}
+
+.game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+    margin-bottom: 2vw;
+}
+
+.game-tag {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: #ddd;
+    padding: 0.3vw 0.8vw;
+    border-radius: 2vw;
+    font-size: 0.8vw;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1vw;
+}
+
+.action-button {
+    padding: 0.7vw 1.5vw;
+    border: none;
+    border-radius: 0.3vw;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+    background-color: #444;
+    color: white;
+}
+
+.action-button:hover {
+    background-color: #555;
+}
+
+.action-button.primary {
+    background-color: rgb(19, 226, 0);
+}
+
+.action-button.primary:hover {
+    background-color: rgb(7, 99, 0);
+}
+
+/* Custom button styling for image-based buttons */
+.custom-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.custom-button img {
+    width: 100%;
+    height: auto;
+}
+
+.custom-button .button-text {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    pointer-events: none;
+}
+
+.custom-button:hover {
+    transform: scale(1.05);
+}
+
+.custom-button:active {
+    transform: scale(0.95);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .game-details-container {
+        flex-direction: column;
+    }
+    
+    .game-cover {
+        flex: none;
+        max-width: 60%;
+        margin: 0 auto;
+    }
+}
+
+/************** KEYFRAMES *************/
+
+@keyframes arrowBounce {
+    0%, 100% {
+        transform: translateY(-50%) translateX(0);
+    }
+    50% {
+        transform: translateY(-50%) translateX(-0.2vw);
+    }
+}

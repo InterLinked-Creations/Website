@@ -1,0 +1,255 @@
+/* Account Overlay Styles */
+#account-overlay,
+#welcome-overlay,
+#avatar-overlay,
+#login-confirm-overlay,
+#friend-request-overlay,
+#friend-invites-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+#account-overlay.hidden,
+#welcome-overlay.hidden,
+#avatar-overlay.hidden,
+#login-confirm-overlay.hidden,
+#friend-request-overlay.hidden,
+#friend-invites-overlay.hidden {
+    display: none;
+}
+
+.account-container {
+    background-color: rgb(45, 45, 45);
+    border-radius: 1vw;
+    width: 74vw;
+    height: 85vh;
+    position: relative;
+    box-shadow: 0 0.5vw 2vw rgba(0, 0, 0, 0.5);
+    display: flex;
+}
+
+.account-section {
+    flex: 0 0 40%;
+    padding: 3vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.image-section {
+    flex: 0 0 60%;
+    background: linear-gradient(0deg, #b97800, #00a5d7, #0000d0, #00a5d7, #b97800);
+    border-top-right-radius: 1vw;
+    border-bottom-right-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    animation: sliding-background 60s linear infinite;
+}
+
+@keyframes sliding-background {
+    from {
+        background-position: 0%;
+    }
+    to {
+        background-position: 100%;
+    }
+}
+
+.account-screen {
+    transition: opacity 0.3s;
+    width: 100%;
+}
+
+.account-screen.hidden {
+    display: none;
+}
+
+.account-screen h2 {
+    text-align: center;
+    font-size: 1.5vw;
+    margin-bottom: 2vw;
+    color: white;
+}
+
+.account-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.account-button {
+    padding: 1vw;
+    border: none;
+    border-radius: 0.5vw;
+    background-color: rgb(0, 100, 255);
+    color: white;
+    cursor: pointer;
+    font-size: 1vw;
+    transition: background-color 0.2s;
+}
+
+.account-button:hover {
+    background-color: rgb(0, 80, 200);
+}
+
+.account-button:active {
+    background-color: rgb(0, 60, 150);
+}
+
+.account-button.secondary {
+    background-color: rgb(70, 70, 70);
+}
+
+.account-button.secondary:hover {
+    background-color: rgb(60, 60, 60);
+}
+
+.account-button.secondary:active {
+    background-color: rgb(50, 50, 50);
+}
+
+.form-avatar {
+    width: 10vw;
+    margin-bottom: 1vw;
+    border-radius: 500px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vw;
+}
+
+.form-group label {
+    color: white;
+    font-size: 0.9vw;
+}
+
+.form-group input {
+    padding: 0.8vw;
+    border: none;
+    border-radius: 0.3vw;
+    background-color: rgb(60, 60, 60);
+    color: white;
+    font-size: 0.9vw;
+}
+
+.form-group input:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2vw rgba(0, 100, 255, 0.5);
+}
+
+/* Form error messages */
+.error-message {
+    color: #ff4444;
+    font-size: 0.9vw;
+    margin-top: 0.5vw;
+}
+
+/* Welcome overlay */
+.welcome-container {
+    text-align: center;
+    padding: 3vw;
+}
+
+.welcome-avatar {
+    width: 15vw;
+    height: 15vw;
+    margin: 0 auto 2vw;
+    border-radius: 50%;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.welcome-title {
+    font-size: 2vw;
+    margin-bottom: 1vw;
+    color: white;
+}
+
+.welcome-username {
+    font-size: 1.5vw;
+    color: #aaa;
+    margin-bottom: 3vw;
+}
+
+/* Avatar selection */
+.avatar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8vw, 1fr));
+    gap: 1vw;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 1vw;
+}
+
+.avatar-option {
+    width: 8vw;
+    height: 8vw;
+    padding: 0.5vw;
+    border-radius: 1vw;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.avatar-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.avatar-option.selected {
+    background: rgba(0, 100, 255, 0.3);
+    box-shadow: 0 0 0 0.2vw rgb(0, 100, 255);
+}
+
+.avatar-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 500px;
+}
+
+/* User Settings Styles */
+.user-profile {
+    text-align: center;
+    margin-bottom: 3vw;
+}
+
+.user-avatar {
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+    margin-bottom: 1vw;
+    border: 0.2vw solid rgba(255, 255, 255, 0.3);
+}
+
+.settings-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.settings-options .account-button {
+    margin-bottom: 0;
+}

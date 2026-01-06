@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="lib/css/menu.css">
+    <link rel="stylesheet" href="lib/css/account.css">
+    <link rel="stylesheet" href="lib/css/pages.css">
+    <link rel="stylesheet" href="lib/css/status-indicators.css">
+    <link rel="stylesheet" href="lib/css/auth-required.css">
+    <link rel="stylesheet" href="lib/css/chat.css">
+</head>
+<body>
+    <div id="sidebar">
+        <div class="top-content">
+            <!-- Account -->
+            <div id="account"></div>
+
+            <!-- navigation -->
+            <div class="sideNav" id="Home">
+                <span class="tooltip">Home</span>
+            </div>
+            <div class="sideNav" id="Search">
+                <span class="tooltip">Search</span>
+            </div>
+            <div class="sideNav" id="Library">
+                <span class="tooltip">Library</span>
+            </div>
+        </div>
+
+        <!-- Other -->
+        <div class="bottom-content">
+            <div class="lowerNav" id="Settings">
+                <span class="tooltip">Settings</span>
+            </div>
+            <div class="lowerNav" id="Friends">
+                <span class="tooltip">Friends / Chat</span>
+            </div>
+            <div class="lowerNav" id="Notifications">
+                <span class="tooltip">Notifications / Alerts</span>
+            </div>
+            <div class="lowerNav" id="Help">
+                <span class="tooltip">Help</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <!-- Home Page Content -->
+        <div id="home-page" class="content-page">
+            <div class="ribbon-label">Newest Games</div>
+            <div class="game-ribbon">
+                <div class="game-card">
+                    <div class="game-card-image" style="background-image: url('app/lib/covers/wonder-world.png');"></div>
+                    <div class="game-card-title"><p>Wonder World</p></div>
+                </div>
+                <div class="game-card">
+                    <div class="game-card-image" style="background-image: url('app/lib/covers/pixel-battles.png');"></div>
+                    <div class="game-card-title"><p>Pixel Battles</p></div>
+                </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/kart-battle.png');"></div>
+                <div class="game-card-title"><p>Kart Battle</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/sonic-hockey.png');"></div>
+                <div class="game-card-title"><p>Sonic Hockey</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/block-lands.png');"></div>
+                <div class="game-card-title"><p>Block Lands</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/pixel-quest.png');"></div>
+                <div class="game-card-title"><p>Pixel Quest</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/tank-battle.png');"></div>
+                <div class="game-card-title"><p>Tank Battle</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/wonder-world-race.png');"></div>
+                <div class="game-card-title"><p>Wonder World Race</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/pixel-quest.png');"></div>
+                <div class="game-card-title"><p>Pixel Quest</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/wonder-world.png');"></div>
+                <div class="game-card-title"><p>Wonder World</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/pixel-battles.png');"></div>
+                <div class="game-card-title"><p>Pixel Battles</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/kart-battle.png');"></div>
+                <div class="game-card-title"><p>Kart Battle</p></div>
+            </div>
+        </div>
+
+
+        <div class="ribbon-label">Popular Games</div>
+        <div class="game-ribbon">
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/wonder-world.png');"></div>
+                <div class="game-card-title"><p>Wonder World</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/sonic-hockey.png');"></div>
+                <div class="game-card-title"><p>Sonic Hockey</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/block-lands.png');"></div>
+                <div class="game-card-title"><p>Block Lands</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/pixel-quest.png');"></div>
+                <div class="game-card-title"><p>Pixel Quest</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/tank-battle.png');"></div>
+                <div class="game-card-title"><p>Tank Battle</p></div>
+            </div>
+            <div class="game-card">
+                <div class="game-card-image" style="background-image: url('app/lib/covers/wonder-world-race.png');"></div>
+                <div class="game-card-title"><p>Wonder World Race</p></div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Search Page Content -->
+        <div id="search-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Search Games</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search for games...">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="search-results">
+                <p>Enter a search term above to find games.</p>
+            </div>
+        </div>
+
+        <!-- Library Page Content -->
+        <div id="library-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Your Game Library</h1>
+            </div>
+            <!-- Content for logged in users -->
+            <div id="library-content" class="auth-required-content hidden">
+                <div class="library-categories">
+                    <div class="category-tab active">All Games</div>
+                    <div class="category-tab">Recently Played</div>
+                    <div class="category-tab">Favorites</div>
+                </div>
+                <div class="library-content">
+                    <p>Your game library is empty.</p>
+                    <p>Browse games and add them to your library to see them here.</p>
+                </div>
+            </div>
+            <!-- Sign in message for guests -->
+            <div id="library-signin" class="signin-required">
+                <div class="signin-message">
+                    <h2>Sign in Required</h2>
+                    <p>Please sign in to view and manage your game library</p>
+                    <button id="library-signin-btn" class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Page Content -->
+        <div id="settings-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Settings</h1>
+            </div>
+            <!-- Content for logged in users -->
+            <div id="settings-content" class="auth-required-content hidden">
+                <div class="settings-container">
+                    <div class="settings-group">
+                        <h2>Account Settings</h2>
+                        <div class="setting-item">
+                            <label>Email Notifications</label>
+                            <input type="checkbox" id="email-notifications">
+                        </div>
+                        <div class="setting-item">
+                            <label>Game Recommendations</label>
+                            <input type="checkbox" id="game-recommendations" checked>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <h2>Display Settings</h2>
+                        <div class="setting-item">
+                            <label>Theme</label>
+                            <select id="theme-selector">
+                                <option value="default">Default</option>
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sign in message for guests -->
+            <div id="settings-signin" class="signin-required">
+                <div class="signin-message">
+                    <h2>Sign in Required</h2>
+                    <p>Please sign in to view and modify your settings</p>
+                    <button id="settings-signin-btn" class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friends Page Content -->
+        <div id="friends-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Friends & Chat</h1>
+            </div>
+            <!-- Content for logged in users -->
+            <div id="friends-content" class="auth-required-content hidden">
+                <div class="friends-container">
+                    <div class="friends-sidebar">
+                        <div class="friend-invite-section">
+                            <button id="send-friend-invite" class="friend-invite-btn">Send Friend Invite</button>
+                            <input type="text" placeholder="Enter username..." class="friend-invite-input">
+                            <button id="show-invites" class="invite-list-btn" title="View Friend Requests">
+                                <span class="invite-icon">👥</span>
+                                <span class="invite-count">0</span>
+                            </button>
+                            <button id="open-chat" class="friend-invite-btn chat-main-btn">Open Chat</button>
+                        </div>
+                        <div class="friends-list">
+                            <div class="no-friends-message">
+                                <p>You currently have no friends in your friends list.</p>
+                                <p>Send a friend invite to start connecting!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sign in message for guests -->
+            <div id="friends-signin" class="signin-required">
+                <div class="signin-message">
+                    <h2>Sign in Required</h2>
+                    <p>Please sign in to view your friends and chat</p>
+                    <button id="friends-signin-btn" class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Friend Chat Dialog -->
+        <div id="chat-dialog" class="overlay hidden">
+            <div class="chat-dialog-content">
+                <div class="chat-dialog-controls">
+                    <div id="chat-mute-btn" class="chat-dialog-mute" title="Mute Conversation">🔊</div>
+                    <div class="chat-dialog-close">&times;</div>
+                </div>
+                <div class="chat-sidebar">
+                    <div class="chat-sidebar-header">
+                        <h3>Your Conversations</h3>
+                    </div>
+                    <div class="chat-conversation-list">
+                        <!-- Conversation list will be displayed here -->
+                        <p class="no-conversations-message">You don't have any conversations yet.</p>
+                    </div>
+                    <div class="chat-sidebar-actions">
+                        <button class="new-conversation-btn">New Conversation</button>
+                    </div>
+                </div>
+                <div class="chat-main">
+                    <!-- Chat welcome screen (shown when no conversation is selected) -->
+                    <div class="chat-welcome-screen">
+                        <div class="chat-welcome-icon">💬</div>
+                        <h2>Welcome to Chat</h2>
+                        <p>Select a conversation from the sidebar or start a new one.</p>
+                    </div>
+                    
+                    <!-- Conversation view (shown when a conversation is selected) -->
+                    <div class="chat-conversation-view hidden">
+                        <div class="chat-dialog-header">
+                            <div class="avatar-container chat-dialog-avatar-container">
+                                <img src="lib/avatars/Colors/FillBlack.png" alt="Friend Avatar" class="chat-dialog-avatar">
+                                <div class="status-dot gray"></div>
+                            </div>
+                            <div class="chat-dialog-user-info">
+                                <h3 class="chat-dialog-username">Loading...</h3>
+                                <div class="chat-dialog-game-status">Please wait while we set up chat...</div>
+                            </div>
+                        </div>
+                        <div class="chat-dialog-messages">
+                            <!-- Chat messages will appear here -->
+                        </div>
+                        <div class="typing-indicator" style="display: none;">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="typing-text">Someone is typing...</div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-dialog-input">
+            <div class="reply-preview">
+                <div class="reply-preview-header">
+                    <span class="reply-preview-title">Replying to</span>
+                    <span class="reply-preview-close">×</span>
+                </div>
+                <div class="reply-preview-content"></div>
+            </div>
+            <textarea id="message-input" placeholder="Type a message..." rows="1"></textarea>
+            <button class="send-message-btn">Send</button>
+        </div>
+        </div>
+
+        <!-- New Conversation Dialog -->
+        <div id="new-conversation-dialog" class="overlay hidden">
+            <div class="new-conversation-content">
+                <div class="dialog-header">
+                    <h2>Create New Conversation</h2>
+                    <div class="dialog-close">&times;</div>
+                </div>
+                
+                <!-- Step 1: Select Friends -->
+                <div class="conversation-step active" id="select-friends-step">
+                    <h3>Friends in Conversation</h3>
+                    <div class="friends-selection-list">
+                        <!-- Friends will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Step 2: Group Name (only for 3+ people) -->
+                <div class="conversation-step hidden" id="group-name-step">
+                    <h3>Group Conversation Name</h3>
+                    <input type="text" id="group-name-input" placeholder="Enter group name..." maxlength="50">
+                </div>
+                
+                <!-- Step 3: Group Avatar (only for 3+ people) -->
+                <div class="conversation-step hidden" id="group-avatar-step">
+                    <h3>Group Conversation Avatar</h3>
+                    <div class="avatar-selection-grid">
+                        <!-- Avatars will be populated here -->
+                    </div>
+                </div>
+                
+                <!-- Summary Step -->
+                <div class="conversation-step hidden" id="conversation-summary-step">
+                    <h3>Create Conversation</h3>
+                    <div class="conversation-summary">
+                        <div class="summary-participants">
+                            <strong>Participants:</strong>
+                            <div id="summary-participants-list"></div>
+                        </div>
+                        <div class="summary-name hidden">
+                            <strong>Group Name:</strong>
+                            <span id="summary-group-name"></span>
+                        </div>
+                        <div class="summary-avatar hidden">
+                            <strong>Group Avatar:</strong>
+                            <img id="summary-group-avatar" src="" alt="Group Avatar">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dialog-actions">
+                    <button id="prev-step-btn" class="dialog-btn secondary hidden">Previous</button>
+                    <button id="next-step-btn" class="dialog-btn primary">Next</button>
+                    <button id="create-conversation-btn" class="dialog-btn primary hidden">Create Conversation</button>
+                    <button id="cancel-conversation-btn" class="dialog-btn secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Friend Profile Overlay -->
+        <div id="profile-overlay" class="overlay hidden">
+            <div class="profile-content">
+                <div class="profile-close">&times;</div>
+                <div class="profile-header">
+                    <div class="avatar-container profile-avatar-container">
+                        <img src="lib/avatars/Colors/LineBlack.png" alt="Friend Avatar" class="profile-avatar">
+                        <div class="status-dot gray"></div>
+                    </div>
+                    <div class="profile-info">
+                        <h2 class="profile-username">Loading...</h2>
+                        <div class="profile-status online">Searching for this user's activity...</div>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <p class="profile-privacy-notice">Please wait...</p>
+                </div>
+                <div class="profile-actions">
+                    <button class="profile-action-btn chat-btn">Open Chat</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notifications Page Content -->
+        <div id="notifications-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Notifications</h1>
+            </div>
+            <!-- Content for logged in users -->
+            <div id="notifications-content" class="auth-required-content hidden">
+                <div class="notifications-container">
+                    <div class="notification-filters">
+                        <button class="filter-btn active">All</button>
+                        <button class="filter-btn">Unread</button>
+                        <button class="filter-btn">Friend Requests</button>
+                        <button class="filter-btn">Game Invites</button>
+                    </div>
+                    <div class="notifications-list">
+                        <p>You don't have any notifications yet.</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Sign in message for guests -->
+            <div id="notifications-signin" class="signin-required">
+                <div class="signin-message">
+                    <h2>Sign in Required</h2>
+                    <p>Please sign in to view your notifications</p>
+                    <button id="notifications-signin-btn" class="signin-btn">Sign In</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Page Content -->
+        <div id="help-page" class="content-page hidden">
+            <div class="page-header">
+                <h1>Help & Support</h1>
+            </div>
+            <div class="help-container">
+                <div class="help-section">
+                    <h2>Frequently Asked Questions</h2>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I add games to my library?</div>
+                        <div class="faq-answer">Click on a game and select "Add to Library" button.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How do I add friends?</div>
+                        <div class="faq-answer">Go to the Friends page and search for your friend's username.</div>
+                    </div>
+                </div>
+                <div class="help-section">
+                    <h2>Contact Support</h2>
+                    <p>Need more help? Contact our support team:</p>
+                    <a href="#" class="support-link">support@interlinked.com</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game details overlay -->
+    <div id="game-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="game-details-container">
+                <div class="game-cover">
+                    <img id="game-cover-img" src="" alt="Game Cover">
+                </div>
+                <div class="game-info">
+                    <h1 id="game-title"></h1>
+                    <div class="game-meta">
+                        <span id="game-developer"></span> | <span id="game-release"></span>
+                    </div>
+                    <div class="game-rating">
+                        <span class="stars"></span>
+                        <span id="game-rating-number"></span>
+                    </div>
+                    <p id="game-description"></p>
+                    <div class="game-tags" id="game-tags"></div>
+                    <div class="action-buttons">
+                        <button class="action-button primary">Play Now</button>
+                        <button class="action-button">Add to Favorites</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Account overlay -->
+    <div id="account-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="account-container">
+                <div class="account-section">
+                    <!-- Initial Screen -->
+                    <div id="account-choice" class="account-screen">
+                        <h2>How do you want to proceed?</h2>
+                        <div class="account-buttons">
+                            <button id="login-choice" class="account-button">Log into an existing account</button>
+                            <button id="register-choice" class="account-button">Create a new Account</button>
+                        </div>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="login-form" class="account-screen hidden">
+                        <img src="lib/avatars/Colors/FillBlack.png" class="form-avatar" alt="Default Avatar">
+                        <h2>Log In</h2>
+                        <form class="auth-form">
+                            <div class="form-group">
+                                <label for="login-username">Username or Email</label>
+                                <input type="text" id="login-username" required>
+                                <div class="error-message" id="login-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" id="login-password" required>
+                            </div>
+                            <button type="submit" class="account-button">Log In</button>
+                            <button type="button" class="account-button secondary back-button">Back</button>
+                        </form>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div id="register-form" class="account-screen hidden">
+                        <img src="lib/avatars/Colors/FillBlack.png" class="form-avatar" alt="Default Avatar">
+                        <h2>Create Account</h2>
+                        <form class="auth-form">
+                            <div class="form-group">
+                                <label for="register-username">Username</label>
+                                <input type="text" id="register-username" required>
+                                <div class="error-message" id="username-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">Email</label>
+                                <input type="email" id="register-email" required>
+                                <div class="error-message" id="email-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Password</label>
+                                <input type="password" id="register-password" required>
+                                <div class="error-message" id="password-error"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-confirm-password">Confirm Password</label>
+                                <input type="password" id="register-confirm-password" required>
+                            </div>
+                            <button type="submit" class="account-button">Create Account</button>
+                            <button type="button" class="account-button secondary back-button">Back</button>
+                        </form>
+                    </div>
+
+                    <!-- User Settings Screen -->
+                    <div id="user-settings" class="account-screen hidden">
+                        <div class="user-profile">
+                            <img id="user-avatar" src="" class="user-avatar" alt="User Avatar">
+                            <h2 id="user-username">Username</h2>
+                        </div>
+                        <div class="settings-options">
+                            <button id="change-avatar-settings-btn" class="account-button">Change Avatar</button>
+                            <button id="logout-btn" class="account-button secondary">Log Out</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-section">
+                    <img src="lib/icons/logo.png" alt="InterLinked Logo" style="width: 20vw; margin-bottom: 2vw; filter: drop-shadow(0 0 0.5vw rgba(255, 255, 255, 0.5));">
+                    <h1 style="color: white; font-size: 2.5vw; text-align: center; text-shadow: 0 0 1vw rgba(0,0,0,0.5);">Interlinked<br>Creations</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Welcome overlay -->
+    <div id="welcome-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="welcome-container">
+                <img id="welcome-avatar" class="welcome-avatar" src="" alt="User Avatar">
+                <h2 class="welcome-title">Welcome to InterLinked Creations!</h2>
+                <div class="welcome-username" id="welcome-username"></div>
+                <div class="account-buttons">
+                    <button id="change-avatar-btn" class="account-button">Change Avatar</button>
+                    <button id="welcome-close-btn" class="account-button secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Avatar selection overlay -->
+    <div id="avatar-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <h2 style="text-align: center; margin: 2vw;">Choose Your Avatar</h2>
+            <div class="avatar-grid" id="avatar-grid"></div>
+            <div style="text-align: center; padding: 2vw;">
+                <button id="save-avatar-btn" class="account-button">Save Selection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login confirmation overlay -->
+    <div id="login-confirm-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="welcome-container">
+                <img id="login-confirm-avatar" class="welcome-avatar" src="" alt="User Avatar">
+                <h2 class="welcome-title">Sign in as:</h2>
+                <div class="welcome-username" id="login-confirm-username"></div>
+                <div class="account-buttons">
+                    <button id="confirm-login-btn" class="account-button">Yes, Sign In</button>
+                    <button id="cancel-login-btn" class="account-button secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Friend request confirmation overlay -->
+    <div id="friend-request-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="welcome-container">
+                <h2 class="welcome-title">Send Friend Request</h2>
+                <img id="friend-request-avatar" class="welcome-avatar" src="" alt="User Avatar">
+                <div id="friend-request-username" class="welcome-username"></div>
+                <p id="friend-request-message"></p>
+                <div class="account-buttons">
+                    <button id="confirm-friend-request-btn" class="account-button">Send Request</button>
+                    <button id="cancel-friend-request-btn" class="account-button secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Friend invites overlay -->
+    <div id="friend-invites-overlay" class="hidden">
+        <div class="overlay-content">
+            <div class="overlay-close">&times;</div>
+            <div class="welcome-container">
+                <h2 class="welcome-title">Friend Requests</h2>
+                <div id="friend-invites-list" class="friend-invites-container">
+                    <!-- Friend invites will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/js/menu.js"></script>
+    <script src="lib/js/account.js"></script>
+    <script src="lib/js/navigation.js"></script>
+    <script src="lib/js/friends.js"></script>
+    <script src="lib/js/auth-check.js"></script>
+</body>
+</html>

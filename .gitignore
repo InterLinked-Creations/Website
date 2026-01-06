@@ -1,0 +1,7 @@
+database/
+.git/
+*.log
+*.tmp
+**/Temp/
+**/temp/
+*.bak

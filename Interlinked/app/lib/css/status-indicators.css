@@ -1,0 +1,54 @@
+/* Status indicator dots for avatar images */
+.avatar-container {
+    position: relative;
+    display: inline-block;
+}
+
+.chat-friend-avatar .avatar-container {
+    width: 100%;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 0.2vw;
+    right: 0.2vw;
+    width: 1vw;
+    padding-bottom: 1vw;
+    border-radius: 50%;
+    border: 0.15vw solid rgba(30, 30, 40, 0.95);
+    z-index: 2;
+}
+
+.status-dot.blue {
+    background-color: #4a6cff;
+}
+
+.status-dot.orange {
+    background-color: #ff8c00;
+}
+
+.status-dot.gray {
+    background-color: #808080;
+}
+
+/* For small avatars (in chat sidebar) */
+.chat-friend-avatar .status-dot {
+    width: 0.8vw;
+    padding-bottom: 0.8vw;
+    border-width: 0.1vw;
+    bottom: 0;
+    right: 0;
+}
+
+/* For medium avatars (in chat dialog header) */
+.chat-dialog-avatar-container .status-dot {
+    width: 0.8vw;
+    padding-bottom: 0.8vw;
+}
+
+/* For larger avatars (profile) */
+.profile-avatar-container .status-dot {
+    width: 1.5vw;
+    height: 0.5vw;
+    border-width: 0.2vw;
+}

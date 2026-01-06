@@ -1,0 +1,386 @@
+/* Keyframe animations */
+@keyframes backgroundFlash {
+    0% { background-color: rgb(0, 0, 0); }
+    15% { background-color: rgb(255, 255, 255); }
+    35% { background-color: rgb(255, 255, 255); }
+    100% { background-color: rgb(100, 100, 100); }
+}
+
+@keyframes bgGlowing {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes logoGrowing {
+    from { 
+        width: 12%; 
+        padding-bottom: 12vw; 
+    }
+    to { 
+        width: 30%; 
+        padding-bottom: 30vw; 
+    }
+}
+
+@keyframes logoLight {
+    from { filter: brightness(0.01); }
+    to { filter: brightness(1); }
+}
+
+@keyframes logoGlowLight {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes logoGlowFinish {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes logoSidestep {
+    from { left: 50%; }
+    to { left: 19%; }
+}
+
+@keyframes logoUp {
+    from { top: 50%; }
+    to { top: 37%; }
+}
+
+@keyframes nameShow {
+    from { 
+        opacity: 0; 
+        left: 40%; 
+    }
+    to { 
+        opacity: 1; 
+        left: 65%; 
+    }
+}
+
+@keyframes nameUp {
+    from { top: 30%; }
+    to { top: 17%; }
+}
+
+@keyframes buttonShow {
+    from { scale: 0; }
+    to { scale: 1; }
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(100, 100, 100);
+}
+body.intro {
+    background-color: rgb(0, 0, 0);
+}
+body.flash {
+    animation: backgroundFlash 4s ease-in-out;
+}
+
+#MainLogo {
+    background-image: url("../icons/logo.png");
+    background-size: 100% 100%;
+    width: 5%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 5vw; /* Replace border-bottom with padding-bottom */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: brightness(0.01);
+    z-index: -2;
+}
+#Logo_Glow {
+    background-image: url("../icons/logoShine.png");
+    background-size: 100% 100%;
+    width: 5%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 5vw; /* Replace border-bottom with padding-bottom */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    opacity: 0;
+    z-index: -1;
+}
+#BG_Glow {
+    position: absolute;
+    top: -40%;
+    left: 0;
+    width: 100%;
+    padding-bottom: 100vw;
+    background-image: radial-gradient(circle, rgb(255, 255, 255), rgba(0, 0, 0, 0), rgba(0, 0, 0, 0));
+    background-size: cover;
+    opacity: 0;
+    z-index: -2;
+}
+
+#BG_Glow.glowing {
+    opacity: 1;
+    animation: bgGlowing 8s ease-in-out;
+}
+#MainLogo.growing{
+    width: 30%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 30vw; /* Replace border-bottom with padding-bottom */
+    animation: logoGrowing 6.3s ease-in-out;
+}
+#MainLogo.light {
+    width: 30%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 30vw; /* Replace border-bottom with padding-bottom */
+    filter: brightness(1);
+    animation: logoLight 2s ease-in-out;
+}
+#Logo_Glow.light {
+    opacity: 1;
+    width: 30%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 30vw; /* Replace border-bottom with padding-bottom */
+    animation: logoGlowLight 1s ease-in-out;
+}
+#Logo_Glow.finish {
+    width: 30%; /* Adjusted to be relative to the parent container */
+    padding-bottom: 30vw; /* Replace border-bottom with padding-bottom */
+    opacity: 0;
+    animation: logoGlowFinish 1s ease-in-out;
+}
+#MainLogo.Sidestep {
+    left: 19%; /* Adjusted to be relative to the parent container */
+    width: 30vw; /* Adjusted to be relative to the parent container */
+    padding-bottom: 30vw; /* Replace border-bottom with padding-bottom */
+    filter: brightness(1);
+    animation: logoSidestep 0.8s ease-in-out;
+}
+
+#Name {
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    transform: translateX(-50%);
+    color: rgb(255, 255, 255);
+    font-size: 2rem; /* Adjusted to scale with the viewport */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    z-index: -3;
+    opacity: 0;
+}
+
+#TopName, #BottomName {
+    font-size: 10vw; /* Adjusted to scale with the viewport width */
+    font-weight: bold;
+}
+
+#Name.show {
+    opacity: 1;
+    left: 65%;
+    animation: nameShow 1s ease-in-out;
+}
+
+#Name.show.up {
+    top: 17%;
+    animation: nameUp 0.8s ease-in-out;
+}
+#MainLogo.up {
+    top: 37%;
+    animation: logoUp 0.8s ease-in-out;
+}
+
+
+#startBTN {
+    position: absolute;
+    bottom: 10%; /* Adjusted to be relative to the parent container */
+    left: 40%; /* Center horizontally */
+    padding: 2% 8%; /* Adjusted to scale with the viewport */
+    font-size: 3vw; /* Adjusted to scale with the viewport */
+    font-family: Arial, sans-serif;
+    color: rgb(255, 255, 255);
+    background: linear-gradient(45deg, #ff0000, #ff9900, #ffff00, #00ff00, #0000ff, #9900ff, #ff00ff);
+    background-size: 400% 400%;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6), 0 0 60px rgba(255, 255, 255, 0.4);
+    animation: glowPulse 2s infinite;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    scale: 0;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+#startBTN.show {
+    scale: 1;
+    animation: buttonShow 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#startBTN:hover {
+    background-size: 200% 200%;
+    background-position: right;
+    transform: scale(1.1);    
+}
+
+/* Authentication popup styles */
+#authPopup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(5px);
+}
+
+#authPopup.hidden {
+    display: none;
+    opacity: 0;
+}
+
+.auth-container {
+    background-color: #222;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1);
+    padding: 2vw;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vw;
+}
+
+.auth-header h2 {
+    margin: 0;
+    font-size: 3vw;
+    background: linear-gradient(90deg, #ff0000, #ff9900, #ffff00, #00ff00, #0000ff, #9900ff, #ff00ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 400% 400%;
+    animation: gradient 5s ease infinite;
+}
+
+.close-btn {
+    font-size: 3vw;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+}
+
+.auth-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.auth-buttons button {
+    padding: 2vw;
+    font-size: 2vw;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    background: linear-gradient(45deg, #333, #444);
+    color: white;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+.auth-buttons button:hover {
+    transform: scale(1.05);
+    background: linear-gradient(45deg, #444, #555);
+}
+
+.auth-form {
+    transition: all 0.3s ease;
+}
+
+.auth-form.hidden {
+    display: none;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.auth-form h3 {
+    margin-top: 0;
+    font-size: 2.5vw;
+    text-align: center;
+    margin-bottom: 2vw;
+}
+
+.form-group {
+    margin-bottom: 2vw;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5vw;
+    font-size: 1.5vw;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 1vw;
+    font-size: 1.5vw;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background-color: #333;
+    color: white;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3vw;
+}
+
+.form-actions button {
+    padding: 1vw 2vw;
+    font-size: 1.5vw;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #333, #444);
+    color: white;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.form-actions button:first-child {
+    background: linear-gradient(45deg, #004080, #0066cc);
+}
+
+.form-actions button:hover {
+    transform: scale(1.05);
+}
+
+.form-error {
+    color: #ff6b6b;
+    font-size: 1.4vw;
+    margin-top: 1vw;
+    min-height: 1.4vw;
+}
+
+/* Fade animation for logo and title */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
