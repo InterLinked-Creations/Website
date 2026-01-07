@@ -2,7 +2,8 @@
 
 # Interlinked Creations: Website Alpha
 
-This is the basic "skeleton" of the front-end development of my site.
+This is the base of the Interlinked Creations website.
+This includes front-end and back-end activity with a local SQLite database.
 
 ## The First Run!
 First you will need Node.js on your machine. If you run `npm -v` and `node -v` without an error, chances are that you have Node.js. Otherwise, you need to [install Node.js](https://nodejs.org/en).
@@ -24,7 +25,7 @@ After the first run, you can just run `node server.js` to start the server.
 - [LogProgrammer92](https://github.com/logprogrammer92)
 
 ## Copyrights
-© Copyright 2025 Interlinked Creations, SuperGamer001 (Alex Fischer). All rights reserved.
+© Copyright 2026 Interlinked Creations, SuperGamer001 (Alex Fischer). All rights reserved.
 
 ![Copyright Claim Gif](/Markdown%20Files/Copyright.gif)
 
