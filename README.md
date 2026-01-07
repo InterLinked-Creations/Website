@@ -11,7 +11,7 @@ First you will need Node.js on your machine. If you run `npm -v` and `node -v` w
 Once you have Node.js and have downloaded the project, open your terminal and make sure you're on the project folder that contains the **server.js** file. If this is your first time starting the project up, then run these commands: 
 ```
 npm install
-node DataBaseSetup.js
+node DatabaseSetup.js
 node server.js
 ```
 
