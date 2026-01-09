@@ -19,6 +19,11 @@ const replyMessageFetchPromises = new Map();
 // The base position of the chat dialog input in vw units
 const basePosition = 50; // vw
 
+// Live read receipt tracking
+let currentReadMessageId = null; // Track current user's last read message in memory
+let readStatusUpdateTimeout = null; // Debounce timer for visual updates
+let pendingReadStatusSave = false; // Flag to track if we need to save to DB
+
 document.addEventListener('DOMContentLoaded', () => {
     // Friend system elements
     const sendFriendInviteBtn = document.getElementById('send-friend-invite');
@@ -781,6 +786,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (data.type === 'typing_stop') {
                     handleTypingIndicator(data.conversationId, data.user, false);
                 }
+                else if (data.type === 'read_status_update') {
+                    handleReadStatusUpdate(data.conversationId, data.messageId, data.user);
+                }
             } catch (error) {
                 console.error('Error handling WebSocket message:', error);
             }
@@ -813,8 +821,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (messagesContainer) {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 
-                // Update read status when we receive a message and we're viewing the conversation
-                updateReadStatus(message.ConversationID, message.MessageID);
+                // Check visible messages and update read receipt
+                setTimeout(() => {
+                    checkVisibleMessages();
+                }, 100);
             }
         }
         
@@ -822,6 +832,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update conversation preview in sidebar (if visible)
         updateConversationPreview(message);
+    }
+    
+    // Function to handle read status updates from other users
+    function handleReadStatusUpdate(conversationId, messageId, user) {
+        // Only handle read status updates for current conversation
+        if (currentConversationId !== conversationId) {
+            return;
+        }
+        
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer) return;
+        
+        // Remove this user's previous read status from all messages
+        const existingReadIndicators = messagesContainer.querySelectorAll(`[data-read-by-user="${user.id}"]`);
+        existingReadIndicators.forEach(indicator => indicator.remove());
+        
+        // Add user's avatar to their new last read message
+        const messageElement = messagesContainer.querySelector(`[data-message-id="${messageId}"]`);
+        if (messageElement) {
+            // Create read status container if it doesn't exist
+            let readStatusContainer = messageElement.querySelector('.message-read-status');
+            if (!readStatusContainer) {
+                readStatusContainer = document.createElement('div');
+                readStatusContainer.className = 'message-read-status';
+                messageElement.appendChild(readStatusContainer);
+            }
+            
+            // Add user's avatar
+            const avatarImg = document.createElement('img');
+            avatarImg.className = 'read-status-avatar';
+            avatarImg.src = user.avatar;
+            avatarImg.alt = `${user.username} read this message`;
+            avatarImg.title = `${user.username} read this message`;
+            avatarImg.dataset.readByUser = user.id;
+            
+            readStatusContainer.appendChild(avatarImg);
+        }
     }
     
     // Store typing indicators by conversation
@@ -1403,9 +1450,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
     
-    // Function to update read status for a conversation
-    function updateReadStatus(conversationId, lastMessageId = null) {
+    // Function to update read status for a conversation (saves to database)
+    function updateReadStatus(conversationId, lastMessageId = null, immediate = false) {
         if (!conversationId) return;
+        
+        // If immediate is false, just mark that we need to save later
+        if (!immediate) {
+            pendingReadStatusSave = true;
+            return;
+        }
         
         fetch(`/api/conversations/${conversationId}/read-status`, {
             method: 'POST',
@@ -1414,9 +1467,113 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ messageId: lastMessageId })
         })
+        .then(() => {
+            pendingReadStatusSave = false;
+        })
         .catch(error => {
             console.error('Error updating read status:', error);
         });
+    }
+    
+    // Function to save pending read status to database
+    function savePendingReadStatus() {
+        if (pendingReadStatusSave && currentConversationId && currentReadMessageId) {
+            updateReadStatus(currentConversationId, currentReadMessageId, true);
+        }
+    }
+    
+    // Function to update live read receipt visuals
+    function updateLiveReadReceipt(messageId) {
+        if (!currentUserId || !messageId) return;
+        
+        // Don't allow read receipt to go backwards
+        if (currentReadMessageId && messageId < currentReadMessageId) {
+            return;
+        }
+        
+        currentReadMessageId = messageId;
+        pendingReadStatusSave = true;
+        
+        // Send read status update via WebSocket to other users
+        if (socket && socket.readyState === WebSocket.OPEN && currentConversationId) {
+            socket.send(JSON.stringify({
+                type: 'read_status_update',
+                conversationId: currentConversationId,
+                messageId: messageId
+            }));
+        }
+        
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer) return;
+        
+        // Remove current user's read status from all messages
+        const existingReadIndicators = messagesContainer.querySelectorAll(`[data-read-by-user="${currentUserId}"]`);
+        existingReadIndicators.forEach(indicator => indicator.remove());
+        
+        // Add current user's avatar to the new last read message
+        const messageElement = messagesContainer.querySelector(`[data-message-id="${messageId}"]`);
+        if (messageElement) {
+            // Get current user's avatar
+            fetch('/api/current-user')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.avatar) {
+                        // Create read status container if it doesn't exist
+                        let readStatusContainer = messageElement.querySelector('.message-read-status');
+                        if (!readStatusContainer) {
+                            readStatusContainer = document.createElement('div');
+                            readStatusContainer.className = 'message-read-status';
+                            messageElement.appendChild(readStatusContainer);
+                        }
+                        
+                        // Add current user's avatar
+                        const avatarImg = document.createElement('img');
+                        avatarImg.className = 'read-status-avatar';
+                        avatarImg.src = data.avatar;
+                        avatarImg.alt = 'You read this message';
+                        avatarImg.title = 'You read this message';
+                        avatarImg.dataset.readByUser = currentUserId;
+                        
+                        readStatusContainer.appendChild(avatarImg);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching current user for read receipt:', error);
+                });
+        }
+    }
+    
+    // Function to check which messages are visible and update read receipt
+    function checkVisibleMessages() {
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer || !currentConversationId) return;
+        
+        const containerRect = messagesContainer.getBoundingClientRect();
+        const containerBottom = containerRect.bottom;
+        
+        // Find the last message that is above the bottom of the container
+        const messageElements = Array.from(messagesContainer.querySelectorAll('[data-message-id]'));
+        
+        let lastVisibleMessageId = null;
+        
+        for (let i = messageElements.length - 1; i >= 0; i--) {
+            const messageElement = messageElements[i];
+            const messageRect = messageElement.getBoundingClientRect();
+            
+            // Check if message is above the bottom of container (with some threshold)
+            if (messageRect.top < containerBottom - 50) {
+                lastVisibleMessageId = parseInt(messageElement.dataset.messageId);
+                break;
+            }
+        }
+        
+        if (lastVisibleMessageId) {
+            // Debounce visual updates
+            clearTimeout(readStatusUpdateTimeout);
+            readStatusUpdateTimeout = setTimeout(() => {
+                updateLiveReadReceipt(lastVisibleMessageId);
+            }, 200);
+        }
     }
     
     // Function to load messages for a specific conversation
@@ -1447,12 +1604,14 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Remove existing scroll listener if any
                         messagesContainer.removeEventListener('scroll', scrollListener);
                         
-                        // Add scroll listener for loading more messages
+                        // Add scroll listener for loading more messages and tracking read status
                         scrollListener = () => {
                             if (messagesContainer.scrollTop === 0 && !messagesContainer.dataset.loading) {
                                 // Load more messages when scrolled to top
                                 loadMoreMessages();
                             }
+                            // Check visible messages for live read receipts
+                            checkVisibleMessages();
                         };
                         messagesContainer.addEventListener('scroll', scrollListener);
                     }
@@ -1473,6 +1632,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Store read status data for later use
                         messagesContainer.dataset.lastReadMessageId = data.lastReadMessageID || '';
                         messagesContainer.dataset.allReadStatuses = JSON.stringify(data.allReadStatuses || {});
+                        
+                        // Initialize current read message ID from server data
+                        currentReadMessageId = data.lastReadMessageID || null;
                         
                         // Add read status indicators (user avatars)
                         addReadStatusIndicators(messagesContainer);
@@ -1498,20 +1660,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (firstUnreadMessageElement) {
                             setTimeout(() => {
                                 scrollMessageToBottom(firstUnreadMessageElement, messagesContainer);
-                                // Update read status - mark the last message as read
-                                if (data.messages.length > 0) {
-                                    const lastMessage = data.messages[data.messages.length - 1];
-                                    updateReadStatus(conversationId, lastMessage.MessageID);
-                                }
+                                // Check which messages are visible after scrolling
+                                setTimeout(() => {
+                                    checkVisibleMessages();
+                                }, 150);
                             }, 100);
                         } else {
                             // No unread messages, scroll to very bottom
                             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                            // Update read status - mark the last message as read
-                            if (data.messages.length > 0) {
-                                const lastMessage = data.messages[data.messages.length - 1];
-                                updateReadStatus(conversationId, lastMessage.MessageID);
-                            }
+                            // Check visible messages and update read receipt
+                            setTimeout(() => {
+                                checkVisibleMessages();
+                            }, 150);
                         }
                     }
                 } else {
@@ -1789,6 +1949,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatDialogClose) {
         chatDialogClose.addEventListener('click', () => {
             persistCurrentDraft();
+            // Save pending read status before closing
+            savePendingReadStatus();
             chatDialog.classList.add('hidden');
         });
     }
@@ -2076,7 +2238,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currentConversationData = conversation;
 
         if (!isSameConversation) {
+            // Save read status for the previous conversation before switching
+            if (currentConversationId) {
+                savePendingReadStatus();
+            }
+            
             currentConversationId = newConversationId;
+            currentReadMessageId = null; // Reset for new conversation
             messageOffset = 0;
             lastDisplayedDate = null; // Reset date tracking for new conversation
 
@@ -2102,6 +2270,18 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Error fetching current user:', error);
         });
+
+    // Save read status when window is about to close or navigate away
+    window.addEventListener('beforeunload', () => {
+        savePendingReadStatus();
+    });
+    
+    // Also save periodically (every 30 seconds) if there's a pending save
+    setInterval(() => {
+        if (pendingReadStatusSave && currentConversationId && currentReadMessageId) {
+            savePendingReadStatus();
+        }
+    }, 30000);
 
     // Helper function to get current user ID
     function getCurrentUserId() {
