@@ -41,10 +41,19 @@ node server.js
 After the first run, you can just run `node server.js` to start the server again anytime afterwards.
 If everything worked, you can open [localhost:3000](http://localhost:3000/) on your browser.
 
-
 ## Contributors
 - [ToastedToast00](https://github.com/ToastedToast00)
 - [LogProgrammer92](https://github.com/logprogrammer92)
+
+## File Structure
+```
+server.js (the script that runs the local server)
+Interlinked/ (The files that are used in the website)
+   | index.html (The "MainFrame" page)
+   | main.css (The CSS that holds the MainFrame together)
+   | main.js (The MainFrame API)
+   | app/ (The app folder that contains "MainFrame" content)
+```
 
 ## Copyrights
 © Copyright 2026 Interlinked Creations, SuperGamer001 (Alex Fischer). All rights reserved.
