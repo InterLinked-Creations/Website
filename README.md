@@ -24,7 +24,7 @@ There are hopes for many amazing features, so here are the top three features th
 ## Tech Stack
 Outline the technologies, frameworks, and tools used.
 - Frontend: HTML/CSS/JS
-- Backend: Node.js
+- Backend: Node.js (v24.13.0)
 - Database: SQLite (temporary)
 - Infrastructure / DevOps: GitHub
 - Other tools: npm
@@ -34,12 +34,17 @@ First you will need Node.js on your machine. If you run `npm -v` and `node -v` w
 
 Once you have Node.js and have downloaded the project, open your terminal and make sure you're on the project folder that contains the **server.js** file. If this is your first time starting the project up, then run these commands: 
 ```
+npm rebuild
 npm install
 node DatabaseSetup.js
 node server.js
 ```
 After the first run, you can just run `node server.js` to start the server again anytime afterwards.
 If everything worked, you can open [localhost:3000](http://localhost:3000/) on your browser.
+
+## Troubleshoothing tips
+
+1. **Very often, users may have a different version of Node.js than the one we are currently using.** To solve this issue, run `npm rebuild` to compile the Node.js application. Running `node serve.js` afterwards should work.
 
 ## Contributors
 - [ToastedToast00](https://github.com/ToastedToast00)
