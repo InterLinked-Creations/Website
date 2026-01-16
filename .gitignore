@@ -5,3 +5,4 @@ database/
 **/Temp/
 **/temp/
 *.bak
+./node_modules
