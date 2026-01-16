@@ -44,7 +44,7 @@ If everything worked, you can open [localhost:3000](http://localhost:3000/) on y
 
 ## Troubleshooting tips
 
-1. **Very often, users may have a different version of Node.js than the one we are currently using.** To solve this issue, run `npm rebuild` to compile the Node.js application. Running `node serve.js` afterwards should work.
+1. **Very often, users may have a different version of Node.js than the one we are currently using.** To solve this issue, run `npm rebuild` to compile the Node.js application. Running `node server.js` afterwards should work.
 
 ## Contributors
 - [ToastedToast00](https://github.com/ToastedToast00)
