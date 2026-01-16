@@ -1437,12 +1437,12 @@ app.post('/api/conversations/:conversationId/read-status', requireAuth, (req, re
             }
         }
         
-        // Update or insert read status
+        // Update or insert read status with monotonicity enforcement
         const upsertReadStatus = req.db.prepare(`
             INSERT INTO ConversationReadStatus (ConversationID, UserID, LastReadMessageID, LastReadTimeStamp)
             VALUES (?, ?, ?, ?)
             ON CONFLICT(ConversationID, UserID) DO UPDATE SET
-                LastReadMessageID = excluded.LastReadMessageID,
+                LastReadMessageID = MAX(LastReadMessageID, excluded.LastReadMessageID),
                 LastReadTimeStamp = excluded.LastReadTimeStamp
         `);
         
