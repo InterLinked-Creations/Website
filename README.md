@@ -42,7 +42,7 @@ node server.js
 After the first run, you can just run `node server.js` to start the server again anytime afterwards.
 If everything worked, you can open [localhost:3000](http://localhost:3000/) on your browser.
 
-## Troubleshoothing tips
+## Troubleshooting tips
 
 1. **Very often, users may have a different version of Node.js than the one we are currently using.** To solve this issue, run `npm rebuild` to compile the Node.js application. Running `node serve.js` afterwards should work.
 
