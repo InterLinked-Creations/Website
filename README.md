@@ -24,7 +24,7 @@ There are hopes for many amazing features, so here are the top three features th
 ## Tech Stack
 Outline the technologies, frameworks, and tools used.
 - Frontend: HTML/CSS/JS
-- Backend: Node.js
+- Backend: Node.js (v24.13.0)
 - Database: SQLite (temporary)
 - Infrastructure / DevOps: GitHub
 - Other tools: npm
@@ -32,14 +32,26 @@ Outline the technologies, frameworks, and tools used.
 ## The First Run!
 First you will need Node.js on your machine. If you run `npm -v` and `node -v` without an error, chances are that you have Node.js. Otherwise, you need to [install Node.js](https://nodejs.org/en).
 
-Once you have Node.js and have downloaded the project, open your terminal and make sure you're on the project folder that contains the **server.js** file. If this is your first time starting the project up, then run these commands: 
+Once you have Node.js installed, you will want to clone the project onto your device. Open your terminal in an empty folder and run these commands to clone the project:
 ```
+git clone https://github.com/InterLinked-Creations/Website.git
+cd Website
+```
+
+After that, run these commands to run the project.
+```
+npm rebuild
 npm install
 node DatabaseSetup.js
 node server.js
 ```
-After the first run, you can just run `node server.js` to start the server again anytime afterwards.
 If everything worked, you can open [localhost:3000](http://localhost:3000/) on your browser.
+
+After the first run, you can run `node server.js` on it's own to start the server again anytime afterwards.
+
+## Troubleshooting tips
+
+1. **Very often, users may have a different version of Node.js than the one we are currently using.** To solve this issue, run `npm rebuild` to compile the Node.js application. Running `node server.js` afterwards should work.
 
 ## Contributors
 - [ToastedToast00](https://github.com/ToastedToast00)
