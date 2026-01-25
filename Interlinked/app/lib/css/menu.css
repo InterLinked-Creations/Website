@@ -51,13 +51,38 @@ body {
     border-bottom: black 0.1vw solid;
     border-top: black 0.1vw solid;
     overflow: visible;
-    position: relative;
 }
 .sideNav:hover {
     background: rgb(60, 60, 60);
 }
-.sideNav:active {
-    background: rgb(30, 30, 30);
+/* Active navigation state */
+.sideNav.active {
+    box-shadow: inset 0.3vw 0 0 #4a6cff;
+}
+#Home, #Search, #Library, #Friends, #Notifications, #Settings, #Help {
+    background-position: center;
+    background-size: 100% 100%;
+}
+#Home {
+    background-image: url(../icons/house.png);
+}
+#Search{
+    background-image: url(../icons/search.png);
+}
+#Library {
+    background-image: url(../icons/library.png);
+}
+#Friends {
+    background-image: url(../icons/friends.png);
+}
+#Settings {
+    background-image: url(../icons/settings.png);
+}
+#Notifications {
+    background-image: url(../icons/notifications.png);
+}
+#Help {
+    background-image: url(../icons/help.png);
 }
 
 /* The lower navigation links */
@@ -78,13 +103,6 @@ body {
 .lowerNav:active {
     box-shadow: orange 0 0 0 0.2vw inset;
 }
-
-/* Active navigation state */
-.sideNav.active {
-    background: rgb(70, 70, 70);
-    box-shadow: inset 0.3vw 0 0 #4a6cff;
-}
-
 .lowerNav.active {
     box-shadow: #4a6cff 0 0 0 0.2vw inset;
 }
