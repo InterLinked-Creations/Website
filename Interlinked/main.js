@@ -44,12 +44,40 @@ window.mainFrame = {
     },
 
     /**
-     * @description Displays an error message above the iframe. If there is no message given, nothing happens.
-     * @param {string} message The error message to display.
-     */
-    error: function(message) {
-        // Display an error pop up above the iframe.
+    * @namespace toast
+    * @description System-level toast notification API for displaying pop-up messages
+    * above the MainFrame screen. Supports multiple notification types such as normal,
+    * success, info, warning, error, congrats, invite, and special events.
+    */
+    toast: {
+        normal: function(message, options) { this._create("normal", message, options); },
+        success: function(message, options) { this._create("success", message, options); },
+        info: function(message, options) { this._create("info", message, options); },
+        warn: function(message, options) { this._create("warn", message, options); },
+        error: function(message, options) { this._create("error", message, options); },
+        congrats: function(message, options) { this._create("congrats", message, options); },
+        invite: function(message, options) { this._create("invite", message, options); },
+        special: function(message, options) { this._create("special", message, options); },
+
+        _create: function(type, message, options = {}) {
+            if (!message) return;
+
+            const container = document.getElementById("toast-container");
+            if (!container) return;
+
+            const toast = document.createElement("div");
+            toast.classList.add("toast", `toast-${type}`);
+            toast.textContent = message;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add("fade-out");
+                setTimeout(() => toast.remove(), 300);
+            }, options.duration || 3000);
+        }
     }
+
 }
 
 window.addEventListener('DOMContentLoaded', e => {
