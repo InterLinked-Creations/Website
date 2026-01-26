@@ -1581,6 +1581,9 @@ document.addEventListener('DOMContentLoaded', () => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const messageId = parseInt(entry.target.dataset.messageId);
+                    if (isNaN(messageId)) {
+                        return;
+                    }
                     if (!lastVisibleMessageId || messageId > lastVisibleMessageId) {
                         lastVisibleMessageId = messageId;
                     }
