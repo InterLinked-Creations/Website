@@ -1442,7 +1442,7 @@ app.post('/api/conversations/:conversationId/read-status', requireAuth, (req, re
             INSERT INTO ConversationReadStatus (ConversationID, UserID, LastReadMessageID, LastReadTimeStamp)
             VALUES (?, ?, ?, ?)
             ON CONFLICT(ConversationID, UserID) DO UPDATE SET
-                LastReadMessageID = MAX(LastReadMessageID, excluded.LastReadMessageID),
+                LastReadMessageID = MAX(COALESCE(LastReadMessageID, 0), excluded.LastReadMessageID),
                 LastReadTimeStamp = excluded.LastReadTimeStamp
         `);
         
