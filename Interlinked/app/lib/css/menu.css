@@ -65,7 +65,7 @@ body {
     margin: 0;
     scale: 0.6;
 }
-#Home, #Search, #Library, #Friends, #Notifications, #Settings, #Help {
+#Friends, #Notifications, #Settings, #Help {
     background-position: center;
     background-size: 100% 100%;
 }
