@@ -97,6 +97,11 @@ wss.on('connection', (ws, req) => {
             else if (data.type === 'typing_stop' && ws.userId) {
                 handleTypingIndicator(ws.userId, data, false);
             }
+            
+            // Handle read status updates
+            else if (data.type === 'read_status_update' && ws.userId) {
+                handleReadStatusUpdate(ws.userId, data);
+            }
         } catch (error) {
             console.error('Error handling WebSocket message:', error);
         }
@@ -306,6 +311,64 @@ function handleTypingIndicator(senderId, data, isTyping) {
         });
     } catch (error) {
         console.error('Error handling typing indicator:', error);
+    }
+}
+
+// Handle read status updates via WebSocket
+function handleReadStatusUpdate(senderId, data) {
+    try {
+        const { conversationId, messageId } = data;
+        
+        if (!conversationId || !messageId) {
+            return;
+        }
+        
+        // Verify user is a member of this conversation
+        const conversation = db.prepare(`
+            SELECT Members FROM Conversations WHERE ConversationID = ?
+        `).get(conversationId);
+        
+        if (!conversation) {
+            return;
+        }
+        
+        const memberIds = JSON.parse(conversation.Members);
+        if (!memberIds.includes(senderId)) {
+            return;
+        }
+        
+        // Get sender info
+        const sender = db.prepare(`
+            SELECT UserName, Avatar FROM Users WHERE UserID = ?
+        `).get(senderId);
+        
+        if (!sender) {
+            return;
+        }
+        
+        // Broadcast read status update to all other conversation members
+        const readStatusData = {
+            type: 'read_status_update',
+            conversationId: conversationId,
+            messageId: messageId,
+            user: {
+                id: senderId,
+                username: sender.UserName,
+                avatar: sender.Avatar
+            }
+        };
+        
+        memberIds.forEach(memberId => {
+            // Don't send read status back to the sender
+            if (memberId !== senderId) {
+                const memberWs = clients.get(memberId);
+                if (memberWs && memberWs.readyState === WebSocket.OPEN) {
+                    memberWs.send(JSON.stringify(readStatusData));
+                }
+            }
+        });
+    } catch (error) {
+        console.error('Error handling read status update:', error);
     }
 }
 
@@ -943,12 +1006,11 @@ app.get('/api/conversations', requireAuth, (req, res) => {
             
             // Get member information
             const membersInfo = memberIds.map(memberId => {
-                const user = req.db.prepare(`
+                return req.db.prepare(`
                     SELECT UserID, UserName, Avatar
                     FROM Users
                     WHERE UserID = ?
                 `).get(memberId);
-                return user;
             }).filter(user => user !== undefined);
 
             // Get last message
@@ -1082,12 +1144,11 @@ app.post('/api/conversations', requireAuth, (req, res) => {
 
             const memberIds = JSON.parse(conversation.Members);
             const membersInfo = memberIds.map(memberId => {
-                const user = req.db.prepare(`
+                return req.db.prepare(`
                     SELECT UserID, UserName, Avatar
                     FROM Users
                     WHERE UserID = ?
                 `).get(memberId);
-                return user;
             }).filter(user => user !== undefined);
 
             res.json({
@@ -1376,12 +1437,12 @@ app.post('/api/conversations/:conversationId/read-status', requireAuth, (req, re
             }
         }
         
-        // Update or insert read status
+        // Update or insert read status with monotonicity enforcement
         const upsertReadStatus = req.db.prepare(`
             INSERT INTO ConversationReadStatus (ConversationID, UserID, LastReadMessageID, LastReadTimeStamp)
             VALUES (?, ?, ?, ?)
             ON CONFLICT(ConversationID, UserID) DO UPDATE SET
-                LastReadMessageID = excluded.LastReadMessageID,
+                LastReadMessageID = MAX(COALESCE(LastReadMessageID, 0), excluded.LastReadMessageID),
                 LastReadTimeStamp = excluded.LastReadTimeStamp
         `);
         

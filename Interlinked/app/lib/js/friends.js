@@ -19,6 +19,14 @@ const replyMessageFetchPromises = new Map();
 // The base position of the chat dialog input in vw units
 const basePosition = 50; // vw
 
+// Live read receipt tracking
+let currentReadMessageId = null; // Track current user's last read message in memory
+let readStatusUpdateTimeout = null; // Debounce timer for visual updates
+let pendingReadStatusSave = false; // Flag to track if we need to save to DB
+let wsReadStatusThrottle = null; // Throttle timer for WebSocket broadcasts
+let messageObserver = null; // IntersectionObserver for tracking visible messages
+const WS_READ_THROTTLE_MS = 2000; // Only send WS updates every 2 seconds max
+
 document.addEventListener('DOMContentLoaded', () => {
     // Friend system elements
     const sendFriendInviteBtn = document.getElementById('send-friend-invite');
@@ -781,6 +789,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (data.type === 'typing_stop') {
                     handleTypingIndicator(data.conversationId, data.user, false);
                 }
+                else if (data.type === 'read_status_update') {
+                    handleReadStatusUpdate(data.conversationId, data.messageId, data.user);
+                }
             } catch (error) {
                 console.error('Error handling WebSocket message:', error);
             }
@@ -813,8 +824,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (messagesContainer) {
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
                 
-                // Update read status when we receive a message and we're viewing the conversation
-                updateReadStatus(message.ConversationID, message.MessageID);
+                // Check visible messages and update read receipt
+                setTimeout(() => {
+                    checkVisibleMessages();
+                }, 100);
             }
         }
         
@@ -822,6 +835,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update conversation preview in sidebar (if visible)
         updateConversationPreview(message);
+    }
+    
+    // Function to handle read status updates from other users
+    function handleReadStatusUpdate(conversationId, messageId, user) {
+        // Only handle read status updates for current conversation
+        if (currentConversationId !== conversationId) {
+            return;
+        }
+        
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer) return;
+        
+        // Update the read status in allReadStatuses
+        try {
+            const allReadStatuses = JSON.parse(messagesContainer.dataset.allReadStatuses || '{}');
+            const oldMessageId = allReadStatuses[user.id];
+            allReadStatuses[user.id] = messageId;
+            messagesContainer.dataset.allReadStatuses = JSON.stringify(allReadStatuses);
+            
+            // Update UI
+            updateReadMarkerUI(user.id, messageId, oldMessageId);
+        } catch (error) {
+            console.error('Error handling read status update:', error);
+        }
     }
     
     // Store typing indicators by conversation
@@ -1403,9 +1440,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
     
-    // Function to update read status for a conversation
-    function updateReadStatus(conversationId, lastMessageId = null) {
+    // Function to update read status for a conversation (saves to database)
+    function updateReadStatus(conversationId, lastMessageId = null, immediate = false) {
         if (!conversationId) return;
+        
+        // If immediate is false, just mark that we need to save later
+        if (!immediate) {
+            pendingReadStatusSave = true;
+            return;
+        }
         
         fetch(`/api/conversations/${conversationId}/read-status`, {
             method: 'POST',
@@ -1414,9 +1457,159 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             body: JSON.stringify({ messageId: lastMessageId })
         })
+        .then(() => {
+            pendingReadStatusSave = false;
+        })
         .catch(error => {
             console.error('Error updating read status:', error);
         });
+    }
+    
+    // Function to save pending read status to database
+    function savePendingReadStatus() {
+        if (pendingReadStatusSave && currentConversationId && currentReadMessageId) {
+            updateReadStatus(currentConversationId, currentReadMessageId, true);
+        }
+    }
+    
+    // Function to update live read receipt visuals
+    function updateLiveReadReceipt(messageId, sendWS = true) {
+        if (!currentUserId || !messageId) return;
+        
+        // Don't allow read receipt to go backwards
+        if (currentReadMessageId) {
+            const numericMessageId = parseInt(messageId, 10);
+            const numericCurrentReadMessageId = parseInt(currentReadMessageId, 10);
+            
+            if (!Number.isNaN(numericMessageId) &&
+                !Number.isNaN(numericCurrentReadMessageId) &&
+                numericMessageId <= numericCurrentReadMessageId) {
+                return;
+            }
+        }
+        
+        const oldReadMessageId = currentReadMessageId;
+        currentReadMessageId = messageId;
+        pendingReadStatusSave = true;
+        
+        // Send read status update via WebSocket to other users (throttled)
+        if (sendWS && socket && socket.readyState === WebSocket.OPEN && currentConversationId) {
+            // Clear existing throttle timer
+            if (wsReadStatusThrottle) {
+                clearTimeout(wsReadStatusThrottle);
+            }
+            
+            // Throttle WS sends to avoid spam
+            wsReadStatusThrottle = setTimeout(() => {
+                socket.send(JSON.stringify({
+                    type: 'read_status_update',
+                    conversationId: currentConversationId,
+                    messageId: currentReadMessageId
+                }));
+                wsReadStatusThrottle = null;
+            }, WS_READ_THROTTLE_MS);
+        }
+        
+        // Update UI
+        updateReadMarkerUI(currentUserId, messageId, oldReadMessageId);
+    }
+    
+    // Function to update read marker UI for a specific user
+    function updateReadMarkerUI(userId, newMessageId, oldMessageId) {
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer) return;
+        
+        // Remove any existing read indicators for this user
+        const existingIndicators = messagesContainer.querySelectorAll(`.message-read-status [data-read-by-user="${userId}"]`);
+        existingIndicators.forEach(indicator => indicator.remove());
+        
+        // Add new read indicator
+        const newMessage = messagesContainer.querySelector(`[data-message-id="${newMessageId}"]`);
+        if (!newMessage) return;
+        
+        // Get user info
+        const getUserInfo = userId === currentUserId 
+            ? fetch('/api/current-user').then(r => r.json()).then(d => ({ avatar: d.avatar, username: 'You' }))
+            : fetch(`/api/users/${userId}`).then(r => r.json()).then(d => d.success ? { avatar: d.user.avatar, username: d.user.username } : null);
+        
+        getUserInfo.then(userInfo => {
+            if (!userInfo) return;
+            
+            // Create or get read status container
+            let readStatusContainer = newMessage.querySelector('.message-read-status');
+            if (!readStatusContainer) {
+                readStatusContainer = document.createElement('div');
+                readStatusContainer.className = 'message-read-status';
+                newMessage.appendChild(readStatusContainer);
+            }
+            
+            // Add avatar for this user
+            const avatarImg = document.createElement('img');
+            avatarImg.className = 'read-status-avatar';
+            avatarImg.src = userInfo.avatar || 'lib/avatars/Colors/FillBlack';
+            avatarImg.alt = `${userInfo.username} read`;
+            avatarImg.title = `${userInfo.username} read up to here`;
+            avatarImg.dataset.readByUser = userId;
+            
+            readStatusContainer.appendChild(avatarImg);
+        }).catch(error => {
+            console.error('Error updating read marker UI:', error);
+        });
+    }
+    
+    // Function to setup IntersectionObserver for message visibility tracking
+    function setupMessageObserver() {
+        const messagesContainer = document.querySelector('.chat-dialog-messages');
+        if (!messagesContainer) return;
+        
+        // Disconnect existing observer
+        if (messageObserver) {
+            messageObserver.disconnect();
+        }
+        
+        // Create observer to track messages near the bottom of viewport
+        const observerOptions = {
+            root: messagesContainer,
+            rootMargin: '-100px 0px 0px 0px', // Trigger when message is 100px above bottom
+            threshold: 0.1
+        };
+        
+        messageObserver = new IntersectionObserver((entries) => {
+            // Find the last visible message (highest messageId that's intersecting)
+            let lastVisibleMessageId = null;
+            
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const messageId = parseInt(entry.target.dataset.messageId);
+                    if (isNaN(messageId)) {
+                        return;
+                    }
+                    if (!lastVisibleMessageId || messageId > lastVisibleMessageId) {
+                        lastVisibleMessageId = messageId;
+                    }
+                }
+            });
+            
+            // Update read receipt if we found a visible message
+            if (lastVisibleMessageId) {
+                // Debounce the update
+                clearTimeout(readStatusUpdateTimeout);
+                readStatusUpdateTimeout = setTimeout(() => {
+                    updateLiveReadReceipt(lastVisibleMessageId);
+                }, 300);
+            }
+        }, observerOptions);
+        
+        // Observe all message elements
+        const messageElements = messagesContainer.querySelectorAll('[data-message-id]');
+        messageElements.forEach(el => messageObserver.observe(el));
+    }
+    
+    // Function to check which messages are visible and update read receipt (DEPRECATED - keeping for compatibility)
+    function checkVisibleMessages() {
+        // This function is now handled by IntersectionObserver
+        // Kept for any existing calls during transition
+        setupMessageObserver();
     }
     
     // Function to load messages for a specific conversation
@@ -1447,12 +1640,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Remove existing scroll listener if any
                         messagesContainer.removeEventListener('scroll', scrollListener);
                         
-                        // Add scroll listener for loading more messages
+                        // Add scroll listener for loading more messages and tracking read status
                         scrollListener = () => {
                             if (messagesContainer.scrollTop === 0 && !messagesContainer.dataset.loading) {
                                 // Load more messages when scrolled to top
                                 loadMoreMessages();
                             }
+                            // Note: Read tracking now handled by IntersectionObserver
                         };
                         messagesContainer.addEventListener('scroll', scrollListener);
                     }
@@ -1473,6 +1667,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         // Store read status data for later use
                         messagesContainer.dataset.lastReadMessageId = data.lastReadMessageID || '';
                         messagesContainer.dataset.allReadStatuses = JSON.stringify(data.allReadStatuses || {});
+                        
+                        // Initialize current read message ID from server data
+                        currentReadMessageId = data.lastReadMessageID || null;
                         
                         // Add read status indicators (user avatars)
                         addReadStatusIndicators(messagesContainer);
@@ -1498,20 +1695,18 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (firstUnreadMessageElement) {
                             setTimeout(() => {
                                 scrollMessageToBottom(firstUnreadMessageElement, messagesContainer);
-                                // Update read status - mark the last message as read
-                                if (data.messages.length > 0) {
-                                    const lastMessage = data.messages[data.messages.length - 1];
-                                    updateReadStatus(conversationId, lastMessage.MessageID);
-                                }
+                                // Setup IntersectionObserver after scrolling
+                                setTimeout(() => {
+                                    setupMessageObserver();
+                                }, 150);
                             }, 100);
                         } else {
                             // No unread messages, scroll to very bottom
                             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                            // Update read status - mark the last message as read
-                            if (data.messages.length > 0) {
-                                const lastMessage = data.messages[data.messages.length - 1];
-                                updateReadStatus(conversationId, lastMessage.MessageID);
-                            }
+                            // Setup IntersectionObserver
+                            setTimeout(() => {
+                                setupMessageObserver();
+                            }, 150);
                         }
                     }
                 } else {
@@ -1789,6 +1984,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatDialogClose) {
         chatDialogClose.addEventListener('click', () => {
             persistCurrentDraft();
+            // Save pending read status before closing
+            savePendingReadStatus();
             chatDialog.classList.add('hidden');
         });
     }
@@ -2076,7 +2273,13 @@ document.addEventListener('DOMContentLoaded', () => {
         currentConversationData = conversation;
 
         if (!isSameConversation) {
+            // Save read status for the previous conversation before switching
+            if (currentConversationId) {
+                savePendingReadStatus();
+            }
+            
             currentConversationId = newConversationId;
+            currentReadMessageId = null; // Reset for new conversation
             messageOffset = 0;
             lastDisplayedDate = null; // Reset date tracking for new conversation
 
@@ -2102,6 +2305,18 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Error fetching current user:', error);
         });
+
+    // Save read status when window is about to close or navigate away
+    window.addEventListener('beforeunload', () => {
+        savePendingReadStatus();
+    });
+    
+    // Also save periodically (every 30 seconds) if there's a pending save
+    setInterval(() => {
+        if (pendingReadStatusSave && currentConversationId && currentReadMessageId) {
+            savePendingReadStatus();
+        }
+    }, 30000);
 
     // Helper function to get current user ID
     function getCurrentUserId() {
