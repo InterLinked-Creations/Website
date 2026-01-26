@@ -1477,8 +1477,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!currentUserId || !messageId) return;
         
         // Don't allow read receipt to go backwards
-        if (currentReadMessageId && messageId <= currentReadMessageId) {
-            return;
+        if (currentReadMessageId) {
+            const numericMessageId = parseInt(messageId, 10);
+            const numericCurrentReadMessageId = parseInt(currentReadMessageId, 10);
+            
+            if (!Number.isNaN(numericMessageId) &&
+                !Number.isNaN(numericCurrentReadMessageId) &&
+                numericMessageId <= numericCurrentReadMessageId) {
+                return;
+            }
         }
         
         const oldReadMessageId = currentReadMessageId;
