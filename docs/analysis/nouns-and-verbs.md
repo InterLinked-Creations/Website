@@ -25,4 +25,4 @@
 - login/signup page
 - profile page
 - library
-- websokets
+- websockets

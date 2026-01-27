@@ -1,4 +1,4 @@
-class notification {
+class Notification {
     message
     isRead
     timeSent
