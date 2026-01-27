@@ -34,4 +34,14 @@
 - User
 
 
-## ???
+## Notification (Inbox)
+
+**Responsibilities**
+- Contains information about what's in the message
+- Tracks who sent it and when
+- Holds possible rewards that can be obtained
+
+**Collaborators**
+- User
+- Conversation
+- Friend
