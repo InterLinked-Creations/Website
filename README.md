@@ -58,13 +58,30 @@ After the first run, you can run `node server.js` on it's own to start the serve
 - [LogProgrammer92](https://github.com/logprogrammer92)
 
 ## File Structure
+### What is MainFrame?
+MainFrame is an embed element that shows the content of `app/`. It was created to maintain WebSocket and Gamepad connections when opening a new page. Usually, every time we leave the current page and load a new one, those connections are lost, so this page is to preserve those connections as the MainFrame switches to a new page inside the app. ***Plus**, The way I styled the MainFrame object is to make CSS in the app much easier when the window or screen changes size.*
+
+
+### The Interlinked folder
+The `Interlinked` folder contains all the files that the server will send to users. The server cannot send any file outside of this folder.
+
+Inside you'll see there are three files:
+
+- index.html: The main page that holds the MainFrame and other gaming content.
+- main.css: The file that styles all the content on Index.html
+- main.js: The script that runs the MainFrameAPI
+
+### The App Folder
+The `app` folder is content that the MainFrame shows. With it, it can run special methods using the MainFrame API to make notifications, Gamepad Controller and Websocket connections, use Gamepad Mice to control the app through a single controller, etc.
+
+### The File Structure Graph
 ```
 server.js (the script that runs the local server)
 Interlinked/ (The files that are used in the website)
-   | index.html (The "MainFrame" page)
-   | main.css (The CSS that holds the MainFrame together)
-   | main.js (The MainFrame API)
-   | app/ (The app folder that contains "MainFrame" content)
+    | index.html (The "MainFrame" page)
+    | main.css (The CSS that holds the MainFrame together)
+    | main.js (The MainFrame API)
+    | app/ (The app folder that contains "MainFrame" content)
 ```
 
 ## Copyrights
