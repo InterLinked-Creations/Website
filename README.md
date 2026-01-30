@@ -39,15 +39,35 @@ cd Website
 ```
 
 After that, run these commands to run the project.
-```
-npm rebuild
+```bash
 npm install
-node DatabaseSetup.js
-node server.js
+npm run db:setup
+npm start
 ```
 If everything worked, you can open [localhost:3000](http://localhost:3000/) on your browser.
 
-After the first run, you can run `node server.js` on it's own to start the server again anytime afterwards.
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm start` | Start the production server |
+| `npm run dev` | Start server with auto-reload (Node.js 18+) |
+| `npm run db:setup` | Create/reset the database |
+| `npm run db:update` | Migrate data (backup → rebuild → restore) |
+| `npm run db:query` | Run ad-hoc database queries |
+
+### Environment Variables
+
+Copy `.env.example` to `.env` and customize as needed:
+
+```bash
+PORT=3000
+NODE_ENV=development
+SESSION_SECRET=your-secret-key
+DB_PATH=database/interlinked.db
+```
+
+After the first run, you can run `npm start` to start the server again anytime afterwards.
 
 ## Troubleshooting tips
 
@@ -76,12 +96,36 @@ The `app` folder is content that the MainFrame shows. With it, it can run specia
 
 ### The File Structure Graph
 ```
-server.js (the script that runs the local server)
-Interlinked/ (The files that are used in the website)
-    | index.html (The "MainFrame" page)
-    | main.css (The CSS that holds the MainFrame together)
-    | main.js (The MainFrame API)
-    | app/ (The app folder that contains "MainFrame" content)
+├── src/                         # Source code (modular structure)
+│   ├── server.js               # Entry point: HTTP/WebSocket server
+│   ├── app.js                  # Express app config (middleware, routes)
+│   ├── config/                 # Configuration
+│   │   └── index.js            # Environment variables
+│   ├── db/                     # Database layer
+│   │   ├── connection.js       # SQLite connection singleton
+│   │   └── setup.js            # Table definitions
+│   ├── middleware/             # Express middleware
+│   │   └── auth.js             # Authentication middleware
+│   ├── modules/                # Feature modules
+│   │   ├── auth/               # Authentication (register, login, session)
+│   │   ├── users/              # User management (profile, avatars)
+│   │   ├── friends/            # Friend system (requests, list)
+│   │   └── conversations/      # Chat/messaging
+│   └── websocket/              # WebSocket handlers
+│       └── index.js            # Real-time status, chat, typing
+├── scripts/                    # CLI scripts
+│   ├── dbSetup.js              # Create fresh database
+│   ├── dbUpdate.js             # Migrate database
+│   └── dbQuery.js              # Run queries
+├── Interlinked/                # Frontend static files
+│   ├── index.html              # MainFrame page
+│   ├── main.css                # MainFrame styles
+│   ├── main.js                 # MainFrame API
+│   └── app/                    # App content
+├── database/                   # SQLite data (gitignored)
+├── .env.example                # Environment template
+├── package.json                # Dependencies and scripts
+└── README.md                   # This file
 ```
 
 ## Copyrights
