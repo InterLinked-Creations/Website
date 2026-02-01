@@ -2705,7 +2705,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (totalParticipants >= 3) {
             // Show group name and avatar for group conversations
             if (summaryNameDiv) {
-                summaryNameDiv.classList.remove('hidden');
+                summaryNameDiv.hidden = false;
                 const groupName = document.getElementById('group-name-input').value || 'Untitled Group';
                 if (groupNameElement) {
                     groupNameElement.textContent = groupName;
@@ -2713,15 +2713,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             
             if (summaryAvatarDiv) {
-                summaryAvatarDiv.classList.remove('hidden');
+                summaryAvatarDiv.hidden = false;
                 if (groupAvatarElement && selectedAvatar) {
                     groupAvatarElement.src = selectedAvatar;
                 }
             }
         } else {
             // Hide group name and avatar for direct conversations
-            if (summaryNameDiv) summaryNameDiv.classList.add('hidden');
-            if (summaryAvatarDiv) summaryAvatarDiv.classList.add('hidden');
+            if (summaryNameDiv) summaryNameDiv.hidden = true;
+            if (summaryAvatarDiv) summaryAvatarDiv.hidden = true;
         }
     }
 
