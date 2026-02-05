@@ -2756,7 +2756,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // TODO: Could select the existing conversation in the list
                     loadConversations();
                 } else {
-                    parent.window.mainFrame.toast.warn(`Failed to create conversation: ${data.error}`);
+                    parent.window.mainFrame.toast.error(`Failed to create conversation: ${data.error}`);
                 }
             }
         })
