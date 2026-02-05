@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (username) {
                 checkFriendRequestStatus(username);
             } else {
-                alert('Please enter a username');
+                parent.window.mainFrame.toast.warn('Please enter a username to send a friend request.');
             }
         });
     }
@@ -359,27 +359,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Show the overlay
                 friendRequestOverlay.classList.remove('hidden');
             } else if (data.status === 'already_friends') {
-                alert(`You are already friends with ${data.targetUser.username}.`);
+                parent.window.mainFrame.toast.normal(`You are already friends with ${data.targetUser.username}.`);
             } else if (data.status === 'invite_already_sent') {
-                alert(`You have already sent a friend request to ${data.targetUser.username}.`);
+                parent.window.mainFrame.toast.normal(`You have already sent a friend request to ${data.targetUser.username}.`);
             } else if (data.status === 'invite_already_received') {
-                alert(`${data.targetUser.username} has already sent you a friend request. Check your invites!`);
+                parent.window.mainFrame.toast.info(`${data.targetUser.username} has already sent you a friend request. Check your invites!`);
             } else if (data.status === 'not_found') {
-                alert('User not found. Please check the username and try again.');
+                parent.window.mainFrame.toast.warn('User not found. Please check the username and try again.');
             } else {
-                alert('Unable to process your request at this time.');
+                parent.window.mainFrame.toast.error('Unable to process your request at this time.');
             }
         })
         .catch(error => {
             console.error('Error checking friend request status:', error);
-            alert('Failed to check friend request status. Please try again later.');
+            parent.window.mainFrame.toast.error('Failed to check friend request status. Please try again later.');
         });
     }
     
     // Function to send friend request
     function sendFriendRequest() {
         if (!pendingFriendRequest.targetUserId) {
-            alert('Invalid request. Please try again.');
+            parent.window.mainFrame.toast.error('Invalid request. Please try again.');
             return;
         }
         
@@ -393,10 +393,10 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert(`Friend request sent to ${pendingFriendRequest.targetUsername} successfully!`);
+                parent.window.mainFrame.toast.success(`Friend request sent to ${pendingFriendRequest.targetUsername} successfully!`);
                 friendInviteInput.value = '';
             } else {
-                alert(`Failed to send friend request: ${data.error}`);
+                parent.window.mainFrame.toast.error(`Failed to send friend request: ${data.error}`);
             }
             // Close the overlay
             friendRequestOverlay.classList.add('hidden');
@@ -407,7 +407,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error sending friend request:', error);
-            alert('Failed to send friend request. Please try again later.');
+            parent.window.mainFrame.toast.error('Failed to send friend request. Please try again later.');
             friendRequestOverlay.classList.add('hidden');
         });
     }
@@ -1157,7 +1157,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Refresh friends list if it's visible
                 refreshFriendsList();
             } else {
-                alert(`Failed to accept friend request: ${data.error}`);
+                parent.window.mainFrame.toast.error(`Failed to accept friend request: ${data.error}`);
                 // Re-enable buttons if there was an error
                 if (inviteCard) {
                     const buttons = inviteCard.querySelectorAll('.invite-btn');
@@ -1170,7 +1170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error accepting friend request:', error);
-            alert('An error occurred while accepting the friend request.');
+            parent.window.mainFrame.toast.error('An error occurred while accepting the friend request.');
             // Re-enable buttons if there was an error
             if (inviteCard) {
                 const buttons = inviteCard.querySelectorAll('.invite-btn');
@@ -1226,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update the friend request count
                 updateFriendRequestCount();
             } else {
-                alert(`Failed to decline friend request: ${data.error}`);
+                parent.window.mainFrame.toast.error(`Failed to decline friend request: ${data.error}`);
                 // Re-enable buttons if there was an error
                 if (inviteCard) {
                     const buttons = inviteCard.querySelectorAll('.invite-btn');
@@ -1239,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => {
             console.error('Error declining friend request:', error);
-            alert('An error occurred while declining the friend request.');
+            parent.window.mainFrame.toast.error('An error occurred while declining the friend request.');
             // Re-enable buttons if there was an error
             if (inviteCard) {
                 const buttons = inviteCard.querySelectorAll('.invite-btn');
@@ -1319,12 +1319,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Show the overlay
                     friendInvitesOverlay.classList.remove('hidden');
                 } else {
-                    alert('Failed to load friend requests. Please try again later.');
+                    parent.window.mainFrame.toast.error('Failed to load friend requests. Please try again later.');
                 }
             })
             .catch(error => {
                 console.error('Error loading friend requests:', error);
-                alert('An error occurred while loading friend requests.');
+                parent.window.mainFrame.toast.error('An error occurred while loading friend requests.');
             });
     }
 
@@ -2552,20 +2552,20 @@ document.addEventListener('DOMContentLoaded', () => {
         switch (currentStep) {
             case 0: // Friends selection
                 if (selectedFriends.length === 0) {
-                    alert('Please select at least one friend to start a conversation.');
+                    parent.window.mainFrame.toast.warn('Please select at least one friend to start a conversation.');
                     return false;
                 }
                 return true;
             case 1: // Group name (only for 3+ people)
                 const groupNameInput = document.getElementById('group-name-input');
                 if (selectedFriends.length + 1 >= 3 && (!groupNameInput.value || groupNameInput.value.trim().length === 0)) {
-                    alert('Please enter a group name.');
+                    parent.window.mainFrame.toast.warn('Please enter a group name.');
                     return false;
                 }
                 return true;
             case 2: // Group avatar (only for 3+ people)
                 if (selectedFriends.length + 1 >= 3 && !selectedAvatar) {
-                    alert('Please select a group avatar.');
+                    parent.window.mainFrame.toast.warn('Please select a group avatar.');
                     return false;
                 }
                 return true;
@@ -2745,24 +2745,24 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Conversation created successfully!');
+                parent.window.mainFrame.toast.success('Conversation created successfully!');
                 closeNewConversationDialog();
                 // Refresh conversations list
                 loadConversations();
             } else {
                 if (data.existingConversationId) {
-                    alert('A conversation with these members already exists. You will be redirected to the existing conversation.');
+                    parent.window.mainFrame.toast.info('A conversation with these members already exists! :)');
                     closeNewConversationDialog();
                     // TODO: Could select the existing conversation in the list
                     loadConversations();
                 } else {
-                    alert(`Failed to create conversation: ${data.error}`);
+                    parent.window.mainFrame.toast.warn(`Failed to create conversation: ${data.error}`);
                 }
             }
         })
         .catch(error => {
             console.error('Error creating conversation:', error);
-            alert('Failed to create conversation. Please try again.');
+            parent.window.mainFrame.toast.error('Failed to create conversation. Please try again.');
         });
     }
 
