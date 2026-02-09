@@ -85,7 +85,7 @@
         {"name": "FOREIGN KEY(ConversationID)", "type": "REFERENCES Conversations(ConversationID)"},
         {"name": "FOREIGN KEY(UserID)", "type": "REFERENCES Users(UserID)"},
         {"name": "FOREIGN KEY(LastReadMessageID)", "type": "REFERENCES ConversationData(MessageID)"},
-        {"name": "UNIQUE(ConversationID,UserID)", "type": "CONSTRAINT"}
+        {"name": "", "type": "UNIQUE(ConversationID,UserID)"}
       ]
     }
   ]
