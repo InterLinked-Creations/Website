@@ -8,7 +8,7 @@
 
 **Collaborators**
 - Users
-- Administrators
+- Friends
 - Currency
 
 ## User
@@ -16,21 +16,20 @@
 **Responsibilities**
 - Stores personal information about a person
 - Stores how much currency a user has available
-- Identifies administrators
 - Holds the userId
 - Holds the avatar
 
 **Collaborators**
-- Administrator
-- Currency
+- Friends
 
-## Currency
+## Friends
 
 **Responsibilities**
-- Stores the amount
+- Links users together
+- Holds a friendship ID
 
 **Collaborators**
-- None
+- Users
 
 ## Conversations
 
@@ -42,4 +41,4 @@
 
 **Collaborators**
 - Users
-- Administrators
+- Friends
