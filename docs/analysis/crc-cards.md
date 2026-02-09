@@ -2,20 +2,20 @@
 
 **Responsibilities**
 - Holds and receives messages sent by participants
-- Keeps together replied messages and attachments
-- Informs users on which message the user last read.
+- Maintains relationships between messages, their replies, and attachments
+- Coordinates with read status tracking to determine which message each user last read.
 
 **Collaborators**
 - User
 - Message
-- InterWebSocket
+- WebSocket
 
 
-## InterWebSocket
+## WebSocket
 
 **Responsibilities**
 - Updates users in real time when a message, letter, invite, etc. shows up.
-- Updates player info in Online Multiplayer Games.
+- Handles real-time chat events such as typing indicators and read status updates.
 
 **Collaborators**
 - User
@@ -39,9 +39,22 @@
 **Responsibilities**
 - Contains information about what's in the message
 - Tracks who sent it and when
-- Holds possible rewards that can be obtained
+- Holds any associated package content or additional data
 
 **Collaborators**
 - User
 - Conversation
 - Friend
+
+
+## Friend
+
+**Responsibilities**
+- Represents a friendship relationship between users
+- Stores friendship status and metadata (for example, when the friendship was created)
+- Supports friend-related actions such as sending and responding to friend requests
+
+**Collaborators**
+- User
+- Notification (Inbox)
+- Conversation
