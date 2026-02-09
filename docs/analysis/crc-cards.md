@@ -17,6 +17,8 @@
 - Stores personal information about a person
 - Stores how much currency a user has available
 - Identifies administrators
+- Holds the userId
+- Holds the avatar
 
 **Collaborators**
 - Administrator
