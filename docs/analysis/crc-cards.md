@@ -29,3 +29,15 @@
 
 **Collaborators**
 - None
+
+## Conversations
+
+**Responsibilities**
+- Allow multiple users to communicate with each other simultaneously.
+- Contain 2 or more users.
+- Has a title.
+- Has a logo.
+
+**Collaborators**
+- Users
+- Administrators
