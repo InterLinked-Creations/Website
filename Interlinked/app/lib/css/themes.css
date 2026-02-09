@@ -6,19 +6,19 @@
 
 /* Dark Theme */
 body.dark {
-    background: #2b2d31;
+    background: #17191e;
     color: #f5f7ff;
 }
 
 body.dark #sidebar {
-    background: #1d1f24;
-    border-right: #0f1115 0.1vw solid;
+    background: #11203f;
+    border-right: #000000 0.1vw solid;
 }
 
 body.dark .sideNav {
-    background: #24262b;
-    border-bottom: #0f1115 0.1vw solid;
-    border-top: #0f1115 0.1vw solid;
+    background: #301800;
+    border-bottom: #000818 0.1vw solid;
+    border-top: #301800 0.1vw solid;
 }
 
 body.dark .sideNav:hover {
@@ -30,15 +30,25 @@ body.dark .bottom-content {
 }
 
 body.dark .tooltip {
-    background: #121317;
+    background: #000000;
     color: #f5f7ff;
-    border: #2f6dff 0.22vw solid;
 }
 
-body.dark .game-ribbon,
+body.dark .game-ribbon {
+    background: rgba(0, 0, 0, 0.5);
+}
 body.dark .settings-group,
 body.dark .friends-container {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(125, 125, 125, 0.43);
+}
+
+body.dark .game-card {
+    background: #1f2126;
+}
+
+body.dark .game-card-title {
+    background: rgb(95, 95, 95);
+    color: #f5f7ff;
 }
 
 body.dark .category-tab {
@@ -76,89 +86,4 @@ body.dark .setting-item select {
     background-color: #2a2c32;
     color: #f5f7ff;
     border: 0.1vw solid #3a3d45;
-}
-
-/* Light Theme */
-body.light {
-    background: #f5f6f8;
-    color: #1c1f26;
-}
-
-body.light #sidebar {
-    background: #ffffff;
-    border-right: #d1d5db 0.1vw solid;
-}
-
-body.light .sideNav {
-    background: #f3f4f6;
-    border-bottom: #d1d5db 0.1vw solid;
-    border-top: #d1d5db 0.1vw solid;
-}
-
-body.light .sideNav:hover {
-    background: #e5e7eb;
-}
-
-body.light .bottom-content {
-    background: #eef1f5;
-}
-
-body.light .tooltip {
-    background: #ffffff;
-    color: #1c1f26;
-    border: #3b82f6 0.22vw solid;
-    box-shadow: 0 0.2vw 0.5vw rgba(0, 0, 0, 0.12);
-}
-
-body.light .ribbon-label,
-body.light .page-header h1,
-body.light .search-results,
-body.light .library-content,
-body.light .settings-group h2,
-body.light .setting-item {
-    color: #1c1f26;
-}
-
-body.light .game-ribbon,
-body.light .settings-group,
-body.light .friends-container {
-    background: #ffffff;
-    border: 0.1vw solid #e5e7eb;
-}
-
-body.light .category-tab {
-    background-color: #eef0f3;
-    color: #1c1f26;
-}
-
-body.light .category-tab.active {
-    background-color: var(--accent-color);
-    color: #ffffff;
-}
-
-body.light .search-container input {
-    background: #ffffff;
-    color: #1c1f26;
-    border: 0.1vw solid #d1d5db;
-}
-
-body.light .search-container button {
-    background-color: var(--accent-color);
-}
-
-body.light .friend-invite-input {
-    background-color: #ffffff;
-    color: #1c1f26;
-    border: 0.1vw solid #d1d5db;
-}
-
-body.light .invite-list-btn {
-    background-color: #ffffff;
-    border: 0.1vw solid #d1d5db;
-}
-
-body.light .setting-item select {
-    background-color: #ffffff;
-    color: #1c1f26;
-    border: 0.1vw solid #d1d5db;
 }
