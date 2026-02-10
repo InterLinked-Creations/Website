@@ -34,4 +34,5 @@ dist/
 build/
 
 # downloaded game builds
-Interlinked/games/
+Interlinked/games/*
+!Interlinked/games/.gitkeep
