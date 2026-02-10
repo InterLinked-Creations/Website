@@ -144,6 +144,10 @@ async function main() {
 
         const status = getGameStatus(localManifest, remoteManifest);
         console.log("Status:", status);
+        
+        const action = getRequiredAction(status);
+        console.log("Action:", action);
+
     }
 
 
