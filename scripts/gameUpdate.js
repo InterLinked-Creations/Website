@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
-const fetch = require("node-fetch");
+const simpleGit = require("simple-git");
+
 
 // Path to game.json
 const gameListPath = path.join(__dirname, "..", "Interlinked", "game.json");
@@ -112,6 +113,46 @@ function getRequiredAction(status) {
             return "none";
         default:
             return "error";
+    }
+}
+
+async function cloneGameRepo(game) {
+    const git = simpleGit();
+    const folder = getGameFolder(game);
+
+    console.log(`→ Cloning ${game.repo} into ${folder}`);
+    await git.clone(game.repo, folder);
+}
+
+async function pullGameRepo(game) {
+    const folder = getGameFolder(game);
+    const git = simpleGit(folder);
+
+    console.log(`→ Pulling latest changes in ${folder}`);
+    await git.pull();
+}
+
+async function performAction(game, action) {
+    switch (action) {
+        case "install":
+            console.log("→ Installing game...");
+            await cloneGameRepo(game);
+            console.log("✓ Install complete");
+            break;
+
+        case "update":
+            console.log("→ Updating game...");
+            await pullGameRepo(game);
+            console.log("✓ Update complete");
+            break;
+
+        case "none":
+            console.log("→ No action needed");
+            break;
+
+        default:
+            console.log("→ Cannot perform action due to error state");
+            break;
     }
 }
 
