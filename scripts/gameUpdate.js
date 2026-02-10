@@ -22,7 +22,6 @@ function loadGameList() {
     return data.games;
 }
 
-// For now, just test loading
 const games = loadGameList();
 
 const gamesDir = path.join(__dirname, "..", "Interlinked", "games");
@@ -53,8 +52,6 @@ function loadLocalManifest(game) {
     const raw = fs.readFileSync(manifestPath, "utf8");
     return JSON.parse(raw);
 }
-
-console.log("\nStep 2 complete — folder + manifest detection ready.");
 
 function getRemoteManifestUrl(game) {
     const repoUrl = game.repo;
@@ -120,7 +117,7 @@ async function cloneGameRepo(game) {
     const git = simpleGit();
     const folder = getGameFolder(game);
 
-    console.log(`→ Cloning ${game.repo} into ${folder}`);
+    console.log(`Cloning ${game.repo} into ${folder}`);
     await git.clone(game.repo, folder);
 }
 
@@ -128,30 +125,30 @@ async function pullGameRepo(game) {
     const folder = getGameFolder(game);
     const git = simpleGit(folder);
 
-    console.log(`→ Pulling latest changes in ${folder}`);
+    console.log(`Pulling latest changes in ${folder}`);
     await git.pull();
 }
 
 async function performAction(game, action) {
     switch (action) {
         case "install":
-            console.log("→ Installing game...");
+            console.log("Installing game...");
             await cloneGameRepo(game);
-            console.log("✓ Install complete");
+            console.log("Install complete");
             break;
 
         case "update":
             console.log("→ Updating game...");
             await pullGameRepo(game);
-            console.log("✓ Update complete");
+            console.log("Update complete");
             break;
 
         case "none":
-            console.log("→ No action needed");
+            console.log("No action needed");
             break;
 
         default:
-            console.log("→ Cannot perform action due to error state");
+            console.log("Cannot perform action due to error state");
             break;
     }
 }
@@ -163,7 +160,6 @@ async function main() {
 
     if (games.length === 0) {
         console.log("No games found in game.json");
-        console.log("\nStep 6 complete — git actions executed.");
         return;
     }
 
