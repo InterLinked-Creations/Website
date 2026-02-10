@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const fetch = require("node-fetch");
 
 // Path to game.json
 const gameListPath = path.join(__dirname, "..", "Interlinked", "game.json");
@@ -52,6 +53,29 @@ function loadLocalManifest(game) {
     return JSON.parse(raw);
 }
 
+console.log("\nStep 2 complete — folder + manifest detection ready.");
+
+function getRemoteManifestUrl(game) {
+    const repoUrl = game.repo;
+    const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)(?:\.git)?/);
+    if (!match) {
+        throw new Error(`Invalid GitHub repo URL for game "${game.name}": ${repoUrl}`);
+    }
+    const owner = match[1];
+    const repoName = match[2];
+    return `https://raw.githubusercontent.com/${owner}/${repoName}/main/manifest.json`;
+}
+
+async function fetchRemoteManifest(game) {
+    const url = getRemoteManifestUrl(game);
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch remote manifest for "${game.name}" from ${url} (status ${response.status})`);
+    }
+    const text = await response.text();
+    return JSON.parse(text);
+}
+
 async function main() {
     console.log("=== Game Update Status Check ===");
 
@@ -84,29 +108,3 @@ main().catch(err => {
     console.error("Unexpected error in gameUpdate script:", err);
     process.exit(1);
 });
-
-
-console.log("\nStep 2 complete — folder + manifest detection ready.");
-
-function getRemoteManifestUrl(game) {
-    const repoUrl = game.repo;
-    const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)(?:\.git)?/);
-    if (!match) {
-        throw new Error(`Invalid GitHub repo URL for game "${game.name}": ${repoUrl}`);
-    }
-    const owner = match[1];
-    const repoName = match[2];
-    return `https://raw.githubusercontent.com/${owner}/${repoName}/main/manifest.json`;
-}
-
-async function fetchRemoteManifest(game) {
-    const url = getRemoteManifestUrl(game);
-    const response = await fetch(url);
-    if (!response.ok) {
-        throw new Error(`Failed to fetch remote manifest for "${game.name}" from ${url} (status ${response.status})`);
-    }
-    const text = await response.text();
-    return JSON.parse(text);
-}
-
-
