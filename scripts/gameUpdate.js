@@ -76,6 +76,46 @@ async function fetchRemoteManifest(game) {
     return JSON.parse(text);
 }
 
+function getGameStatus(localManifest, remoteManifest) {
+    if (!localManifest) {
+        if (!remoteManifest) {
+            return "not-installed";
+        }
+        if (!remoteManifest.version) {
+            return "remote-no-version";
+        }
+        return "not-installed";
+    }
+
+    if (!localManifest.version) {
+        return "installed-no-version";
+    }
+
+    if (!remoteManifest || !remoteManifest.version) {
+        return "remote-no-version";
+    }
+
+    if (localManifest.version === remoteManifest.version) {
+        return "up-to-date";
+    }
+
+    return "update-available";
+}
+
+function getRequiredAction(status) {
+    switch (status) {
+        case "not-installed":
+            return "install";
+        case "update-available":
+            return "update";
+        case "up-to-date":
+            return "none";
+        default:
+            return "error";
+    }
+}
+
+
 async function main() {
     console.log("=== Game Update Status Check ===");
 
@@ -93,13 +133,19 @@ async function main() {
         console.log(`Folder exists: ${folderExists}`);
         console.log("Local manifest:", localManifest || "None found");
 
+        let remoteManifest = null;
+
         try {
-            const remoteManifest = await fetchRemoteManifest(game);
+            remoteManifest = await fetchRemoteManifest(game);
             console.log("Remote manifest:", remoteManifest);
         } catch (err) {
             console.error(`Failed to load remote manifest for "${game.name}":`, err.message);
         }
+
+        const status = getGameStatus(localManifest, remoteManifest);
+        console.log("Status:", status);
     }
+
 
     console.log("\nStep 3 complete — remote manifest fetching ready.");
 }
