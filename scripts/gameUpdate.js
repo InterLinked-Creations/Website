@@ -52,20 +52,61 @@ function loadLocalManifest(game) {
     return JSON.parse(raw);
 }
 
-console.log("=== Game Update Status Check ===");
+async function main() {
+    console.log("=== Game Update Status Check ===");
 
-for (const game of games) {
-    const folderExists = gameFolderExists(game);
-    const manifest = loadLocalManifest(game);
-
-    console.log(`\nGame: ${game.name}`);
-    console.log(`Folder exists: ${folderExists}`);
-
-    if (folderExists) {
-        console.log("Local manifest:", manifest || "None found");
-    } else {
-        console.log("Local manifest: (no folder)");
+    if (games.length === 0) {
+        console.log("No games found in game.json");
+        console.log("\nStep 3 complete — remote manifest fetching logic ready.");
+        return;
     }
+
+    for (const game of games) {
+        const folderExists = gameFolderExists(game);
+        const localManifest = loadLocalManifest(game);
+
+        console.log(`\nGame: ${game.name}`);
+        console.log(`Folder exists: ${folderExists}`);
+        console.log("Local manifest:", localManifest || "None found");
+
+        try {
+            const remoteManifest = await fetchRemoteManifest(game);
+            console.log("Remote manifest:", remoteManifest);
+        } catch (err) {
+            console.error(`Failed to load remote manifest for "${game.name}":`, err.message);
+        }
+    }
+
+    console.log("\nStep 3 complete — remote manifest fetching ready.");
 }
 
+main().catch(err => {
+    console.error("Unexpected error in gameUpdate script:", err);
+    process.exit(1);
+});
+
+
 console.log("\nStep 2 complete — folder + manifest detection ready.");
+
+function getRemoteManifestUrl(game) {
+    const repoUrl = game.repo;
+    const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)(?:\.git)?/);
+    if (!match) {
+        throw new Error(`Invalid GitHub repo URL for game "${game.name}": ${repoUrl}`);
+    }
+    const owner = match[1];
+    const repoName = match[2];
+    return `https://raw.githubusercontent.com/${owner}/${repoName}/main/manifest.json`;
+}
+
+async function fetchRemoteManifest(game) {
+    const url = getRemoteManifestUrl(game);
+    const response = await fetch(url);
+    if (!response.ok) {
+        throw new Error(`Failed to fetch remote manifest for "${game.name}" from ${url} (status ${response.status})`);
+    }
+    const text = await response.text();
+    return JSON.parse(text);
+}
+
+
