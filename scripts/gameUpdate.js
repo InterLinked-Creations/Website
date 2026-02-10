@@ -159,23 +159,30 @@ async function performAction(game, action) {
 
 async function main() {
     console.log("=== Game Update Status Check ===");
+    console.log("Loading game list...");
 
     if (games.length === 0) {
         console.log("No games found in game.json");
-        console.log("\nStep 3 complete — remote manifest fetching logic ready.");
+        console.log("\nStep 6 complete — git actions executed.");
         return;
     }
 
+    console.log("Ensuring games directory exists...");
+    ensureGamesDir();
+
     for (const game of games) {
+        console.log("\n----------------------------------------");
+        console.log(`Starting update check for: ${game.name}`);
+
         const folderExists = gameFolderExists(game);
         const localManifest = loadLocalManifest(game);
 
-        console.log(`\nGame: ${game.name}`);
         console.log(`Folder exists: ${folderExists}`);
-        console.log("Local manifest:", localManifest || "None found");
+        console.log("Local manifest:", localManifest || "None");
 
         let remoteManifest = null;
 
+        console.log("Fetching remote manifest...");
         try {
             remoteManifest = await fetchRemoteManifest(game);
             console.log("Remote manifest:", remoteManifest);
@@ -183,17 +190,23 @@ async function main() {
             console.error(`Failed to load remote manifest for "${game.name}":`, err.message);
         }
 
+        console.log("Comparing versions...");
         const status = getGameStatus(localManifest, remoteManifest);
         console.log("Status:", status);
-        
+
+        console.log("Determining required action...");
         const action = getRequiredAction(status);
         console.log("Action:", action);
 
+        console.log("Performing action...");
+        await performAction(game, action);
+
+        console.log(`Finished processing ${game.name}`);
     }
 
-
-    console.log("\nStep 3 complete — remote manifest fetching ready.");
+    console.log("\n=== Game update process complete ===");
 }
+
 
 main().catch(err => {
     console.error("Unexpected error in gameUpdate script:", err);
