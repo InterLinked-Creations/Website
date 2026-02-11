@@ -1,0 +1,92 @@
+{
+  "tables": [
+    {
+      "name": "Users",
+      "columns": [
+        {"name": "UserID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "UserName", "type": "VARCHAR(50) NOT NULL"},
+        {"name": "Password", "type": "VARCHAR(80) NOT NULL"},
+        {"name": "Email", "type": "VARCHAR(100) NOT NULL"},
+        {"name": "Avatar", "type": "VARCHAR(100) DEFAULT 'Colors/FillBlack'"},
+        {"name": "Stars", "type": "BIGINT NOT NULL DEFAULT 0"},
+        {"name": "Silver", "type": "BIGINT NOT NULL DEFAULT 0"},
+        {"name": "Gold", "type": "BIGINT NOT NULL DEFAULT 0"},
+        {"name": "Gems", "type": "BIGINT NOT NULL DEFAULT 0"},
+        {"name": "Points", "type": "BIGINT NOT NULL DEFAULT 0"},
+        {"name": "Level", "type": "BIGINT NOT NULL DEFAULT 1"}
+      ]
+    },
+    {
+      "name": "Invites",
+      "columns": [
+        {"name": "InviteID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "FromUser", "type": "INTEGER NOT NULL"},
+        {"name": "ToUser", "type": "INTEGER NOT NULL"},
+        {"name": "FOREIGN KEY(FromUser)", "type": "REFERENCES Users(UserID)"},
+        {"name": "FOREIGN KEY(ToUser)", "type": "REFERENCES Users(UserID)"}
+      ]
+    },
+    {
+      "name": "Mail",
+      "columns": [
+        {"name": "MailID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "SenderID", "type": "DECIMAL NOT NULL"},
+        {"name": "RecieverID", "type": "INTEGER NOT NULL"},
+        {"name": "Title", "type": "VARCHAR(150) NOT NULL"},
+        {"name": "Message", "type": "VARCHAR(10000) NOT NULL"},
+        {"name": "PackageContent", "type": "JSON"},
+        {"name": "FOREIGN KEY(RecieverID)", "type": "REFERENCES Users(UserID)"}
+      ]
+    },
+    {
+      "name": "Friends",
+      "columns": [
+        {"name": "FriendshipID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "User1", "type": "INTEGER NOT NULL"},
+        {"name": "User2", "type": "INTEGER NOT NULL"},
+        {"name": "FOREIGN KEY(User1)", "type": "REFERENCES Users(UserID)"},
+        {"name": "FOREIGN KEY(User2)", "type": "REFERENCES Users(UserID)"}
+      ]
+    },
+    {
+      "name": "Conversations",
+      "columns": [
+        {"name": "ConversationID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "Members", "type": "TEXT NOT NULL"},
+        {"name": "ConversationTitle", "type": "VARCHAR(100) DEFAULT NULL"},
+        {"name": "ConversationLogo", "type": "VARCHAR(255) DEFAULT NULL"}
+      ]
+    },
+    {
+      "name": "ConversationData",
+      "columns": [
+        {"name": "MessageID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "ConversationID", "type": "INTEGER NOT NULL"},
+        {"name": "SenderID", "type": "INTEGER NOT NULL"},
+        {"name": "Message", "type": "TEXT NOT NULL"},
+        {"name": "Attachment", "type": "VARCHAR(1000) DEFAULT NULL"},
+        {"name": "Reactions", "type": "JSON DEFAULT NULL"},
+        {"name": "Reply", "type": "INTEGER DEFAULT NULL"},
+        {"name": "TimeStamp", "type": "DATETIME DEFAULT CURRENT_TIMESTAMP"},
+        {"name": "DeletedAt", "type": "DATETIME DEFAULT NULL"},
+        {"name": "FOREIGN KEY(ConversationID)", "type": "REFERENCES Conversations(ConversationID)"},
+        {"name": "FOREIGN KEY(SenderID)", "type": "REFERENCES Users(UserID)"},
+        {"name": "FOREIGN KEY(Reply)", "type": "REFERENCES ConversationData(MessageID)"}
+      ]
+    },
+    {
+      "name": "ConversationReadStatus",
+      "columns": [
+        {"name": "ReadStatusID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
+        {"name": "ConversationID", "type": "INTEGER NOT NULL"},
+        {"name": "UserID", "type": "INTEGER NOT NULL"},
+        {"name": "LastReadMessageID", "type": "INTEGER"},
+        {"name": "LastReadTimeStamp", "type": "DATETIME"},
+        {"name": "FOREIGN KEY(ConversationID)", "type": "REFERENCES Conversations(ConversationID)"},
+        {"name": "FOREIGN KEY(UserID)", "type": "REFERENCES Users(UserID)"},
+        {"name": "FOREIGN KEY(LastReadMessageID)", "type": "REFERENCES ConversationData(MessageID)"},
+        {"name": "", "type": "UNIQUE(ConversationID,UserID)"}
+      ]
+    }
+  ]
+}

@@ -31,97 +31,16 @@ if (fs.existsSync(DB_PATH)) {
 
 // Create new database connection
 const db = new Database(DB_PATH, { verbose: console.log });
-
-// Table definitions
-const tables = {
-    Users: `
-        CREATE TABLE Users (
-            UserID INTEGER PRIMARY KEY AUTOINCREMENT,
-            UserName VARCHAR(50) NOT NULL,
-            Password VARCHAR(80) NOT NULL,
-            Email VARCHAR(100) NOT NULL,
-            Avatar VARCHAR(100) DEFAULT 'Colors/FillBlack',
-            Stars BIGINT NOT NULL DEFAULT 0,
-            Silver BIGINT NOT NULL DEFAULT 0,
-            Gold BIGINT NOT NULL DEFAULT 0,
-            Gems BIGINT NOT NULL DEFAULT 0,
-            Points BIGINT NOT NULL DEFAULT 0,
-            Level BIGINT NOT NULL DEFAULT 1
-        )
-    `,
-    Invites: `
-        CREATE TABLE Invites (
-            InviteID INTEGER PRIMARY KEY AUTOINCREMENT,
-            FromUser INTEGER NOT NULL,
-            ToUser INTEGER NOT NULL,
-            FOREIGN KEY (FromUser) REFERENCES Users(UserID),
-            FOREIGN KEY (ToUser) REFERENCES Users(UserID)
-        )
-    `,
-    Mail: `
-        CREATE TABLE Mail (
-            MailID INTEGER PRIMARY KEY AUTOINCREMENT,
-            SenderID DECIMAL NOT NULL,
-            RecieverID INTEGER NOT NULL,
-            Title VARCHAR(150) NOT NULL,
-            Message VARCHAR(10000) NOT NULL,
-            PackageContent JSON,
-            FOREIGN KEY (RecieverID) REFERENCES Users(UserID)
-        )
-    `,
-    Friends: `
-        CREATE TABLE Friends (
-            FriendshipID INTEGER PRIMARY KEY AUTOINCREMENT,
-            User1 INTEGER NOT NULL,
-            User2 INTEGER NOT NULL,
-            FOREIGN KEY (User1) REFERENCES Users(UserID),
-            FOREIGN KEY (User2) REFERENCES Users(UserID)
-        )
-    `,
-    Conversations: `
-        CREATE TABLE Conversations (
-            ConversationID INTEGER PRIMARY KEY AUTOINCREMENT,
-            Members TEXT NOT NULL,
-            ConversationTitle VARCHAR(100) DEFAULT NULL,
-            ConversationLogo VARCHAR(255) DEFAULT NULL
-        )
-    `,
-    ConversationData: `
-        CREATE TABLE ConversationData (
-            MessageID INTEGER PRIMARY KEY AUTOINCREMENT,
-            ConversationID INTEGER NOT NULL,
-            SenderID INTEGER NOT NULL,
-            Message TEXT NOT NULL,
-            Attachment VARCHAR(1000) DEFAULT NULL,
-            Reactions JSON DEFAULT NULL,
-            Reply INTEGER DEFAULT NULL,
-            TimeStamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-            DeletedAt DATETIME DEFAULT NULL,
-            FOREIGN KEY (ConversationID) REFERENCES Conversations(ConversationID),
-            FOREIGN KEY (SenderID) REFERENCES Users(UserID),
-            FOREIGN KEY (Reply) REFERENCES ConversationData(MessageID)
-        )
-    `,
-    ConversationReadStatus: `
-        CREATE TABLE ConversationReadStatus (
-            ReadStatusID INTEGER PRIMARY KEY AUTOINCREMENT,
-            ConversationID INTEGER NOT NULL,
-            UserID INTEGER NOT NULL,
-            LastReadMessageID INTEGER,
-            LastReadTimeStamp DATETIME,
-            FOREIGN KEY (ConversationID) REFERENCES Conversations(ConversationID),
-            FOREIGN KEY (UserID) REFERENCES Users(UserID),
-            FOREIGN KEY (LastReadMessageID) REFERENCES ConversationData(MessageID),
-            UNIQUE(ConversationID, UserID)
-        )
-    `
-};
-
+const schema = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'schema.json'), 'utf-8'));
 // Execute table creation
 try {
-    for (const [tableName, sql] of Object.entries(tables)) {
-        db.exec(sql);
-        console.log(`${tableName} table created successfully.`);
+    for (const table of schema.tables) {
+        const columnsDefinition = table.columns
+            .map(col => `${col.name ? col.name + ' ' : ''}${col.type}`)
+            .join(', ');
+        const createTableSql = `CREATE TABLE IF NOT EXISTS ${table.name} (${columnsDefinition})`;
+        db.exec(createTableSql);
+        console.log(`${table.name} table created successfully.`);
     }
     console.log('\nDatabase setup completed successfully!');
 } catch (error) {
