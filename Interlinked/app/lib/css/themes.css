@@ -1,0 +1,89 @@
+:root {
+    --accent-color: #4a6cff;
+    --success-color: #30cc5a;
+    --danger-color: #ff4a4a;
+}
+
+/* Dark Theme */
+body.dark {
+    background: #17191e;
+    color: #f5f7ff;
+}
+
+body.dark #sidebar {
+    background: #11203f;
+    border-right: #000000 0.1vw solid;
+}
+
+body.dark .sideNav {
+    background: #301800;
+    border-bottom: #000818 0.1vw solid;
+    border-top: #301800 0.1vw solid;
+}
+
+body.dark .sideNav:hover {
+    background: #2c2f36;
+}
+
+body.dark .bottom-content {
+    background: #181a1f;
+}
+
+body.dark .tooltip {
+    background: #000000;
+    color: #f5f7ff;
+}
+
+body.dark .game-ribbon {
+    background: rgba(0, 0, 0, 0.5);
+}
+body.dark .settings-group,
+body.dark .friends-container {
+    background: rgba(125, 125, 125, 0.43);
+}
+
+body.dark .game-card {
+    background: #1f2126;
+}
+
+body.dark .game-card-title {
+    background: rgb(95, 95, 95);
+    color: #f5f7ff;
+}
+
+body.dark .category-tab {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #f5f7ff;
+}
+
+body.dark .category-tab.active {
+    background-color: var(--accent-color);
+}
+
+body.dark .page-header h1,
+body.dark .search-results,
+body.dark .library-content,
+body.dark .settings-group h2,
+body.dark .setting-item {
+    color: #f5f7ff;
+}
+
+body.dark .search-container input {
+    background: #1f2126;
+    color: #f5f7ff;
+}
+
+body.dark .search-container button {
+    background-color: var(--accent-color);
+}
+
+body.dark .friend-invite-input {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: #f5f7ff;
+}
+
+body.dark .setting-item select {
+    background-color: #2a2c32;
+    color: #f5f7ff;
+    border: 0.1vw solid #3a3d45;
+}
