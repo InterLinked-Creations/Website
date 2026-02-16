@@ -253,3 +253,16 @@
 .settings-options .account-button {
     margin-bottom: 0;
 }
+
+/* Logout button styling */
+.account-button.logout {
+    background-color: rgb(90, 50, 50);
+}
+
+.account-button.logout:hover {
+    background-color: rgb(120, 60, 60);
+}
+
+.account-button.logout:active {
+    background-color: rgb(100, 45, 45);
+}
