@@ -444,6 +444,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Close profile dialog
+    const closeProfileBtn = document.getElementById('close-profile-btn');
+    if (closeProfileBtn) {
+        closeProfileBtn.addEventListener('click', () => {
+            accountOverlay.classList.add('hidden');
+        });
+    }
+
     // Change avatar from settings
     const changeAvatarSettingsBtn = document.getElementById('change-avatar-settings-btn');
     if (changeAvatarSettingsBtn) {
