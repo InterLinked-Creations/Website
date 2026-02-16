@@ -115,7 +115,7 @@ async function validateLogin(db, username, password) {
  */
 function getUserById(db, userId) {
     return db.prepare(`
-        SELECT UserID, UserName, Avatar 
+        SELECT UserID, UserName, Avatar, Email
         FROM Users 
         WHERE UserID = ?
     `).get(userId);
@@ -139,11 +139,27 @@ function getFriendCount(db, userId) {
     }
 }
 
+/** 
+ * Update user email
+ * @param {Database} db - Database instance
+ * @param {number} userId - User ID
+ * @param {string} email - New email address
+*/
+function updateUserEmail(db, userId, email) {
+    const updateEmail = db.prepare(`
+        UPDATE Users 
+        SET Email = ? 
+        WHERE UserID = ?
+    `);
+    const result = updateEmail.run(email, userId);
+    return result.changes > 0;
+}
 module.exports = {
     hashPassword,
     comparePassword,
     registerUser,
     validateLogin,
     getUserById,
-    getFriendCount
+    getFriendCount,
+    updateUserEmail
 };

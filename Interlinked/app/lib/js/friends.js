@@ -2298,8 +2298,10 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch('/api/current-user')
         .then(response => response.json())
         .then(data => {
+            console.log('Current user data:', data);
             if (data.userId) {
                 currentUserId = data.userId;
+                email = data.email;
             }
         })
         .catch(error => {

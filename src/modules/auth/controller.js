@@ -97,12 +97,14 @@ function checkSession(req, res) {
         // Update session with current user data
         req.session.username = user.UserName;
         req.session.avatar = user.Avatar;
+        req.session.email = user.Email;
 
         res.json({
             authenticated: true,
             userId: user.UserID,
             username: user.UserName,
-            avatar: user.Avatar
+            avatar: user.Avatar,
+            email: user.Email
         });
     } catch (error) {
         console.error('Session check error:', error);
@@ -122,7 +124,8 @@ function getCurrentUser(req, res) {
         res.json({
             userId: req.session.userId,
             username: req.session.username,
-            avatar: req.session.avatar
+            avatar: req.session.avatar,
+            email: req.session.email
         });
     } catch (error) {
         console.error('Get current user error:', error);
@@ -148,11 +151,47 @@ function logout(req, res) {
     }
 }
 
+/**
+ * Update user email
+ */
+function updateEmail(req, res) {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ errors: ['Not authenticated'] });
+        }
+        
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({ errors: ['Email is required'] });
+        }
+
+        const emailNotInUse = req.db.prepare('SELECT 1 FROM Users WHERE Email = ? AND UserID != ?').get(email, req.session.userId);
+        console.log('Email check result:', emailNotInUse);
+        if (emailNotInUse) {
+            console.error('Email is already in use:', email);
+
+            return res.status(400).json({ errors: ['Email is already in use'] });
+        }
+        else {
+            const success = authService.updateUserEmail(req.db, req.session.userId, email);
+            if (!success) {
+                return res.status(400).json({ errors: ['Failed to update email'] });
+            }
+
+            res.json({ success: true });
+        }
+    } catch (error) {
+        console.error('Update email error:', error);
+        res.status(500).json({ errors: ['Failed to update email'] });
+    }
+}
+
 module.exports = {
     register,
     login,
     confirmLogin,
     checkSession,
     getCurrentUser,
-    logout
+    logout,
+    updateEmail
 };
