@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginFormScreen = document.getElementById('login-form');
     const registerFormScreen = document.getElementById('register-form');
     const backButtons = document.querySelectorAll('.back-button');
+    const editEmailBtn = document.getElementById('email-edit');
     
     let currentUser = null;
     let isLoggedIn = false;
@@ -29,7 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentUser = {
                     userId: data.userId,
                     username: data.username,
-                    avatar: data.avatar
+                    avatar: data.avatar,
+                    email: data.email
                 };
                 isLoggedIn = true;
                 updateAccountButton();
@@ -76,6 +78,30 @@ document.addEventListener('DOMContentLoaded', () => {
             showUserSettings();
         } else {
             showScreen('account-choice');
+        }
+    });
+
+    // show edit email when clicking email edit button
+    editEmailBtn.addEventListener('click', () => {
+        const emailText = document.querySelector('#user-email .email-text');
+        const currentEmail = emailText.textContent;
+        const newEmail = prompt('Enter your new email:', currentEmail);
+        if (newEmail && newEmail !== currentEmail) {
+            // Send update request to server
+            fetch('/api/update-email', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: newEmail })
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to update email');
+                }
+            }).catch(error => {
+                console.error('Error updating email:', error);
+                alert('Failed to update email.');
+            });
+            // Update email in UI
+            emailText.textContent = newEmail;
         }
     });
 
@@ -407,6 +433,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const userSettings = document.getElementById('user-settings');
         const userAvatar = document.getElementById('user-avatar');
         const userUsername = document.getElementById('user-username');
+        const userEmail = document.getElementById('user-email');
         
         if (userSettings) {
             userSettings.classList.remove('hidden');
@@ -416,6 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (userUsername) {
             userUsername.textContent = currentUser.username;
+        }
+        if (userEmail) {
+            userEmail.querySelector('.email-text').textContent = currentUser.email;
         }
     }
 
