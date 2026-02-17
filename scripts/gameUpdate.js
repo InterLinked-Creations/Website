@@ -6,6 +6,11 @@ const simpleGit = require("simple-git");
 // Path to game.json
 const gameListPath = path.join(__dirname, "..", "Interlinked", "game.json");
 
+// Directory setup
+const games = loadGameList();
+const gamesDir = path.join(__dirname, "..", "Interlinked", "games");
+
+
 // Load and parse game.json
 function loadGameList() {
     if (!fs.existsSync(gameListPath)) {
@@ -22,10 +27,7 @@ function loadGameList() {
     return data.games;
 }
 
-const games = loadGameList();
-
-const gamesDir = path.join(__dirname, "..", "Interlinked", "games");
-
+// Locate each games folder, checks if they exist, locates local manifest, loads if present
 function getGameFolder(game) {
     return path.join(gamesDir, game.folderName);
 }
@@ -53,6 +55,7 @@ function loadLocalManifest(game) {
     return JSON.parse(raw);
 }
 
+// Converts repo URL into raw manifest URL
 function getRemoteManifestUrl(game) {
     const repoUrl = game.repo;
     const match = repoUrl.match(/github\.com\/([^/]+)\/([^/]+)(?:\.git)?/);
@@ -64,6 +67,7 @@ function getRemoteManifestUrl(game) {
     return `https://raw.githubusercontent.com/${owner}/${repoName}/main/manifest.json`;
 }
 
+// calls fetch on the raw manifest url, throws error if file doesn't exist, parses the JSON
 async function fetchRemoteManifest(game) {
     const url = getRemoteManifestUrl(game);
     const response = await fetch(url);
@@ -74,6 +78,7 @@ async function fetchRemoteManifest(game) {
     return JSON.parse(text);
 }
 
+// Determines wether game is installed and in need of an update, not installed, or up to date
 function getGameStatus(localManifest, remoteManifest) {
     if (!localManifest) {
         if (!remoteManifest) {
@@ -100,6 +105,7 @@ function getGameStatus(localManifest, remoteManifest) {
     return "update-available";
 }
 
+// Uses the status to determine the action (clone for install, pull for update)
 function getRequiredAction(status) {
     switch (status) {
         case "not-installed":
@@ -113,6 +119,7 @@ function getRequiredAction(status) {
     }
 }
 
+// Uses git to pull or clone the repo
 async function cloneGameRepo(game) {
     const git = simpleGit();
     const folder = getGameFolder(game);
@@ -138,7 +145,7 @@ async function performAction(game, action) {
             break;
 
         case "update":
-            console.log("→ Updating game...");
+            console.log("Updating game...");
             await pullGameRepo(game);
             console.log("Update complete");
             break;
@@ -150,6 +157,16 @@ async function performAction(game, action) {
         default:
             console.log("Cannot perform action due to error state");
             break;
+    }
+}
+
+// Makes the folder location if it's missing.
+function ensureGamesDir() {
+    if (!fs.existsSync(gamesDir)) {
+        fs.mkdirSync(gamesDir, { recursive: true });
+        console.log("Created games directory:", gamesDir);
+    } else {
+        console.log("Games directory already exists.");
     }
 }
 
@@ -203,7 +220,7 @@ async function main() {
     console.log("\n=== Game update process complete ===");
 }
 
-
+//catches any unhandled errors when running.
 main().catch(err => {
     console.error("Unexpected error in gameUpdate script:", err);
     process.exit(1);
