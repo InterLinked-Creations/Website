@@ -39,7 +39,7 @@
 - Primary Actor: User
 - Goal: User receives the site's library of games
 
-### UC7: User searches for a specific game, genera, etc.
+### UC7: User searches for a specific game, genre, etc.
 - Primary Actor: User
 - Goal: User receives the results of his search
 
@@ -61,8 +61,8 @@
 | UC4: System sends an inbox letter to user | Register, Inbox Messages |
 | UC5: System alerts user of achievement | Register, Achievement system, Toast Notifications |
 | UC6: User views the Game Library | Game Library |
-| UC7: User searches for a specific game, genera, etc. | Game Library, Search |
-| UC6: User becomes friends with another user | Register, Online Activities, Friends |
+| UC7: User searches for a specific game, genre, etc. | Game Library, Search |
+| UC8: User becomes friends with another user | Register, Online Activities, Friends |
 ...
 
 ## Use Case Diagram
