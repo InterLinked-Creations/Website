@@ -86,10 +86,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // show edit email when clicking email edit button
     const editEmailBtn = document.getElementById('email-edit');
     editEmailBtn.addEventListener('click', () => {
-        // show overlay forum to edit email
+        // show overlay form to edit email
         userChangeEmailOverlay.classList.remove('hidden');
         userSettings.classList.add('hidden');
-        document.getElementById('user-email-current').querySelector('.user-email-current-text').textContent = currentUser.email;
+        if (currentUser && currentUser.email) {
+            document.getElementById('user-email-current').querySelector('.user-email-current-text').textContent = currentUser.email;
+        }
     });
 
     // Back button in change email overlay
@@ -104,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (userChangeEmailForm) {
         userChangeEmailForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            clearErrors
+            clearErrors();
             const formData = {
                 newEmail: document.getElementById('new-email').value
             }
@@ -123,19 +125,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (currentUser) {
                         currentUser.email = newEmail;
                     }
+                    alert('Email updated successfully');
+                    // Update email in UI
+                    accountOverlay.querySelector('.user-email-current-text').textContent = newEmail;
+                    accountOverlay.querySelector('.email-text').textContent = newEmail;
                     userChangeEmailForm.reset();
                 } else {
-                    if (result.errors && result.errors.includes('Email is already in use')) {
-                        alert('This email is already in use. Please choose a different one.');
+                    if (result.errors) {
+                        //alert('This email is already in use. Please choose a different one.');
+                        showErrors(result.errors);
                     } else {
                         throw new Error(result.message || 'Failed to update email');
 
                     }
                 }
             }
-            // Update email in UI
-            accountOverlay.querySelector('.user-email-current-text').textContent = newEmail;
-            accountOverlay.querySelector('.email-text').textContent = newEmail;
+            
         });
     }
 
@@ -431,11 +436,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (error.includes('Username')) {
                 errorElement = document.getElementById('username-error');
             } else if (error.includes('Email')) {
-                errorElement = document.getElementById('email-error');
+                if (error.includes('Email is already in use')) {
+                    errorElement = document.getElementById('new-email-error');
+                } else {
+                    errorElement = document.getElementById('email-error');
+                }
             } else if (error.includes('Password')) {
                 errorElement = document.getElementById('password-error');
             }
-            
             if (errorElement) {
                 errorElement.textContent = error;
             }
