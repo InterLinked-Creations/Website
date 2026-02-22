@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginFormScreen = document.getElementById('login-form');
     const registerFormScreen = document.getElementById('register-form');
     const backButtons = document.querySelectorAll('.back-button');
-    const editEmailBtn = document.getElementById('email-edit');
-    const changeEmailBackBtn = document.querySelector('.change-email-back-button');
     const userChangeEmailOverlay = document.getElementById('user-change-email');
     const userSettings = document.getElementById('user-settings');
 
@@ -86,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // show edit email when clicking email edit button
+    const editEmailBtn = document.getElementById('email-edit');
     editEmailBtn.addEventListener('click', () => {
         // show overlay forum to edit email
         userChangeEmailOverlay.classList.remove('hidden');
@@ -93,11 +92,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('user-email-current').querySelector('.user-email-current-text').textContent = currentUser.email;
     });
 
+    // Back button in change email overlay
+    const changeEmailBackBtn = document.querySelector('.change-email-back-button');
     changeEmailBackBtn.addEventListener('click', () => {
         userSettings.classList.remove('hidden');
         userChangeEmailOverlay.classList.add('hidden');
     });
 
+    // Handle change email form submission
     const userChangeEmailForm = document.querySelector('#user-change-email form');
     if (userChangeEmailForm) {
         userChangeEmailForm.addEventListener('submit', async (event) => {
