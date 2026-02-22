@@ -117,9 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: newEmail })
                 });
-                if (!response.ok) {
-                    throw new Error('Failed to update email');
-                }
                 const result = await response.json();
                 if (result.success) {
                     // Update current user email
@@ -128,7 +125,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     userChangeEmailForm.reset();
                 } else {
-                    throw new Error(result.message || 'Failed to update email');
+                    if (result.errors && result.errors.includes('Email is already in use')) {
+                        alert('This email is already in use. Please choose a different one.');
+                    } else {
+                        throw new Error(result.message || 'Failed to update email');
+
+                    }
                 }
             }
             // Update email in UI
