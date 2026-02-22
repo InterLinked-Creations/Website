@@ -13,6 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const registerFormScreen = document.getElementById('register-form');
     const backButtons = document.querySelectorAll('.back-button');
     const editEmailBtn = document.getElementById('email-edit');
+    const changeEmailBackBtn = document.querySelector('.change-email-back-button');
+    const userChangeEmailOverlay = document.getElementById('user-change-email');
+    const userSettings = document.getElementById('user-settings');
+
     
     let currentUser = null;
     let isLoggedIn = false;
@@ -83,27 +87,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // show edit email when clicking email edit button
     editEmailBtn.addEventListener('click', () => {
-        const emailText = document.querySelector('#user-email .email-text');
-        const currentEmail = emailText.textContent;
-        const newEmail = prompt('Enter your new email:', currentEmail);
-        if (newEmail && newEmail !== currentEmail) {
-            // Send update request to server
-            fetch('/api/update-email', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: newEmail })
-            }).then(response => {
+        // show overlay forum to edit email
+        userChangeEmailOverlay.classList.remove('hidden');
+        userSettings.classList.add('hidden');
+        document.getElementById('user-email-current').querySelector('.user-email-current-text').textContent = currentUser.email;
+    });
+
+    changeEmailBackBtn.addEventListener('click', () => {
+        userSettings.classList.remove('hidden');
+        userChangeEmailOverlay.classList.add('hidden');
+    });
+
+    const userChangeEmailForm = document.querySelector('#user-change-email form');
+    if (userChangeEmailForm) {
+        userChangeEmailForm.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            clearErrors
+            const formData = {
+                newEmail: document.getElementById('new-email').value
+            }
+            const newEmail = formData.newEmail.trim();
+            const currentEmail = currentUser.email;
+            if (newEmail && newEmail !== currentEmail) {
+                // Send update request to server
+                const response = await fetch('/api/update-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: newEmail })
+                });
                 if (!response.ok) {
                     throw new Error('Failed to update email');
                 }
-            }).catch(error => {
-                console.error('Error updating email:', error);
-                alert('Failed to update email.');
-            });
+                const result = await response.json();
+                if (result.success) {
+                    // Update current user email
+                    if (currentUser) {
+                        currentUser.email = newEmail;
+                    }
+                    userChangeEmailForm.reset();
+                } else {
+                    throw new Error(result.message || 'Failed to update email');
+                }
+            }
             // Update email in UI
-            emailText.textContent = newEmail;
-        }
-    });
+            accountOverlay.querySelector('.user-email-current-text').textContent = newEmail;
+            accountOverlay.querySelector('.email-text').textContent = newEmail;
+        });
+    }
 
     // Close overlays when clicking close button
     closeButtons.forEach(button => {
@@ -430,7 +460,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         // Show user settings
-        const userSettings = document.getElementById('user-settings');
         const userAvatar = document.getElementById('user-avatar');
         const userUsername = document.getElementById('user-username');
         const userEmail = document.getElementById('user-email');

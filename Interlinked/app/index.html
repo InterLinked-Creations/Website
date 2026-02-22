@@ -563,6 +563,22 @@
                             <button id="logout-btn" class="account-button secondary">Log Out</button>
                         </div>
                     </div>
+                    <div id="user-change-email" class="account-screen hidden">
+                        <h2>Change Email</h2> 
+                        <h2 id="user-email-current">
+                            <span>Current Email: </span>
+                            <span class="user-email-current-text">user@example.com</span>
+                        </h2>
+                        <form id="change-email-form" class="auth-form">
+                            <div class="form-group">
+                                <label for="new-email">New Email</label>
+                                <input type="email" id="new-email" required>
+                                <div class="error-message" id="new-email-error"></div>
+                            </div>
+                            <button type="submit" class="account-button" >Change Email</button>
+                            <button type="button" class="account-button secondary change-email-back-button">Back</button>
+                        </form>
+                    </div>
                 </div>
                 <div class="image-section">
                     <img src="lib/icons/logo.png" alt="InterLinked Logo" style="width: 20vw; margin-bottom: 2vw; filter: drop-shadow(0 0 0.5vw rgba(255, 255, 255, 0.5));">
