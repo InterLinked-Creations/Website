@@ -8,7 +8,7 @@
 
 **Collaborators**
 - Users
-- Friends
+- Friend
 - Currency
 
 ## User
@@ -20,25 +20,25 @@
 - Holds the avatar
 
 **Collaborators**
-- Friends
+- Friend
 
-## Friends
+## Friend
 
 **Responsibilities**
-- Links users together
-- Holds a friendship ID
+- Links multiple users together.
+- Holds a Friendship ID with status and metadata info.
 
 **Collaborators**
 - Users
 
-## Conversations
+## Conversation
 
 **Responsibilities**
 - Allow multiple users to communicate with each other simultaneously.
 - Contain 2 or more users.
-- Has a title.
-- Has a logo.
+- Has a title and a logo.
+- Updates read status of messages exchanged.
 
 **Collaborators**
 - Users
-- Friends
+- Friend
