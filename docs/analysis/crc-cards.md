@@ -4,6 +4,7 @@
 - Holds and receives messages sent by participants
 - Maintains relationships between messages, their replies, and attachments
 - Coordinates with read status tracking to determine which message each user last read.
+- Contains the conversation image and title
 
 **Collaborators**
 - User
