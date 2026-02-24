@@ -29,7 +29,9 @@
 - Holds a Friendship ID with status and metadata info.
 
 **Collaborators**
-- Users
+- User
+- Notification (Inbox)
+- Conversation
 
 ## Conversation
 
@@ -40,5 +42,6 @@
 - Updates read status of messages exchanged.
 
 **Collaborators**
-- Users
-- Friend
+- User
+- Message
+- WebSocket
