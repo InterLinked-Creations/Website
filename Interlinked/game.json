@@ -1,3 +1,11 @@
 {
-    "games": []
+    "games": [
+        {
+            "name": "Super Smash Bros",
+            "description": "Test entry for update script",
+            "tags": ["fighting", "test"],
+            "folderName": "super-smash-bros",
+            "repo": "https://github.com/ToastedToast00/Super-Smash-Bros"
+        }
+    ]
 }
