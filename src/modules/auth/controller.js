@@ -14,14 +14,6 @@ async function register(req, res) {
         if (!result.success) {
             return res.status(400).json({ errors: result.errors });
         }
-        // Create session for the newly registered user so they remain logged in
-        req.session.userId = result.userId;
-        req.session.username = result.username;
-        req.session.avatar = result.avatar;
-
-        // Log friend count for information
-        const friendCount = authService.getFriendCount(req.db, result.userId);
-        console.log(`New user ${result.username} registered with ${friendCount} friends`);
 
         res.json(result);
     } catch (error) {

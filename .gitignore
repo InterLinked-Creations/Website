@@ -32,7 +32,3 @@ Thumbs.db
 # Build outputs
 dist/
 build/
-
-# downloaded game builds
-Interlinked/games/*
-!Interlinked/games/.gitkeep
