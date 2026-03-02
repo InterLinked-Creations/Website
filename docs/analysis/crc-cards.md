@@ -25,3 +25,16 @@
 - NotificationService
 
 ---
+## Achievement
+
+**Responsibilities**
+- Track user progress toward achievement goals
+- Determine when an achievement is completed
+- Trigger reward distribution when requirements are met
+
+**Collaborators**
+- User
+- Reward
+- Game
+
+---
