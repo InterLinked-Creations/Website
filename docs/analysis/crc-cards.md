@@ -38,3 +38,15 @@
 - Game
 
 ---
+## Reward
+
+**Responsibilities**
+- Grant rewards to users upon achievement completion
+- Track reward types (XP, coins, cosmetics)
+- Apply reward rules or multipliers
+
+**Collaborators**
+- User
+- Achievement
+
+---
