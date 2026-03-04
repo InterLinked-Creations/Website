@@ -50,3 +50,25 @@
 - Achievement
 
 ---
+## Game
+
+**Responsibilities**
+- Provide metadata (title, genre, developer)
+- Maintain the list of achievements associated with the game
+- Update game information when the catalog changes
+
+**Collaborators**
+- Achievement
+- User
+
+---
+## SupportRequest
+
+**Responsibilities**
+- Create and submit support tickets
+- Track ticket status and updates
+- Route requests to the appropriate support channel
+
+**Collaborators**
+- User
+- SupportService
