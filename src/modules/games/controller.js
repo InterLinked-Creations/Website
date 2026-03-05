@@ -10,13 +10,15 @@ const installedPath = path.resolve(__dirname, '../../../Interlinked/games/instal
 /**
  * Get all installed games
  */
-function getGames(req, res) {
+async function getGames(req, res) {
     try {
-        if (!fs.existsSync(installedPath)) {
+        try {
+            await fs.promises.access(installedPath);
+        } catch {
             return res.json({ success: true, games: [] });
         }
 
-        const raw = fs.readFileSync(installedPath, 'utf8');
+        const raw = await fs.promises.readFile(installedPath, 'utf8');
         const data = JSON.parse(raw);
 
         return res.json({ success: true, games: data.games || [] });
