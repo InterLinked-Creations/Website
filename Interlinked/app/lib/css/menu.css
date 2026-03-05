@@ -263,6 +263,15 @@ body {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.no-games-message {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2vw;
+    text-align: center;
+    width: 100%;
+    padding: 3vw 0;
+    margin: 0;
+}
+
 /* Game Overlay Styles */
 #game-overlay {
     position: fixed;

@@ -36,3 +36,4 @@ build/
 # downloaded game builds
 Interlinked/games/*
 !Interlinked/games/.gitkeep
+!Interlinked/games/installed.json

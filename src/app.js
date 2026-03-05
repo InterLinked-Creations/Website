@@ -13,6 +13,7 @@ const authRoutes = require('./modules/auth');
 const usersRoutes = require('./modules/users');
 const friendsRoutes = require('./modules/friends');
 const conversationsRoutes = require('./modules/conversations');
+const gamesRoutes = require('./modules/games');
 
 const app = express();
 
@@ -48,6 +49,7 @@ app.use('/api', authRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api', friendsRoutes);
 app.use('/api/conversations', conversationsRoutes);
+app.use('/api/games', gamesRoutes);
 
 // Legacy route for avatars (to maintain backwards compatibility)
 app.get('/api/avatars', (req, res) => {
