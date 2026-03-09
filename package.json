@@ -9,6 +9,7 @@
     "db:setup": "node scripts/dbSetup.js",
     "db:update": "node scripts/dbUpdate.js",
     "db:query": "node scripts/dbQuery.js",
+    "game:update": "node scripts/gameUpdate.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

@@ -87,20 +87,6 @@
         {"name": "FOREIGN KEY(LastReadMessageID)", "type": "REFERENCES ConversationData(MessageID)"},
         {"name": "", "type": "UNIQUE(ConversationID,UserID)"}
       ]
-    },
-    {
-      "name": "Games",
-      "columns": [
-        {"name": "GameID", "type": "INTEGER PRIMARY KEY AUTOINCREMENT"},
-        {"name": "Title", "type": "VARCHAR(150) NOT NULL"},
-        {"name": "Description", "type": "VARCHAR(5000) DEFAULT ''"},
-        {"name": "Tags", "type": "TEXT DEFAULT '[]'"},
-        {"name": "Creator", "type": "VARCHAR(100) DEFAULT ''"},
-        {"name": "YearCreated", "type": "VARCHAR(10) DEFAULT ''"},
-        {"name": "CoverURL", "type": "VARCHAR(500) DEFAULT ''"},
-        {"name": "GameURL", "type": "VARCHAR(500) DEFAULT ''"},
-        {"name": "NumDownloads", "type": "BIGINT NOT NULL DEFAULT 0"}
-      ]
     }
   ]
 }
