@@ -193,11 +193,14 @@
 **Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that cofirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
 
 ** Main Flow **
-1. User navigates t
-2. ...
+1. User opens browser and enters  the URl of the site.
+2. User navigates to a menu item that requires a log in.
+3. User clicks log in and puts in their credentials.
+
 
 ** Alternate Flow **
-- A1: ...
+- A1: User opens browser and enters the url of
+tis eht
 - A2: ...
 
 ---
@@ -205,6 +208,8 @@
 ### UC9 – User Creates an Account  
 - **Primary Actor:** New User  
 - **Goal:** User successfully creates and registers an account.
+- **Preconditions:** User should not be signed into an account
+- **Success Outcome:** A new account is created 
 
 ### UC10 – User Plays a Game  
 - **Primary Actor:** User  
@@ -239,35 +244,104 @@
 ### UC17 – User Blocks Another User  
 - **Primary Actor:** User  
 - **Goal:** User prevents another user from messaging, friending, or interacting with them.
+- **Preconditions:** User is authenticated; Target user exists in system; The user has not already blocked the target user
+- **Success Outcome:** Target user is added tothe user's block list and future interactions are prevented
+
+** Main Flow **
+1. User indicates intent to block another user
+2. System verifies the target user exists
+3. System verifies the user has not already blocked the target user
+4. System records the block relationship
+5. System updates the interaction rules to prevent further communication
+6. System confirms the block.
+
+** Alternate FFlow **
+A1. Target user does not exist -> System rejects the requrest.
+A2. User already blocked target -> System rejects the request.
 
 ### UC18 – User Reports Another User  
 - **Primary Actor:** User  
 - **Goal:** User submits a report about inappropriate behavior or content.
+- **Preconditions:** User is authenticated; Target user exists; report contains valid details.
+- **Success Outcome:** 
+
+** Main Flow **
+
+** Alternate Flow **
 
 ### UC19 – User Submits a Support Ticket  
 - **Primary Actor:** User  
 - **Goal:** User creates a support request for technical, account, or safety issues.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC20 – User Views Game Progress  
 - **Primary Actor:** User  
 - **Goal:** User views their saved progress for a specific game.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC21 – User Updates Notification Preferences  
 - **Primary Actor:** User  
 - **Goal:** User customizes which notifications they receive.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC22 – Admin Assigns User Roles  
 - **Primary Actor:** Admin  
 - **Goal:** Admin grants or modifies user roles such as moderator or developer.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC23 – Admin Moderates User Reports  
 - **Primary Actor:** Admin  
 - **Goal:** Admin reviews submitted reports and takes appropriate action.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC24 – User Recovers Account  
 - **Primary Actor:** User  
 - **Goal:** User regains access to their account after losing credentials.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
 
 ### UC25 – User Adjusts Privacy Settings  
 - **Primary Actor:** User  
 - **Goal:** User controls who can view their profile, activity, and online status.
+- **Preconditions:**
+- **Success Outcome:**
+
+** Main Flow **
+
+** Alternate Flow **
+
