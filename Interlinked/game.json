@@ -3,6 +3,8 @@
         {
             "name": "Wonder World",
             "description": "Test entry for update script",
+            "creator": "Alex Fischer",
+            "yearCreated": "2025",
             "tags": ["test"],
             "folderName": "abc",
             "repo": "https://github.com/InterLinked-Creations/Wonder-World"

@@ -182,19 +182,19 @@ function saveInstalledGames() {
         const manifest = loadLocalManifest(game);
         if (manifest) {
             installedGames.push({
-                name: manifest.name || game.name,
-                title: manifest.title || game.name,
-                description: manifest.description || "No description provided.",
-                tags: manifest.tags || [],
-                creator: manifest.creator || "Unknown",
-                yearCreated: manifest.yearCreated || "????",
+                name: game.name,
+                title: game.name,
+                description: game.description || "No description provided.",
+                tags: game.tags || [],
+                creator: game.creator || "Unknown",
+                yearCreated: game.yearCreated || "????",
                 coverURL: manifest.coverURL || "missing.png",
                 InterlinkedCreations_Version: manifest.InterlinkedCreations_Version || "Unknown",
                 folderName: game.folderName
             });
         }
     }
-    
+
     fs.writeFileSync(installedPath, JSON.stringify({ games: installedGames }, null, 4), "utf8");
     console.log(`Saved ${installedGames.length} installed game(s) to installed.json`);
 }
