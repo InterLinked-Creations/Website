@@ -194,7 +194,7 @@ function saveInstalledGames() {
             });
         }
     }
-
+    
     fs.writeFileSync(installedPath, JSON.stringify({ games: installedGames }, null, 4), "utf8");
     console.log(`Saved ${installedGames.length} installed game(s) to installed.json`);
 }
