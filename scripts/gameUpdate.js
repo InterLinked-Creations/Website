@@ -87,21 +87,21 @@ function getGameStatus(localManifest, remoteManifest) {
         if (!remoteManifest) {
             return "not-installed";
         }
-        if (!remoteManifest.version) {
+        if (!remoteManifest.InterlinkedCreations_Version) {
             return "remote-no-version";
         }
         return "not-installed";
     }
 
-    if (!localManifest.version) {
+    if (!localManifest.InterlinkedCreations_Version) {
         return "installed-no-version";
     }
 
-    if (!remoteManifest || !remoteManifest.version) {
+    if (!remoteManifest || !remoteManifest.InterlinkedCreations_Version) {
         return "remote-no-version";
     }
 
-    if (localManifest.version === remoteManifest.version) {
+    if (localManifest.InterlinkedCreations_Version === remoteManifest.InterlinkedCreations_Version) {
         return "up-to-date";
     }
 
@@ -190,7 +190,7 @@ function saveInstalledGames() {
                 yearCreated: manifest.yearCreated || "",
                 coverURL: manifest.coverURL || "",
                 gameURL: manifest.gameURL || "",
-                version: manifest.version || "",
+                InterlinkedCreations_Version: manifest.InterlinkedCreations_Version || "Unknown",
                 folderName: game.folderName
             });
         }
