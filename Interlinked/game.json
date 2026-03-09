@@ -1,3 +1,11 @@
 {
-    "games": []
+    "games": [
+        {
+            "name": "Wonder World",
+            "description": "Test entry for update script",
+            "tags": ["test"],
+            "folderName": "abc",
+            "repo": "https://github.com/InterLinked-Creations/Wonder-World"
+        }
+    ]
 }
