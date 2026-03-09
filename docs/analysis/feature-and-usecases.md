@@ -199,10 +199,24 @@
 
 
 ** Alternate Flow **
-- A1: User opens browser and enters the url of
-tis eht
-- A2: ...
+* A1: User opens browser and enters the url of the site.
+* A2: The User navigates to another menu item that requires log in.
+* A3: User clicks log in and enters credentials.
 
+### UC2: User Logs Out
+**Primary Actor:** User
+**Goal:**  A user logs out of the site
+**Preconditions:**  The user is currently logged in; The user has already registered on the site.
+**Success Outcome:**  The user successfully logs out of their account and are redirected back to the home page.
+
+** Main Flow ** 
+1. User navigates to the menu and hits the log out button.
+2. System confirms the user tries logging out
+3. System logs user out.
+
+** Alternate Flow ** 
+* A1:
+* A2:
 ---
 
 ### UC9 – User Creates an Account  
