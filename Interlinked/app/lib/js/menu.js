@@ -39,6 +39,60 @@ ImageLibrary.init({
 // Game data loaded from the API
 let gameData = {};
 
+// Currently selected game URL for launching
+let currentGameURL = '';
+
+// Launches the currently selected game with the black screen transition
+function launchGame() {
+    if (!currentGameURL) {
+        console.error('No game URL set');
+        return;
+    }
+
+    const overlay = document.getElementById('game-transition-overlay');
+    const branding = document.getElementById('game-transition-branding');
+    const mainFrame = document.getElementById('MainFrame');
+
+    // Step 1: Fade to black
+    overlay.classList.add('active');
+
+    // Step 2: Show branding text after the screen is opaque
+    setTimeout(() => {
+        branding.classList.add('visible');
+    }, 650);
+
+    // Step 3: Start loading the game's index.html behind the black screen
+    setTimeout(() => {
+        mainFrame.style.display = 'block';
+        mainFrame.src = currentGameURL;
+    }, 1000);
+
+    // Step 4 & 5: Once game finishes loading, remove text then fade away
+    let transitionComplete = false;
+
+    function finishTransition() {
+        if (transitionComplete) return;
+        transitionComplete = true;
+
+        // Remove branding a short moment after load
+        setTimeout(() => {
+            branding.classList.remove('visible');
+        }, 500);
+
+        // Fade away the black screen to reveal the game
+        setTimeout(() => {
+            overlay.classList.remove('active');
+            // Close the game details overlay behind it
+            closeGameOverlay();
+        }, 1100);
+    }
+
+    mainFrame.onload = finishTransition;
+
+    // Fallback: if the iframe never fires onload, finish after 8 seconds
+    setTimeout(finishTransition, 8000);
+}
+
 // Creates a game card DOM element
 function createGameCard(game) {
     const card = document.createElement('div');
@@ -133,6 +187,12 @@ document.addEventListener('DOMContentLoaded', () => {
     closeButton.addEventListener('click', () => {
         closeGameOverlay();
     });
+
+    // Play Now button launches the game with transition
+    const playNowBtn = document.getElementById('play-now-btn');
+    playNowBtn.addEventListener('click', () => {
+        launchGame();
+    });
     
     // Close overlay when clicking outside the content
     overlay.addEventListener('click', (e) => {
@@ -168,6 +228,9 @@ function openGameOverlay(gameTitle) {
     document.getElementById('game-release').textContent = game.release;
     document.getElementById('game-description').textContent = game.description;
     document.getElementById('game-rating-number').textContent = game.rating === "???" ? "???" : game.rating.toFixed(1);
+
+    // Store the game URL for launching
+    currentGameURL = game.gameURL || '';
     
     // Create star rating
     if (game.rating === "???") {

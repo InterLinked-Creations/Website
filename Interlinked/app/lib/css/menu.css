@@ -474,3 +474,53 @@ body {
         transform: translateY(-50%) translateX(-0.2vw);
     }
 }
+
+/************** GAME LAUNCH TRANSITION **************/
+/* Full-screen black overlay used during game launch */
+#game-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+#game-transition-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* "Interlinked Creations" branding text shown during transition */
+#game-transition-branding {
+    position: absolute;
+    top: 1.5vw;
+    right: 2vw;
+    font-size: 1.4vw;
+    font-weight: bold;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+#game-transition-branding.visible {
+    opacity: 1;
+}
+
+/* Full-screen iframe for playing games */
+#MainFrame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 1500;
+    display: none;
+    background: black;
+}

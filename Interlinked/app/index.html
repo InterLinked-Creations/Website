@@ -406,7 +406,7 @@
                     <p id="game-description"></p>
                     <div class="game-tags" id="game-tags"></div>
                     <div class="action-buttons">
-                        <button class="action-button primary">Play Now</button>
+                        <button id="play-now-btn" class="action-button primary">Play Now</button>
                         <button class="action-button">Add to Favorites</button>
                     </div>
                 </div>
@@ -576,6 +576,14 @@
             </div>
         </div>
     </div>
+
+    <!-- Game launch transition overlay -->
+    <div id="game-transition-overlay">
+        <span id="game-transition-branding">Interlinked Creations</span>
+    </div>
+
+    <!-- Full-screen game iframe (MainFrame) -->
+    <iframe id="MainFrame" src="about:blank"></iframe>
 
     <script src="lib/js/menu.js"></script>
     <script src="lib/js/account.js"></script>
