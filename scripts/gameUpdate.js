@@ -184,12 +184,11 @@ function saveInstalledGames() {
             installedGames.push({
                 name: manifest.name || game.name,
                 title: manifest.title || game.name,
-                description: manifest.description || "",
+                description: manifest.description || "No description provided.",
                 tags: manifest.tags || [],
-                creator: manifest.creator || "",
-                yearCreated: manifest.yearCreated || "",
-                coverURL: manifest.coverURL || "",
-                gameURL: manifest.gameURL || "",
+                creator: manifest.creator || "Unknown",
+                yearCreated: manifest.yearCreated || "????",
+                coverURL: manifest.coverURL || "missing.png",
                 InterlinkedCreations_Version: manifest.InterlinkedCreations_Version || "Unknown",
                 folderName: game.folderName
             });
