@@ -1,5 +1,12 @@
 window.mainFrame = {
     /**
+     * @type {string}
+     * @description The mode of the MainFrame, which can affect how certain functions behave.
+     * For example, in "web" mode, a game will try to quit to the main menu instead of closing the entire window.
+     */
+    mode: "web",
+
+    /**
      * @type {HTMLElement}
      * @description The main iframe element on the page.
      */
@@ -36,10 +43,84 @@ window.mainFrame = {
          * @description Changes the page displayed in the iframe without flashing the overlay screen.
          * @param {string} src The path to the new page.
          */
+        fade: function(src = false) {
+            if (src) {
+                const flashElement = document.getElementById('screenOverlay');
+                flashElement.classList.add('active');
+                this.overlayOn = true;
+                setTimeout(() => {
+                    mainFrame.html.src = "app/"+src;
+                }, 800);
+            }
+        },
+
+        /**
+         * @description Changes the page displayed in the iframe without flashing the overlay screen.
+         * @param {string} src The path to the new page.
+         */
         shortcut: function(src = false) {
             if (src) {
                 mainFrame.html.src = "app/"+src;
             }
+        },
+
+        /**
+         * @description Changes the page displayed in the iframe without flashing the overlay screen.
+         * @param {string} src The path to the new page.
+         */
+        home: function() { this.fade('index.html'); },
+
+        /**
+         * @description Launches a game with the full-screen transition overlay.
+         * @param {string} gameURL The URL of the game to launch.
+         * @param {Function} [onComplete] Optional callback invoked when the transition finishes.
+         */
+        launch: function(gameURL, onComplete) {
+            if (!gameURL) {
+                console.error('No game URL set');
+                return;
+            }
+
+            const innerDoc = mainFrame.html.contentDocument;
+            const overlay = innerDoc.getElementById('game-transition-overlay');
+            const branding = innerDoc.getElementById('game-transition-branding');
+            const gameFrame = innerDoc.getElementById('MainFrame');
+
+            // Step 1: Fade to black
+            overlay.classList.add('active');
+
+            // Step 2: Show branding text after the screen is opaque
+            setTimeout(() => {
+                branding.classList.add('visible');
+            }, 650);
+
+            // Step 3: Start loading the game behind the black screen
+            setTimeout(() => {
+                gameFrame.style.display = 'block';
+                gameFrame.src = gameURL;
+            }, 1000);
+
+            // Step 4 & 5: Once game finishes loading, remove text then fade away
+            let transitionComplete = false;
+
+            function finishTransition() {
+                if (transitionComplete) return;
+                transitionComplete = true;
+
+                setTimeout(() => {
+                    branding.classList.remove('visible');
+                }, 500);
+
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                    if (onComplete) onComplete();
+                }, 1100);
+            }
+
+            gameFrame.onload = finishTransition;
+
+            // Fallback: if the iframe never fires onload, finish after 8 seconds
+            setTimeout(finishTransition, 8000);
         }
     },
 
