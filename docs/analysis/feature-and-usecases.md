@@ -1,144 +1,273 @@
-# Logan
+# Unified Features and Use Case Catalog (Merged for Assignment 5)
 
-## Features
-- Log In 
-# Consolidated Features and Use Cases
+## Features (Combined Across All Members)
 
-## Features (consolidated)
-- Register / Account management
-- Log In / Log Out / Account Recovery
-- Game Library / Play Game / Game Progress Tracking
-- Search (games, genres)
-- Friends / Friend requests
-- One-on-one messaging / Inbox messages
-- Group chat / Multi-user interactions
-- Maintain WebSocket / Online activities
-- Achievements & Toast notifications
-- Notification preferences
-- User blocking / Reporting / Safety controls
-- Support ticket system
-- Role & permission management (admin)
-- Privacy & visibility settings
+### Logan’s Features
+- Log In  
+- Log Out  
+- Register  
+- Game Library  
+- Search  
+- User Interactions  
 
-## Consolidated Brief Use Cases
+### Alex’s Features
+- Register  
+- Maintain WebSocket Connections  
+- Online Activities  
+- Inbox Messages  
+- Game Library  
+- Search  
+- Friends  
+- Achievement System  
+- Toast Notifications  
 
-### UC1: User registers an account
-- Primary Actor: New user
-- Goal: Create and register an account.
+### Eli’s Features
+- User Blocking and Safety Controls  
+- User Reporting System  
+- Support Ticket System  
+- Game Progress Tracking  
+- Notification Preferences Management  
+- Role and Permission Management  
+- Account Recovery  
+- Privacy and Visibility Settings  
 
-### UC2: User logs in
-- Primary Actor: Registered user
-- Goal: Authenticate and access site features.
-
-### UC3: User logs out
-- Primary Actor: Registered user
-- Goal: End session securely.
-
-### UC4: User accesses or plays a game
-- Primary Actor: User
-- Goal: Browse the game library and play a selected game (local or online).
-
-### UC5: User searches for games or genres
-- Primary Actor: User
-- Goal: Find games via search filters/queries.
-
-### UC6: User interacts with another user (1:1)
-- Primary Actor: User
-- Goal: Send/receive messages and inbox items.
-
-### UC7: User opens or participates in a group chat
-- Primary Actor: User
-- Goal: Chat with multiple users simultaneously.
-
-### UC8: User manages friendships
-- Primary Actor: Registered user
-- Goal: Send/accept friend requests and manage friend list.
-
-### UC9: System sends notifications / achievements
-- Primary Actor: System
-- Goal: Deliver inbox messages, achievement alerts, and toast notifications.
-
-### UC10: User blocks or reports another user
-- Primary Actor: User
-- Goal: Prevent interaction and submit reports for moderation.
-
-### UC11: User submits a support ticket
-- Primary Actor: User
-- Goal: Request help for technical or account issues.
-
-### UC12: Admin assigns roles / moderates reports
-- Primary Actor: Admin
-- Goal: Manage roles and respond to user reports.
-
-### UC13: User recovers account / manages privacy & notifications
-- Primary Actor: User
-- Goal: Recover lost credentials and adjust privacy/notification preferences.
-
-## Use Case Traceability
-
-| Use Case | Feature(s) |
-|---|---|
-| UC1: User registers an account | Register / Account management |
-| UC2: User logs in | Log In, Register |
-| UC3: User logs out | Log Out |
-| UC4: User accesses or plays a game | Game Library, Play Game, WS connections |
-| UC5: User searches for games or genres | Search, Game Library |
-| UC6: User interacts with another user (1:1) | One-on-one messaging, Inbox messages, Friends |
-| UC7: User opens or participates in a group chat | Group chat, WS connections |
-| UC8: User manages friendships | Friends, User Interactions |
-| UC9: System sends notifications / achievements | Inbox messages, Achievement system, Toast notifications |
-| UC10: User blocks or reports another user | User Blocking and Safety Controls, User Reporting System |
-| UC11: User submits a support ticket | Support Ticket System |
-| UC12: Admin assigns roles / moderates reports | Role & Permission Management, User Reporting System |
-| UC13: User recovers account / manages privacy & notifications | Account Recovery, Privacy & Visibility Settings, Notification Preferences |
-
-## Unified Use Case Diagram (PlantUML)
-
-The following PlantUML block represents the consolidated actors and use cases; you can paste it into a PlantUML renderer to generate an image.
-
-```plantuml
-@startuml
-actor User
-actor Admin
-actor System
-
-User --> (Register)
-User --> (Log In)
-User --> (Log Out)
-User --> (View Game Library)
-User --> (Search Games)
-User --> (Play Game)
-User --> (Play Online)
-User --> (Send Message)
-User --> (Start Group Chat)
-User --> (Add Friend)
-User --> (Block User)
-User --> (Report User)
-User --> (Submit Support Ticket)
-User --> (View Game Progress)
-User --> (Update Notification Preferences)
-User --> (Recover Account)
-
-Admin --> (Assign Roles)
-Admin --> (Moderate Reports)
-
-System --> (Send Inbox Message)
-System --> (Send Achievement Alert)
-
-"Send Inbox Message" ..> (Send Message) : <<include>>
-"Send Achievement Alert" ..> (Send Inbox Message) : <<include>>
-
-@enduml
-```
 
 ---
 
-If you'd like, I can: export the PlantUML as a PNG, render and embed the image here, or adjust grouping/labels in the diagram. 
-| UC8: User Recovers Account | Account Recovery |
-| UC9: User Adjusts Privacy Settings | Privacy and Visibility Settings |
+# Unified Brief Use Cases (Renumbered UC1–UC25)
+
+# Unified Brief Use Cases (Renumbered UC1–UC25 with Actors & Goals)
+
+### UC1 – User Logs In  
+- **Primary Actor:** User  
+- **Goal:** User successfully logs into the site using valid credentials.
+
+### UC2 – User Logs Out  
+- **Primary Actor:** User  
+- **Goal:** User successfully logs out of the site.
+
+### UC3 – User Registers  
+- **Primary Actor:** User  
+- **Goal:** User creates a new account using registration credentials.
+
+### UC4 – User Accesses Game Library  
+- **Primary Actor:** User  
+- **Goal:** User views the catalog of available games.
+
+### UC5 – User Searches for Specific Games  
+- **Primary Actor:** User  
+- **Goal:** User searches for a specific game within the site.
+
+### UC6 – User Interacts One‑on‑One  
+- **Primary Actor:** User  
+- **Goal:** User opens a one‑on‑one communication channel with another user.
+
+### UC7 – User Interacts with Multiple Users  
+- **Primary Actor:** User  
+- **Goal:** User opens a group chat with multiple users.
+
+### UC8 – User Befriends Other Users  
+- **Primary Actor:** User  
+- **Goal:** User establishes a friendship relationship with one or more users.
+
+---
+
+### UC9 – User Creates an Account  
+- **Primary Actor:** New User  
+- **Goal:** User successfully creates and registers an account.
+
+### UC10 – User Plays a Game  
+- **Primary Actor:** User  
+- **Goal:** User opens and plays an available game.
+
+### UC11 – User Plays Online  
+- **Primary Actor:** Registered User  
+- **Goal:** User connects to online services and plays an online game.
+
+### UC12 – System Sends Inbox Letter  
+- **Primary Actor:** System  
+- **Goal:** System delivers a message to the user’s inbox.
+
+### UC13 – System Alerts User of Achievement  
+- **Primary Actor:** System  
+- **Goal:** System notifies the user when they complete an achievement.
+
+### UC14 – User Views Game Library  
+- **Primary Actor:** User  
+- **Goal:** User receives the site’s library of games.
+
+### UC15 – User Searches for a Game/Genre  
+- **Primary Actor:** User  
+- **Goal:** User receives search results for a game, genre, or related query.
+
+### UC16 – User Becomes Friends with Another User  
+- **Primary Actor:** Registered User  
+- **Goal:** User becomes friends with another user and can interact socially.
+
+---
+
+### UC17 – User Blocks Another User  
+- **Primary Actor:** User  
+- **Goal:** User prevents another user from messaging, friending, or interacting with them.
+
+### UC18 – User Reports Another User  
+- **Primary Actor:** User  
+- **Goal:** User submits a report about inappropriate behavior or content.
+
+### UC19 – User Submits a Support Ticket  
+- **Primary Actor:** User  
+- **Goal:** User creates a support request for technical, account, or safety issues.
+
+### UC20 – User Views Game Progress  
+- **Primary Actor:** User  
+- **Goal:** User views their saved progress for a specific game.
+
+### UC21 – User Updates Notification Preferences  
+- **Primary Actor:** User  
+- **Goal:** User customizes which notifications they receive.
+
+### UC22 – Admin Assigns User Roles  
+- **Primary Actor:** Admin  
+- **Goal:** Admin grants or modifies user roles such as moderator or developer.
+
+### UC23 – Admin Moderates User Reports  
+- **Primary Actor:** Admin  
+- **Goal:** Admin reviews submitted reports and takes appropriate action.
+
+### UC24 – User Recovers Account  
+- **Primary Actor:** User  
+- **Goal:** User regains access to their account after losing credentials.
+
+### UC25 – User Adjusts Privacy Settings  
+- **Primary Actor:** User  
+- **Goal:** User controls who can view their profile, activity, and online status.
+
+
+# Unified Use Case Traceability Table
+
+| Use Case | Feature(s) |
+|---------|-------------|
+| UC1 | Log In, Register, User Interactions |
+| UC2 | Log In, Register, Log Out |
+| UC3 | Log In, Register, Log Out, User Interactions |
+| UC4 | Game Library, Search |
+| UC5 | Search, Game Library |
+| UC6 | Log In, Register, User Interactions |
+| UC7 | Log In, Register, User Interactions |
+| UC8 | Log In, Register, User Interactions |
+| UC9 | Register |
+| UC10 | Game Library, WebSocket Connections |
+| UC11 | Register, Online Activities, Game Library, WebSocket Connections |
+| UC12 | Register, Inbox Messages |
+| UC13 | Register, Achievement System, Toast Notifications |
+| UC14 | Game Library |
+| UC15 | Game Library, Search |
+| UC16 | Register, Online Activities, Friends |
+| UC17 | User Blocking and Safety Controls |
+| UC18 | User Reporting System |
+| UC19 | Support Ticket System |
+| UC20 | Game Progress Tracking |
+| UC21 | Notification Preferences Management |
+| UC22 | Role and Permission Management |
+| UC23 | User Reporting System, Role and Permission Management |
+| UC24 | Account Recovery |
+| UC25 | Privacy and Visibility Settings |
 
 ## Use Case Diagram
 
-I made this in paint(the one built into windows) because of how artistic I am
+### Logan's Diagram
+![Use Case Diagram](use-case-diagram-Logan.png)
 
-![Use Case Diagram](use-case-diagramToast.png)
+### Alex's Diagram
+![Alex's Use Case Diagram](use-case-diagram-Alex.png)
+
+### Eli's Diagram
+![Eli's Use Case Diagram](use-case-diagram-Toast.png)
+
+## Detailed Use Cases
+
+### UC1: User Logs In
+**Primary Actor:** User
+**Goal:**  A user logs into the site.
+**Preconditions:**  The user is not currently logged in; The user has already registered on the site.
+**Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that cofirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
+
+** Main Flow **
+1. User navigates t
+2. ...
+
+** Alternate Flow **
+- A1: ...
+- A2: ...
+
+---
+
+### UC9 – User Creates an Account  
+- **Primary Actor:** New User  
+- **Goal:** User successfully creates and registers an account.
+
+### UC10 – User Plays a Game  
+- **Primary Actor:** User  
+- **Goal:** User opens and plays an available game.
+
+### UC11 – User Plays Online  
+- **Primary Actor:** Registered User  
+- **Goal:** User connects to online services and plays an online game.
+
+### UC12 – System Sends Inbox Letter  
+- **Primary Actor:** System  
+- **Goal:** System delivers a message to the user’s inbox.
+
+### UC13 – System Alerts User of Achievement  
+- **Primary Actor:** System  
+- **Goal:** System notifies the user when they complete an achievement.
+
+### UC14 – User Views Game Library  
+- **Primary Actor:** User  
+- **Goal:** User receives the site’s library of games.
+
+### UC15 – User Searches for a Game/Genre  
+- **Primary Actor:** User  
+- **Goal:** User receives search results for a game, genre, or related query.
+
+### UC16 – User Becomes Friends with Another User  
+- **Primary Actor:** Registered User  
+- **Goal:** User becomes friends with another user and can interact socially.
+
+---
+
+### UC17 – User Blocks Another User  
+- **Primary Actor:** User  
+- **Goal:** User prevents another user from messaging, friending, or interacting with them.
+
+### UC18 – User Reports Another User  
+- **Primary Actor:** User  
+- **Goal:** User submits a report about inappropriate behavior or content.
+
+### UC19 – User Submits a Support Ticket  
+- **Primary Actor:** User  
+- **Goal:** User creates a support request for technical, account, or safety issues.
+
+### UC20 – User Views Game Progress  
+- **Primary Actor:** User  
+- **Goal:** User views their saved progress for a specific game.
+
+### UC21 – User Updates Notification Preferences  
+- **Primary Actor:** User  
+- **Goal:** User customizes which notifications they receive.
+
+### UC22 – Admin Assigns User Roles  
+- **Primary Actor:** Admin  
+- **Goal:** Admin grants or modifies user roles such as moderator or developer.
+
+### UC23 – Admin Moderates User Reports  
+- **Primary Actor:** Admin  
+- **Goal:** Admin reviews submitted reports and takes appropriate action.
+
+### UC24 – User Recovers Account  
+- **Primary Actor:** User  
+- **Goal:** User regains access to their account after losing credentials.
+
+### UC25 – User Adjusts Privacy Settings  
+- **Primary Actor:** User  
+- **Goal:** User controls who can view their profile, activity, and online status.
