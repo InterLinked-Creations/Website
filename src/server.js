@@ -32,9 +32,9 @@ function runGameUpdate() {
     });
 }
 
-// Run game update on startup and then every 1 minute
+// Run game update on startup and then every 24 hours
 runGameUpdate();
-const gameUpdateInterval = setInterval(runGameUpdate, 60 * 1000);
+const gameUpdateInterval = setInterval(runGameUpdate, 24 * 60 * 60 * 1000);
 
 // Handle graceful shutdown
 function shutdown() {
