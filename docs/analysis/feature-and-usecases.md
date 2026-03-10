@@ -186,11 +186,13 @@
 
 ## Detailed Use Cases
 
+# Logan
+
 ### UC1: User Logs In
-**Primary Actor:** User
-**Goal:**  A user logs into the site.
-**Preconditions:**  The user is not currently logged in; The user has already registered on the site.
-**Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that cofirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
+- **Primary Actor:** User
+- **Goal:**  A user logs into the site.
+- **Preconditions:**  The user is not currently logged in; The user has already registered on the site.
+- **Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that cofirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
 
 ** Main Flow **
 1. User opens browser and enters  the URl of the site.
@@ -217,7 +219,46 @@
 ** Alternate Flow ** 
 * A1:
 * A2:
+
+### UC3 – User Registers  
+- **Primary Actor:** User  
+- **Goal:** User creates a new account using registration credentials.
+
+### UC4 – User Accesses Game Library  
+- **Primary Actor:** User  
+- **Goal:** User views the catalog of available games.
+
+### UC5 – User Searches for Specific Games  
+- **Primary Actor:** User  
+- **Goal:** User searches for a specific game within the site.
+
+### UC6 – User Interacts One‑on‑One  
+- **Primary Actor:** User  
+- **Goal:** User opens a one‑on‑one communication channel with another user.
+
+### UC7 – User Interacts with Multiple Users  
+- **Primary Actor:** User  
+- **Goal:** User opens a group chat with multiple users.
+
+### UC8 – User Befriends Other Users  
+- **Primary Actor:** User  
+- **Goal:** User establishes a friendship relationship with one or more users.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ---
+# Alex
 
 ### UC9 – User Creates an Account  
 - **Primary Actor:** New User  
@@ -253,7 +294,16 @@
 - **Primary Actor:** Registered User  
 - **Goal:** User becomes friends with another user and can interact socially.
 
+
+
+
+
+
+
+
+
 ---
+# Eli
 
 ### UC17 – User Blocks Another User  
 - **Primary Actor:** User  
