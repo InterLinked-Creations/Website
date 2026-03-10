@@ -277,85 +277,144 @@ A2. User already blocked target -> System rejects the request.
 - **Primary Actor:** User  
 - **Goal:** User submits a report about inappropriate behavior or content.
 - **Preconditions:** User is authenticated; Target user exists; report contains valid details.
-- **Success Outcome:** 
+- **Success Outcome:** A new report is stored and marked for moderation review.
 
 ** Main Flow **
+1. User initiates a report.  
+2. System verifies the target user exists.  
+3. System validates the report details.  
+4. System creates a new report entry.  
+5. System timestamps and stores the report.  
+6. System confirms submission.  
 
 ** Alternate Flow **
+- A1: Missing or invalid report details -> System rejects the report.  
+- A2: Target user does not exist -> System rejects the report.  
 
 ### UC19 – User Submits a Support Ticket  
 - **Primary Actor:** User  
 - **Goal:** User creates a support request for technical, account, or safety issues.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** User is authenticated; Ticket includes a valid issue description
+- **Success Outcome:** A new support ticked is created and queued for review.
 
 ** Main Flow **
+1. User initiates a support ticket.  
+2. System validates the issue description.  
+3. System creates a new ticket entry.  
+4. System assigns an ID and timestamp.  
+5. System stores the ticket.  
+6. System confirms creation.  
 
 ** Alternate Flow **
-
+- A1: Missing or invalid issue description -> System rejects the ticket.  
 
 ### UC20 – User Views Game Progress  
 - **Primary Actor:** User  
 - **Goal:** User views their saved progress for a specific game.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** User is authenticated; Game exists; User has progress data
+- **Success Outcome:** User receives accurate progress information
 
 ** Main Flow **
+1. User requests to view game progress.  
+2. System verifies the game exists.  
+3. System retrieves the user’s progress data.  
+4. System returns the progress information.  
+5. User views their progress.  
 
 ** Alternate Flow **
-
+- A1: No progress data exists -> System informs the user.  
+- A2: Game does not exist -> System rejects the request. 
 
 ### UC21 – User Updates Notification Preferences  
 - **Primary Actor:** User  
 - **Goal:** User customizes which notifications they receive.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** User is authenticated
+- **Success Outcome:** User's notification preferences are updated.
 
 ** Main Flow **
+1. User indicates intent to update notification preferences.  
+2. System retrieves current preferences.  
+3. User selects new settings.  
+4. System validates the new settings.  
+5. System updates stored preferences.  
+6. System confirms the update.
 
 ** Alternate Flow **
+- A1: Invalid preference values -> System rejects the update.  
 
 
 ### UC22 – Admin Assigns User Roles  
 - **Primary Actor:** Admin  
 - **Goal:** Admin grants or modifies user roles such as moderator or developer.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** Admin is authenticated; Admin has permission to assign roles; Target user exists
+- **Success Outcome:** User's roles are updated
 
 ** Main Flow **
+1. Admin selects a user to modify roles.  
+2. System verifies admin permissions.  
+3. System verifies the target user exists.  
+4. Admin selects new role(s).  
+5. System validates the role changes.  
+6. System updates the user’s roles.  
+7. System confirms the update.  
 
 ** Alternate Flow **
-
+- A1: Admin lacks permission -> System rejects the request.  
+- A2: Invalid or unknown role -> System rejects the assignment.  
 
 ### UC23 – Admin Moderates User Reports  
 - **Primary Actor:** Admin  
 - **Goal:** Admin reviews submitted reports and takes appropriate action.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** Admin is authenticated; Admin has moderation permission; At least one pending report exists
+- **Success Outcome:** Report is resolved and moderation action is recorded.
 
 ** Main Flow **
+1. Admin requests pending reports.  
+2. System retrieves all pending reports.  
+3. Admin selects a report to review.  
+4. System displays report details.  
+5. Admin chooses an action.  
+6. System validates the action.  
+7. System applies the moderation action.  
+8. System records the decision.  
+9. System marks the report as resolved. 
 
 ** Alternate Flow **
+- A1: Admin lacks moderation permissions -> System rejects the request.  
+- A2: Invalid moderation action -> System rejects the action.  
 
 
 ### UC24 – User Recovers Account  
 - **Primary Actor:** User  
 - **Goal:** User regains access to their account after losing credentials.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** User has an existing account; User provides required recovery information
+- **Success Outcome:** User regains access to their account
 
 ** Main Flow **
+1. User initiates account recovery.  
+2. System verifies recovery information.  
+3. System confirms user identity.  
+4. System generates recovery authorization.  
+5. User resets credentials.  
+6. System confirms recovery.
 
 ** Alternate Flow **
-
+- A1: Invalid recovery information -> System rejects the request.  
+- A2: Identity cannot be verified -> System halts the process. 
 
 ### UC25 – User Adjusts Privacy Settings  
 - **Primary Actor:** User  
 - **Goal:** User controls who can view their profile, activity, and online status.
-- **Preconditions:**
-- **Success Outcome:**
+- **Preconditions:** User is authenticated
+- **Success Outcome:** User's privacy settings are updated
 
 ** Main Flow **
+1. User requests to modify privacy settings.  
+2. System retrieves current settings.  
+3. User selects new privacy options.  
+4. System validates the new settings.  
+5. System updates the privacy configuration.  
+6. System confirms the update. 
 
 ** Alternate Flow **
-
+- A1: Invalid privacy configuration -> System rejects the update.
