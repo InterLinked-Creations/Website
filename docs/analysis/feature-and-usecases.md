@@ -186,6 +186,17 @@
 
 ## Detailed Use Cases
 
+
+
+
+
+
+
+
+
+
+
+
 # Logan
 
 ### UC1: User Logs In
