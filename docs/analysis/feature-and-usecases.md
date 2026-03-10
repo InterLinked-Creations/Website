@@ -223,37 +223,99 @@
 - **Success Outcome:**  The user successfully logs out of their account and are redirected back to the home page.
 
 ** Main Flow ** 
-1. User navigates to the menu and hits the log out button.
+1. User opts to log out.
 2. System confirms the user tries logging out
 3. System logs user out.
 
 ** Alternate Flow ** 
-* A1:
-* A2:
+* A1: If the user gives invalid credentials then they are unable to log in.
 
 ### UC3 – User Registers  
 - **Primary Actor:** User  
 - **Goal:** User creates a new account using registration credentials.
+- **Preconditions:** The user is not already registered, user has a email address.
+- **Success Outcome:** The user registers with a email and password.
+
+** Main Flow ** 
+1. User opts to register for a account.
+2. user submits the request to register.
+3. System logs user in if registration succeeds.
+
+** Alternate Flow ** 
+* A1: If the username is already used then the user is unable to register.
 
 ### UC4 – User Accesses Game Library  
 - **Primary Actor:** User  
 - **Goal:** User views the catalog of available games.
+- **Preconditions:** The user is already registered and logged in.
+- **Success Outcome:** The user can access the library of available games.
+
+** Main Flow ** 
+1. User attempts to access game library.
+2. User is prompted to sign in.
+3. Upon successfully logging in the user can see all games available in the library.
+
+** Alternate Flow ** 
+* A1: User logs in before attempting to access the gaming library.
 
 ### UC5 – User Searches for Specific Games  
 - **Primary Actor:** User  
 - **Goal:** User searches for a specific game within the site.
+- **Preconditions:** The user is able to access site
+- **Success Outcome:** The user is able to search for specific games in the site.
+
+** Main Flow ** 
+1. User navigates to the site.
+2. User opens search and searches for a specific game.
+3. System displays games that match search criteria.
+
+** Alternate Flow ** 
+* A1: If the user is unable to access the site then they cannot search for games.
+
 
 ### UC6 – User Interacts One‑on‑One  
 - **Primary Actor:** User  
 - **Goal:** User opens a one‑on‑one communication channel with another user.
+- **Preconditions:** The user is logged in and they have already accepted a friend request.
+- **Success Outcome:** The user is able to open a one-on-one chat with a friend.
+
+** Main Flow ** 
+1. User navigates to the site.
+2. User logs in and opens their chat and starts a new chat with a friend.
+3. One-on-one communication channel is created between the users.
+
+** Alternate Flow ** 
+* A1: If the user doesn't have any friends they cannot open a one-on-one chat.
+
 
 ### UC7 – User Interacts with Multiple Users  
 - **Primary Actor:** User  
 - **Goal:** User opens a group chat with multiple users.
+- **Preconditions:** The user is logged in and they have multiple accepted friend requests.
+- **Success Outcome:** The user is open a chat with multiple friends at the same time.
+
+** Main Flow ** 
+1. User navigates to the site.
+2. User logs in and opens their chat and starts a new chat picking multiple friends to interact with.
+3. System opens a group chat for the users to interact.
+
+** Alternate Flow ** 
+* A1: If the user doesn't have any friends they cannot open a multiple-user chat.
 
 ### UC8 – User Befriends Other Users  
 - **Primary Actor:** User  
-- **Goal:** User establishes a friendship relationship with one or more users.
+- **Goal:** User creates friendship with other users.
+- **Preconditions:** The user is logged in and they know the username of other users they want to befriend.
+- **Success Outcome:** The user establishes a friendship with one or more users.
+
+** Main Flow ** 
+1. User navigates to the site.
+2. User logs in and sends a friend request to another user.
+3. System sends notification to other user that this user wants to be their friend.
+4. User accepts friend request.
+
+** Alternate Flow ** 
+* A1: If the user doesn't accept the friend request then then no friendship is established.
 
 
 
