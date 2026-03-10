@@ -217,10 +217,10 @@
 * A3: User clicks log in and enters credentials.
 
 ### UC2: User Logs Out
-**Primary Actor:** User
-**Goal:**  A user logs out of the site
-**Preconditions:**  The user is currently logged in; The user has already registered on the site.
-**Success Outcome:**  The user successfully logs out of their account and are redirected back to the home page.
+- **Primary Actor:** User
+- **Goal:**  A user logs out of the site
+- **Preconditions:**  The user is currently logged in; The user has already registered on the site.
+- **Success Outcome:**  The user successfully logs out of their account and are redirected back to the home page.
 
 ** Main Flow ** 
 1. User navigates to the menu and hits the log out button.
