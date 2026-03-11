@@ -336,37 +336,100 @@
 ### UC9 – User Creates an Account  
 - **Primary Actor:** New User  
 - **Goal:** User successfully creates and registers an account.
-- **Preconditions:** User should not be signed into an account
-- **Success Outcome:** A new account is created 
+- **Preconditions:** User should not be signed into an account.
+- **Success Outcome:** A new account is created and registered, and the user is logged into that new account.
+
+** Main Flow **
+1. User must head to the sign-in form
+2. User must enter their credentials
+3. System will check if accounts with similar credentials exist
+4. System will create new account and log the user back in.
+
+** Alternate Flow **
+- A1: User must log out of the account they are currently -> create another account
 
 ### UC10 – User Plays a Game  
 - **Primary Actor:** User  
 - **Goal:** User opens and plays an available game.
+- **Preconditions:**  A game must be on the list of existing games. (For some games, user must be signed in as well)
+- **Success Outcome:**  The user starts playing a selected game.
+
+** Main Flow **
+1. User opens the main menu
+2. User selects a game on the home page
+3. System sends the user to the game.
+
+** Alternate Flow **
+- A1: User logs into a registered account -> attempt playing a game again
 
 ### UC11 – User Plays Online  
 - **Primary Actor:** Registered User  
 - **Goal:** User connects to online services and plays an online game.
+- **Preconditions:**  User is logged into a registered account and has a stable internet connection.
+- **Success Outcome:**  User connects to an online service for the game or app.
+
+** Main Flow **
+1. User starts a game or app service.
+2. User selects the "Online Game" option (if available)
+3. User can interact with friends in the game or app.
+
+** Alternate Flow **
+- A1: User logs into a registered account before playing a game
 
 ### UC12 – System Sends Inbox Letter  
 - **Primary Actor:** System  
 - **Goal:** System delivers a message to the user’s inbox.
+- **Preconditions:**  An Achievement or Request must occur
+- **Success Outcome:**  A letter is sent to a user's inbox
+
+** Main Flow **
+1. A user completes an achievement or sends a friend request to another user.
+2. System processes the action and sends a letter to the recipient user's inbox.
+
+** Alternate Flow **
+- A1: Inbox is still in development -> Nothing happens.
 
 ### UC13 – System Alerts User of Achievement  
 - **Primary Actor:** System  
 - **Goal:** System notifies the user when they complete an achievement.
+- **Preconditions:**  
+- **Success Outcome:**  
+
+** Main Flow **
+1. ...
+2. ...
+
+** Alternate Flow **
+- A1: ...
+- A2: ...
 
 ### UC14 – User Views Game Library  
 - **Primary Actor:** User  
 - **Goal:** User receives the site’s library of games.
+- **Preconditions:**  
+- **Success Outcome:**  
 
-### UC15 – User Searches for a Game/Genre  
-- **Primary Actor:** User  
-- **Goal:** User receives search results for a game, genre, or related query.
+** Main Flow **
+1. ...
+2. ...
 
-### UC16 – User Becomes Friends with Another User  
+** Alternate Flow **
+- A1: ...
+- A2: ...
+
+### UC15 – User Becomes Friends with Another User  
 - **Primary Actor:** Registered User  
 - **Goal:** User becomes friends with another user and can interact socially.
+- **Preconditions:**  
+- **Success Outcome:**  
 
+** Main Flow **
+1. ...
+2. ...
+
+** Alternate Flow **
+- A1: ...
+- A2: ...
 
 
 
@@ -378,7 +441,7 @@
 ---
 # Eli
 
-### UC17 – User Blocks Another User  
+### UC16 – User Blocks Another User  
 - **Primary Actor:** User  
 - **Goal:** User prevents another user from messaging, friending, or interacting with them.
 - **Preconditions:** User is authenticated; Target user exists in system; The user has not already blocked the target user
@@ -396,7 +459,7 @@
 A1. Target user does not exist -> System rejects the requrest.
 A2. User already blocked target -> System rejects the request.
 
-### UC18 – User Reports Another User  
+### UC17 – User Reports Another User  
 - **Primary Actor:** User  
 - **Goal:** User submits a report about inappropriate behavior or content.
 - **Preconditions:** User is authenticated; Target user exists; report contains valid details.
@@ -414,7 +477,7 @@ A2. User already blocked target -> System rejects the request.
 - A1: Missing or invalid report details -> System rejects the report.  
 - A2: Target user does not exist -> System rejects the report.  
 
-### UC19 – User Submits a Support Ticket  
+### UC18 – User Submits a Support Ticket  
 - **Primary Actor:** User  
 - **Goal:** User creates a support request for technical, account, or safety issues.
 - **Preconditions:** User is authenticated; Ticket includes a valid issue description
@@ -431,7 +494,7 @@ A2. User already blocked target -> System rejects the request.
 ** Alternate Flow **
 - A1: Missing or invalid issue description -> System rejects the ticket.  
 
-### UC20 – User Views Game Progress  
+### UC19 – User Views Game Progress  
 - **Primary Actor:** User  
 - **Goal:** User views their saved progress for a specific game.
 - **Preconditions:** User is authenticated; Game exists; User has progress data
@@ -448,7 +511,7 @@ A2. User already blocked target -> System rejects the request.
 - A1: No progress data exists -> System informs the user.  
 - A2: Game does not exist -> System rejects the request. 
 
-### UC21 – User Updates Notification Preferences  
+### UC20 – User Updates Notification Preferences  
 - **Primary Actor:** User  
 - **Goal:** User customizes which notifications they receive.
 - **Preconditions:** User is authenticated
@@ -466,7 +529,7 @@ A2. User already blocked target -> System rejects the request.
 - A1: Invalid preference values -> System rejects the update.  
 
 
-### UC22 – Admin Assigns User Roles  
+### UC21 – Admin Assigns User Roles  
 - **Primary Actor:** Admin  
 - **Goal:** Admin grants or modifies user roles such as moderator or developer.
 - **Preconditions:** Admin is authenticated; Admin has permission to assign roles; Target user exists
@@ -485,7 +548,7 @@ A2. User already blocked target -> System rejects the request.
 - A1: Admin lacks permission -> System rejects the request.  
 - A2: Invalid or unknown role -> System rejects the assignment.  
 
-### UC23 – Admin Moderates User Reports  
+### UC22 – Admin Moderates User Reports  
 - **Primary Actor:** Admin  
 - **Goal:** Admin reviews submitted reports and takes appropriate action.
 - **Preconditions:** Admin is authenticated; Admin has moderation permission; At least one pending report exists
@@ -507,7 +570,7 @@ A2. User already blocked target -> System rejects the request.
 - A2: Invalid moderation action -> System rejects the action.  
 
 
-### UC24 – User Recovers Account  
+### UC23 – User Recovers Account  
 - **Primary Actor:** User  
 - **Goal:** User regains access to their account after losing credentials.
 - **Preconditions:** User has an existing account; User provides required recovery information
@@ -525,7 +588,7 @@ A2. User already blocked target -> System rejects the request.
 - A1: Invalid recovery information -> System rejects the request.  
 - A2: Identity cannot be verified -> System halts the process. 
 
-### UC25 – User Adjusts Privacy Settings  
+### UC24 – User Adjusts Privacy Settings  
 - **Primary Actor:** User  
 - **Goal:** User controls who can view their profile, activity, and online status.
 - **Preconditions:** User is authenticated
