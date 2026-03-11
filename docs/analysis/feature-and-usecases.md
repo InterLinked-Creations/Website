@@ -203,7 +203,7 @@
 - **Primary Actor:** User
 - **Goal:**  A user logs into the site.
 - **Preconditions:**  The user is not currently logged in; The user has already registered on the site.
-- **Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that cofirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
+- **Success Outcome:**  The user enters their username, password, and clicks log in and is redirected to a page that confirms they want to sign in as their username and they click Yes, sign in and are redirected to the sites homepage as a logged in user.
 
 ** Main Flow **
 1. User opens browser and enters  the URl of the site.
@@ -374,7 +374,7 @@
 3. User can interact with friends in the game or app.
 
 ** Alternate Flow **
-- A1: User logs into a registered account before playing a game
+- A1: User logs into a registered account -> attempt playing a game again
 
 ### UC12 – System Sends Inbox Letter  
 - **Primary Actor:** System  
@@ -392,44 +392,44 @@
 ### UC13 – System Alerts User of Achievement  
 - **Primary Actor:** System  
 - **Goal:** System notifies the user when they complete an achievement.
-- **Preconditions:**  
-- **Success Outcome:**  
+- **Preconditions:**  User must complete the requirement of an achievement
+- **Success Outcome:**  User receives the achievement and any rewards attached to it.
 
 ** Main Flow **
-1. ...
-2. ...
+1. User plays a game that has an achievement they want to complete.
+2. User completes the task of that achievement
+3. System processes the task and gives the user any rewards 
 
 ** Alternate Flow **
-- A1: ...
-- A2: ...
+- A1: Achievement system is still development -> Nothing happens.
 
 ### UC14 – User Views Game Library  
 - **Primary Actor:** User  
-- **Goal:** User receives the site’s library of games.
-- **Preconditions:**  
-- **Success Outcome:**  
+- **Goal:** User receives their library of played games.
+- **Preconditions:**  None
+- **Success Outcome:**  User receives the site’s library of games.
 
 ** Main Flow **
-1. ...
-2. ...
+1. User goes to the Library page in the Home Menu
+2. System retrieves the user's play activity and sends all the games they recently played and favored.
 
 ** Alternate Flow **
-- A1: ...
-- A2: ...
+- A1: The Library is still in development -> Nothing happens.
 
 ### UC15 – User Becomes Friends with Another User  
 - **Primary Actor:** Registered User  
 - **Goal:** User becomes friends with another user and can interact socially.
-- **Preconditions:**  
-- **Success Outcome:**  
+- **Preconditions:**  User must be registered
+- **Success Outcome:**  User is able to become friends with another user.
 
 ** Main Flow **
-1. ...
-2. ...
+1. User 1 goes to the friends page in the Home Menu
+2. User 1 sends a friend request to user 2
+3. User 2 accepts the request
 
 ** Alternate Flow **
-- A1: ...
-- A2: ...
+- A1: User 1 already sent a request -> User 2 accepts.
+- A2: User 2 already sent a request to User 1 -> User 1 accepts.
 
 
 
@@ -445,7 +445,7 @@
 - **Primary Actor:** User  
 - **Goal:** User prevents another user from messaging, friending, or interacting with them.
 - **Preconditions:** User is authenticated; Target user exists in system; The user has not already blocked the target user
-- **Success Outcome:** Target user is added tothe user's block list and future interactions are prevented
+- **Success Outcome:** Target user is added to the user's block list and future interactions are prevented
 
 ** Main Flow **
 1. User indicates intent to block another user
@@ -456,7 +456,7 @@
 6. System confirms the block.
 
 ** Alternate FFlow **
-A1. Target user does not exist -> System rejects the requrest.
+A1. Target user does not exist -> System rejects the request.
 A2. User already blocked target -> System rejects the request.
 
 ### UC17 – User Reports Another User  
