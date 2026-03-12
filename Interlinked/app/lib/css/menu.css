@@ -524,3 +524,11 @@ body {
     display: none;
     background: black;
 }
+
+.warning-message{
+    background: rgba(76, 82, 0, 0.545);
+    padding: 2vw;
+    border-radius: 0.5vw;
+    text-align: center;
+    margin: 3vw;
+}
