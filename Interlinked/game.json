@@ -2,12 +2,21 @@
     "games": [
         {
             "name": "Wonder World",
-            "description": "Test entry for update script",
+            "description": "The Alpha version of Wonder World. Explore a vast open world filled with mysteries, quests, and adventures. Discover hidden secrets, interact with unique characters, and shape your own story in this immersive sandbox experience.",
             "creator": "Alex Fischer",
             "yearCreated": "2025",
-            "tags": ["test"],
-            "folderName": "abc",
+            "tags": ["Sandbox", "Open World", "Alpha", "Single Player"],
+            "folderName": "WonderWorld",
             "repo": "https://github.com/InterLinked-Creations/Wonder-World"
+        },
+        {
+            "name": "Block Lands",
+            "description": "The Alpha version of Block Lands. A 3D platformer game set in a vibrant world made entirely of blocks. Navigate through challenging levels, solve puzzles, and uncover hidden secrets as you embark on an epic adventure. This version is temporarily using copywritten Super Mario assets, but will be replaced with original content in the future.",
+            "creator": "Alex Fischer",
+            "yearCreated": "2025",
+            "tags": ["Platformer", "Third Person", "Puzzle", "Alpha"],
+            "folderName": "BlockLands",
+            "repo": "https://github.com/InterLinked-Creations/BlockLands-Beta"
         }
     ]
 }

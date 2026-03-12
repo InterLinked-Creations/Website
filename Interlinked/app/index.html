@@ -591,6 +591,15 @@
         <span id="game-transition-branding">Interlinked Creations</span>
     </div>
 
+    <!-- Error dialog for failed game loads -->
+    <div id="game-error-dialog" class="hidden">
+        <div class="error-dialog-content">
+            <h2>Failed to Load Game</h2>
+            <p id="error-dialog-message">The game could not be loaded. Please try again later.</p>
+            <button id="error-dialog-close" class="error-close-button">Close</button>
+        </div>
+    </div>
+
     <!-- Full-screen game iframe (MainFrame) -->
     <iframe id="MainFrame" src="about:blank"></iframe>
 
