@@ -92,6 +92,15 @@ async function loadGames() {
         const data = await response.json();
 
         if (!data.success || !data.games || data.games.length === 0) {
+            const newestRibbon = document.getElementById('newest-games-ribbon');
+            const popularRibbon = document.getElementById('popular-games-ribbon');
+
+            if (newestRibbon) {
+                populateRibbon(newestRibbon, []);
+            }
+            if (popularRibbon) {
+                populateRibbon(popularRibbon, []);
+            }
             return;
         }
 
@@ -179,7 +188,7 @@ function openGameOverlay(gameTitle) {
     document.getElementById('game-rating-number').textContent = game.rating === "???" ? "???" : game.rating.toFixed(1);
 
     // Store the game URL for launching
-    currentGameURL = '/games/' + game.folderName || '';
+    currentGameURL = game.folderName ? ('/games/' + game.folderName + '/index.html') : '';
     
     // Create star rating
     if (game.rating === "???") {

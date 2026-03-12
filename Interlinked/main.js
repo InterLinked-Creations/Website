@@ -65,8 +65,7 @@ window.mainFrame = {
         },
 
         /**
-         * @description Changes the page displayed in the iframe without flashing the overlay screen.
-         * @param {string} src The path to the new page.
+         * @description Navigates the main iframe to the home page (index.html) using a fade transition.
          */
         home: function() { this.fade('index.html'); },
 

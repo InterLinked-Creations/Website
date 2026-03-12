@@ -75,7 +75,21 @@ async function fetchRemoteManifest(game) {
     const url = getRemoteManifestUrl(game);
     const response = await fetch(url);
     if (!response.ok) {
-        return null;
+        if (response.status === 404) {
+            // manifest.json is missing for this game
+            return null;
+        }
+        let errorText = "";
+        try {
+            errorText = await response.text();
+        } catch (e) {
+            // ignore errors while reading error response body
+        }
+        const details = errorText ? ` - ${errorText}` : "";
+        throw new Error(
+            `Failed to fetch remote manifest for "${game.name}" from ${url}: ` +
+            `${response.status} ${response.statusText}${details}`
+        );
     }
     const text = await response.text();
     return JSON.parse(text);
