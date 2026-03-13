@@ -409,8 +409,8 @@
 
 ** Implementation Evidence **
 - Entry points:
-    - 
-    - 
+    - https://github.com/InterLinked-Creations/Website/blob/8ab2ec06a0feec5b09cd6eb17e4553098ae76df6/Interlinked/app/lib/js/menu.js
+    - https://github.com/InterLinked-Creations/Website/blob/8ab2ec06a0feec5b09cd6eb17e4553098ae76df6/scripts/gameUpdate.js
 
 ### UC11 – User Plays Online  
 - **Primary Actor:** Registered User  
@@ -428,6 +428,7 @@
 
 ** Implementation Evidence **
 - Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/8ab2ec06a0feec5b09cd6eb17e4553098ae76df6/src/websocket/index.js
 
 ### UC12 – System Sends Inbox Letter  
 - **Primary Actor:** System  
@@ -443,7 +444,7 @@
 - A1: Inbox is still in development -> Nothing happens.
 
 ** Implementation Evidence **
-- Entry points:
+- Entry points: _Not fully implemented yet_
 
 ### UC13 – System Alerts User of Achievement  
 - **Primary Actor:** System  
@@ -460,7 +461,7 @@
 - A1: Achievement system is still development -> Nothing happens.
 
 ** Implementation Evidence **
-- Entry points:
+- Entry points: _Not fully implemented yet_
 
 ### UC14 – User Views Game Library  
 - **Primary Actor:** User  
@@ -476,7 +477,7 @@
 - A1: The Library is still in development -> Nothing happens.
 
 ** Implementation Evidence **
-- Entry points:
+- Entry points: _Not fully implemented yet_
 
 ### UC15 – User Becomes Friends with Another User  
 - **Primary Actor:** Registered User  
@@ -495,6 +496,10 @@
 
 ** Implementation Evidence **
 - Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/friends/controller.js
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/friends/index.js
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/friends/service.js
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/friends.js
 
 
 
