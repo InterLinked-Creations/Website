@@ -385,7 +385,13 @@
 4. System will create new account and log the user back in.
 
 ** Alternate Flow **
-- A1: User must log out of the account they are currently -> create another account
+- None
+
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/controller.js
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/index.js
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/service.js
 
 ### UC10 – User Plays a Game  
 - **Primary Actor:** User  
@@ -399,7 +405,12 @@
 3. System sends the user to the game.
 
 ** Alternate Flow **
-- A1: User logs into a registered account -> attempt playing a game again
+- None
+
+** Implementation Evidence **
+- Entry points:
+    - 
+    - 
 
 ### UC11 – User Plays Online  
 - **Primary Actor:** Registered User  
@@ -415,6 +426,9 @@
 ** Alternate Flow **
 - A1: User logs into a registered account -> attempt playing a game again
 
+** Implementation Evidence **
+- Entry points:
+
 ### UC12 – System Sends Inbox Letter  
 - **Primary Actor:** System  
 - **Goal:** System delivers a message to the user’s inbox.
@@ -427,6 +441,9 @@
 
 ** Alternate Flow **
 - A1: Inbox is still in development -> Nothing happens.
+
+** Implementation Evidence **
+- Entry points:
 
 ### UC13 – System Alerts User of Achievement  
 - **Primary Actor:** System  
@@ -442,6 +459,9 @@
 ** Alternate Flow **
 - A1: Achievement system is still development -> Nothing happens.
 
+** Implementation Evidence **
+- Entry points:
+
 ### UC14 – User Views Game Library  
 - **Primary Actor:** User  
 - **Goal:** User receives their library of played games.
@@ -454,6 +474,9 @@
 
 ** Alternate Flow **
 - A1: The Library is still in development -> Nothing happens.
+
+** Implementation Evidence **
+- Entry points:
 
 ### UC15 – User Becomes Friends with Another User  
 - **Primary Actor:** Registered User  
@@ -469,6 +492,9 @@
 ** Alternate Flow **
 - A1: User 1 already sent a request -> User 2 accepts.
 - A2: User 2 already sent a request to User 1 -> User 1 accepts.
+
+** Implementation Evidence **
+- Entry points:
 
 
 
