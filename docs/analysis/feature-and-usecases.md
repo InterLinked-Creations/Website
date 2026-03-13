@@ -210,11 +210,16 @@
 2. User navigates to a menu item that requires a log in.
 3. User clicks log in and puts in their credentials.
 
-
 ** Alternate Flow **
 * A1: User opens browser and enters the url of the site.
 * A2: The User navigates to another menu item that requires log in.
 * A3: User clicks log in and enters credentials.
+
+** Implementation Evidence **
+- Entry points: 
+  - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L503-L519
+  - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/account.js#L224-L256
+  - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/controller.js#L36-L50
 
 ### UC2: User Logs Out
 - **Primary Actor:** User
@@ -230,6 +235,12 @@
 ** Alternate Flow ** 
 * A1: If the user gives invalid credentials then they are unable to log in.
 
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L564
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/account.js#L494-L516
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/controller.js#L144-L160
+
 ### UC3 – User Registers  
 - **Primary Actor:** User  
 - **Goal:** User creates a new account using registration credentials.
@@ -243,6 +254,12 @@
 
 ** Alternate Flow ** 
 * A1: If the username is already used then the user is unable to register.
+
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/account.js#L189-L222
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L521-L548
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/auth/controller.js#L7-L31
 
 ### UC4 – User Accesses Game Library  
 - **Primary Actor:** User  
@@ -258,6 +275,11 @@
 ** Alternate Flow ** 
 * A1: User logs in before attempting to access the gaming library.
 
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L153-L177
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/menu.js#L140-L190
+
 ### UC5 – User Searches for Specific Games  
 - **Primary Actor:** User  
 - **Goal:** User searches for a specific game within the site.
@@ -272,6 +294,9 @@
 ** Alternate Flow ** 
 * A1: If the user is unable to access the site then they cannot search for games.
 
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L138-L150
 
 ### UC6 – User Interacts One‑on‑One  
 - **Primary Actor:** User  
@@ -287,6 +312,11 @@
 ** Alternate Flow ** 
 * A1: If the user doesn't have any friends they cannot open a one-on-one chat.
 
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/conversations/controller.js#L30-L55
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L323-L379
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/friends.js#L3068-L3090
 
 ### UC7 – User Interacts with Multiple Users  
 - **Primary Actor:** User  
@@ -301,6 +331,11 @@
 
 ** Alternate Flow ** 
 * A1: If the user doesn't have any friends they cannot open a multiple-user chat.
+
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/lib/js/friends.js#L2688-L2728
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L339-L351
 
 ### UC8 – User Befriends Other Users  
 - **Primary Actor:** User  
@@ -317,7 +352,11 @@
 ** Alternate Flow ** 
 * A1: If the user doesn't accept the friend request then then no friendship is established.
 
-
+** Implementation Evidence **
+- Entry points:
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/friends/controller.js#L32-L124
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/src/modules/friends/service.js#L77-L189
+    - https://github.com/InterLinked-Creations/Website/blob/0514ce8c8b222c75ddb82164d9d575b4a6100d1e/Interlinked/app/index.html#L230-L237
 
 
 
