@@ -498,6 +498,9 @@
 A1. Target user does not exist -> System rejects the request.
 A2. User already blocked target -> System rejects the request.
 
+**Implementation Evidence**
+- Not implemented in this repository
+
 ### UC17 – User Reports Another User  
 - **Primary Actor:** User  
 - **Goal:** User submits a report about inappropriate behavior or content.
@@ -516,6 +519,9 @@ A2. User already blocked target -> System rejects the request.
 - A1: Missing or invalid report details -> System rejects the report.  
 - A2: Target user does not exist -> System rejects the report.  
 
+**Implementation Evidence**
+- Not implemented in this repository
+
 ### UC18 – User Submits a Support Ticket  
 - **Primary Actor:** User  
 - **Goal:** User creates a support request for technical, account, or safety issues.
@@ -533,6 +539,9 @@ A2. User already blocked target -> System rejects the request.
 ** Alternate Flow **
 - A1: Missing or invalid issue description -> System rejects the ticket.  
 
+**Implementation Evidence**
+- Not implemented in this repository
+
 ### UC19 – User Views Game Progress  
 - **Primary Actor:** User  
 - **Goal:** User views their saved progress for a specific game.
@@ -549,6 +558,9 @@ A2. User already blocked target -> System rejects the request.
 ** Alternate Flow **
 - A1: No progress data exists -> System informs the user.  
 - A2: Game does not exist -> System rejects the request. 
+
+**Implementation Evidence**
+- Not implemented in this repository
 
 ### UC20 – User Updates Notification Preferences  
 - **Primary Actor:** User  
@@ -568,6 +580,9 @@ A2. User already blocked target -> System rejects the request.
 - A1: Invalid preference values -> System rejects the update.  
 
 
+**Implementation Evidence**
+- Not implemented in this repository
+
 ### UC21 – Admin Assigns User Roles  
 - **Primary Actor:** Admin  
 - **Goal:** Admin grants or modifies user roles such as moderator or developer.
@@ -586,6 +601,9 @@ A2. User already blocked target -> System rejects the request.
 ** Alternate Flow **
 - A1: Admin lacks permission -> System rejects the request.  
 - A2: Invalid or unknown role -> System rejects the assignment.  
+
+**Implementation Evidence**
+- Not implemented in this repository
 
 ### UC22 – Admin Moderates User Reports  
 - **Primary Actor:** Admin  
@@ -608,6 +626,8 @@ A2. User already blocked target -> System rejects the request.
 - A1: Admin lacks moderation permissions -> System rejects the request.  
 - A2: Invalid moderation action -> System rejects the action.  
 
+**Implementation Evidence**
+- Not implemented in this repository
 
 ### UC23 – User Recovers Account  
 - **Primary Actor:** User  
@@ -627,6 +647,9 @@ A2. User already blocked target -> System rejects the request.
 - A1: Invalid recovery information -> System rejects the request.  
 - A2: Identity cannot be verified -> System halts the process. 
 
+**Implementation Evidence**
+- Not implemented in this repository
+
 ### UC24 – User Adjusts Privacy Settings  
 - **Primary Actor:** User  
 - **Goal:** User controls who can view their profile, activity, and online status.
@@ -643,3 +666,6 @@ A2. User already blocked target -> System rejects the request.
 
 ** Alternate Flow **
 - A1: Invalid privacy configuration -> System rejects the update.
+
+**Implementation Evidence**
+- Not implemented in this repository
