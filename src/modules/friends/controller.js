@@ -95,8 +95,8 @@ function acceptFriendRequest(req, res) {
         const requesterOnlineStatus = result.requesterOnlineStatus ?? false;
 
         io.to(requesterId).emit("friendshipAccepted", {
-        friendId: accepterId,
-        isOnline: true
+            friendId: accepterId,
+            isOnline: true
         });
 
         io.to(accepterId).emit("friendshipAccepted", {
