@@ -88,6 +88,12 @@ function acceptFriendRequest(req, res) {
         const result = friendsService.acceptFriendRequest(req.db, inviteId, req.session.userId);
         res.json(result);
 
+        const requesterId = result.requesterId;
+        const accepterId = result.accepterId;
+        const accepterName = result.accepterName;
+
+        const requesterOnlineStatus = result.requesterOnlineStatus ?? false;
+
         io.to(requesterId).emit("friendshipAccepted", {
         friendId: accepterId,
         isOnline: true
