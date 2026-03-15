@@ -379,9 +379,17 @@ function closeAll(wss) {
     });
 }
 
+function sendToUser(userId, payload) {
+    const ws = clients.get(userId);
+    if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(payload));
+    }
+}
+
 module.exports = {
     initialize,
     getClients,
     closeAll,
-    broadcastUserStatus
+    broadcastUserStatus,
+    sendToUser
 };
