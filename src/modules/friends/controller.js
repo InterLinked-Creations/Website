@@ -87,6 +87,7 @@ function acceptFriendRequest(req, res) {
 
         const result = friendsService.acceptFriendRequest(req.db, inviteId, req.session.userId);
         res.json(result);
+
         io.to(requesterId).emit("friendshipAccepted", {
         friendId: accepterId,
         isOnline: true
@@ -96,6 +97,13 @@ function acceptFriendRequest(req, res) {
             friendId: requesterId,
             isOnline: requesterOnlineStatus
         });
+
+        io.to(requesterId).emit("friendAdded", {
+            friendId: accepterId,
+            friendName: accepterName,
+            isOnline: true
+        });
+
     } catch (error) {
         console.error('Accept friend request error:', error);
         res.status(500).json({
