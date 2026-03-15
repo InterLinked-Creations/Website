@@ -775,27 +775,43 @@ document.addEventListener('DOMContentLoaded', () => {
         socket.addEventListener('message', (event) => {
             try {
                 const data = JSON.parse(event.data);
-                
-                // Handle different message types
-                if (data.type === 'status_update') {
-                    handleStatusUpdate(data.user);
-                }
-                else if (data.type === 'message_received') {
-                    handleMessageReceived(data.message);
-                }
-                else if (data.type === 'typing_start') {
-                    handleTypingIndicator(data.conversationId, data.user, true);
-                }
-                else if (data.type === 'typing_stop') {
-                    handleTypingIndicator(data.conversationId, data.user, false);
-                }
-                else if (data.type === 'read_status_update') {
-                    handleReadStatusUpdate(data.conversationId, data.messageId, data.user);
+
+                switch (data.type) {
+                    case 'status_update':
+                        handleStatusUpdate(data.user);
+                        break;
+
+                    case 'message_received':
+                        handleMessageReceived(data.message);
+                        break;
+
+                    case 'typing_start':
+                        handleTypingIndicator(data.conversationId, data.user, true);
+                        break;
+
+                    case 'typing_stop':
+                        handleTypingIndicator(data.conversationId, data.user, false);
+                        break;
+
+                    case 'read_status_update':
+                        handleReadStatusUpdate(data.conversationId, data.messageId, data.user);
+                        break;
+
+                    case 'friendshipAccepted':
+                        addFriendToList(data.friendId, data.isOnline);
+                        updateFriendStatus(data.friendId, data.isOnline);
+                        showToast("You are now friends!");
+                        break;
+
+                    case 'friendAdded':
+                        insertFriendIntoUI(data.friendId, data.friendName, data.isOnline);
+                        break;
                 }
             } catch (error) {
                 console.error('Error handling WebSocket message:', error);
             }
         });
+
     }
     
     // Function to handle friend status updates
