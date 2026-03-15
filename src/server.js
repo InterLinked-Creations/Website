@@ -16,6 +16,9 @@ const server = http.createServer(app);
 
 // Initialize WebSocket server
 const wss = websocket.initialize(server);
+const { sendToUser } = websocket;
+
+const friendsController = require('./modules/friends/controller')(sendToUser);
 
 // Handle graceful shutdown
 function shutdown() {
