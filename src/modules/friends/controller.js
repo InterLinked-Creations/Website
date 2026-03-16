@@ -77,51 +77,57 @@ function getFriendRequests(req, res) {
 /**
  * Accept friend request
  */
-function acceptFriendRequest(req, res) {
-    try {
-        const { inviteId } = req.body;
+function acceptFriendRequest(sendToUser) {
+    return function(req, res) {
+        try {
+            const { inviteId } = req.body;
 
-        if (!req.session.userId) {
-            return res.status(401).json({ error: 'Not authenticated' });
+            if (!req.session.userId) {
+                return res.status(401).json({ error: 'Not authenticated' });
+            }
+
+            const result = friendsService.acceptFriendRequest(
+                req.db,
+                inviteId,
+                req.session.userId
+            );
+
+            res.json(result);
+
+            const requesterId = result.requesterId;
+            const accepterId = result.accepterId;
+            const accepterName = result.accepterName;
+            const requesterOnlineStatus = result.requesterOnlineStatus ?? false;
+
+            sendToUser(requesterId, {
+                type: "friendshipAccepted",
+                friendId: accepterId,
+                isOnline: true
+            });
+
+            sendToUser(accepterId, {
+                type: "friendshipAccepted",
+                friendId: requesterId,
+                isOnline: requesterOnlineStatus
+            });
+
+            sendToUser(requesterId, {
+                type: "friendAdded",
+                friendId: accepterId,
+                friendName: accepterName,
+                isOnline: true
+            });
+
+        } catch (error) {
+            console.error('Accept friend request error:', error);
+            res.status(500).json({
+                success: false,
+                error: error.message || 'Failed to accept friend request'
+            });
         }
-
-        const result = friendsService.acceptFriendRequest(req.db, inviteId, req.session.userId);
-        res.json(result);
-
-        const requesterId = result.requesterId;
-        const accepterId = result.accepterId;
-        const accepterName = result.accepterName;
-
-        const requesterOnlineStatus = result.requesterOnlineStatus ?? false;
-
-        sendToUser(requesterId, {
-            type: "friendshipAccepted",
-            friendId: accepterId,
-            isOnline: true
-        });
-
-
-        sendToUser(accepterId, {
-            type: "friendshipAccepted",
-            friendId: requesterId,
-            isOnline: requesterOnlineStatus
-        });
-
-        sendToUser(requesterId, {
-            type: "friendAdded",
-            friendId: accepterId,
-            friendName: accepterName,
-            isOnline: true
-        });
-
-    } catch (error) {
-        console.error('Accept friend request error:', error);
-        res.status(500).json({
-            success: false,
-            error: error.message || 'Failed to accept friend request'
-        });
-    }
+    };
 }
+
 
 /**
  * Decline friend request
@@ -171,11 +177,12 @@ function getFriends(req, res) {
     }
 }
 
-module.exports = {
+module.exports = (sendToUser) => ({
     checkFriendRequest,
     sendFriendRequest,
     getFriendRequests,
-    acceptFriendRequest,
+    acceptFriendRequest: acceptFriendRequest(sendToUser),
     declineFriendRequest,
     getFriends
-};
+});
+
