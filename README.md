@@ -18,31 +18,31 @@ There are hopes for many amazing features, so here are the top three features th
 
 ## Images
 The Intro Screen when the page loads up:<br>
-<img src="Markdown Files/1. Intro.png" width="60%">
+<img src="Markdown%20Files/1.%20Intro.png" width="60%">
 
 The Home Screen when logged out:<br>
-<img src="Markdown Files/2. HomePage.png" width="60%">
+<img src="Markdown%20Files/2.%20HomePage.png" width="60%">
 
 Login screen:<br>
-<img src="Markdown Files/3. LoginScreen.png" width="60%">
+<img src="Markdown%20Files/3.%20LoginScreen.png" width="60%">
 
 Dark Mode:<br>
-<img src="Markdown Files/4. DarkMode.png" width="60%">
+<img src="Markdown%20Files/4.%20DarkMode.png" width="60%">
 
 Friends Page:<br>
-<img src="Markdown Files/5. FriendPage.png" width="60%">
+<img src="Markdown%20Files/5.%20FriendPage.png" width="60%">
 
 The Chat Dialog with some conversations on the sides:<br>
-<img src="Markdown Files/6. Chat.png" width="60%">
+<img src="Markdown%20Files/6.%20Chat.png" width="60%">
 
 A dialog screen that shows after selecting a game:<br>
-<img src="Markdown Files/7. GameDescription.png" width="60%">
+<img src="Markdown%20Files/7.%20GameDescription.png" width="60%">
 
 When the game fails to load (This one showing a 404 error):<br>
-<img src="Markdown Files/8. LoadingError.png" width="60%">
+<img src="Markdown%20Files/8.%20LoadingError.png" width="60%">
 
 An active game. Notice the MainFrame CSS with large side margins when the window is stretched:<br>
-<img src="Markdown Files/9. ActiveGame.png" width="60%">
+<img src="Markdown%20Files/9.%20ActiveGame.png" width="60%">
 
 ## Target Users
 - **Primary Audience:** This website is for all families to act like a safe haven from all the non-family-friendly content out there. We also want to deeply integrate strong Parental Controls so parents can have full control over what their kids do on this site.
@@ -83,7 +83,7 @@ If everything worked, you can open [localhost:3000](http://localhost:3000/) on y
 | `npm run db:setup` | Create/reset the database |
 | `npm run db:update` | Migrate data (backup → rebuild → restore) |
 | `npm run db:query` | Run ad-hoc database queries |
-| `npm run game:update` | Run the install/update script to add games to the library.
+| `npm run game:update` | Run the install/update script to add games to the library |
 
 ### Environment Variables
 
@@ -150,24 +150,24 @@ By default, the `app` folder is content that the MainFrame shows. With it, it ca
 │   ├── dbUpdate.js
 │   └── gameUpdate.js
 └── src/                         # Source code (modular)
-	├── server.js               # Entry point: HTTP/WebSocket server
-	├── app.js                  # Express app config (middleware, routes)
-	├── config/
-	│   └── index.js            # Environment variables
-	├── db/
-	│   ├── connection.js       # SQLite connection singleton
-	│   ├── schema.json
-	│   └── setup.js            # Table definitions
-	├── middleware/
-	│   └── auth.js             # Authentication middleware
-	├── modules/                # Feature modules
-	│   ├── auth/
-	│   ├── users/
-	│   ├── friends/
-	│   ├── games/
-	│   └── conversations/
-	└── websocket/
-		└── index.js            # Real-time status, chat, typing
+    ├── server.js               # Entry point: HTTP/WebSocket server
+    ├── app.js                  # Express app config (middleware, routes)
+    ├── config/
+    │   └── index.js            # Environment variables
+    ├── db/
+    │   ├── connection.js       # SQLite connection singleton
+    │   ├── schema.json
+    │   └── setup.js            # Table definitions
+    ├── middleware/
+    │   └── auth.js             # Authentication middleware
+    ├── modules/                # Feature modules
+    │   ├── auth/
+    │   ├── users/
+    │   ├── friends/
+    │   ├── games/
+    │   └── conversations/
+    └── websocket/
+        └── index.js            # Real-time status, chat, typing
 ```
 
 ## Copyrights
