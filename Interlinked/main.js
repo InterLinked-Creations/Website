@@ -1,5 +1,12 @@
 window.mainFrame = {
     /**
+     * @type {string}
+     * @description The mode of the MainFrame, which can affect how certain functions behave.
+     * For example, in "web" mode, a game will try to quit to the main menu instead of closing the entire window.
+     */
+    mode: "web",
+
+    /**
      * @type {HTMLElement}
      * @description The main iframe element on the page.
      */
@@ -36,10 +43,157 @@ window.mainFrame = {
          * @description Changes the page displayed in the iframe without flashing the overlay screen.
          * @param {string} src The path to the new page.
          */
+        fade: function(src = false) {
+            if (src) {
+                const flashElement = document.getElementById('screenOverlay');
+                flashElement.classList.add('active');
+                this.overlayOn = true;
+                setTimeout(() => {
+                    mainFrame.html.src = "app/"+src;
+                }, 800);
+            }
+        },
+
+        /**
+         * @description Changes the page displayed in the iframe without flashing the overlay screen.
+         * @param {string} src The path to the new page.
+         */
         shortcut: function(src = false) {
             if (src) {
                 mainFrame.html.src = "app/"+src;
             }
+        },
+
+        /**
+         * @description Navigates the main iframe to the home page (index.html) using a fade transition.
+         */
+        home: function() { this.fade('index.html'); },
+
+        /**
+         * @description Launches a game with the full-screen transition overlay.
+         * @param {string} gameURL The URL of the game to launch.
+         * @param {Function} [onComplete] Optional callback invoked when the transition finishes.
+         */
+        launch: function(gameURL, onComplete) {
+            if (!gameURL) {
+                console.error('No game URL set');
+                return;
+            }
+
+            const innerDoc = mainFrame.html.contentDocument;
+            const overlay = innerDoc.getElementById('game-transition-overlay');
+            const branding = innerDoc.getElementById('game-transition-branding');
+            const gameFrame = innerDoc.getElementById('MainFrame');
+            const errorDialog = innerDoc.getElementById('game-error-dialog');
+            const errorDialogMessage = innerDoc.getElementById('error-dialog-message');
+            const errorDialogClose = innerDoc.getElementById('error-dialog-close');
+
+            // Step 1: Fade to black
+            overlay.classList.add('active');
+
+            // Step 2: Show branding text after the screen is opaque
+            setTimeout(() => {
+                branding.classList.add('visible');
+            }, 650);
+
+            // Step 3: Start loading the game behind the black screen
+            setTimeout(() => {
+                gameFrame.style.display = 'block';
+                gameFrame.src = gameURL;
+            }, 1000);
+
+            // Step 4 & 5: Once game finishes loading, remove text then fade away
+            let transitionComplete = false;
+            let errorOccurred = false;
+
+            function showError(errorMessage) {
+                if (errorOccurred) return;
+                errorOccurred = true;
+
+                // Fade out the branding text
+                branding.classList.add('fade-out');
+                branding.classList.remove('visible');
+
+                // Keep the overlay active (black screen stays opaque)
+                // Navigate back to home page while keeping overlay active
+                setTimeout(() => {
+                    gameFrame.style.display = 'none';
+                    gameFrame.src = 'about:blank';
+                    
+                    // Show error dialog
+                    errorDialogMessage.textContent = errorMessage || 'The game could not be loaded. Please try again later.';
+                    errorDialog.classList.remove('hidden');
+
+                    // Setup close button handler
+                    errorDialogClose.onclick = function() {
+                        errorDialog.classList.add('hidden');
+                        branding.classList.remove('fade-out');
+                        overlay.classList.remove('active');
+                    };
+                }, 500);
+            }
+
+            function finishTransition() {
+                if (transitionComplete || errorOccurred) return;
+                transitionComplete = true;
+
+                setTimeout(() => {
+                    branding.classList.remove('visible');
+                }, 500);
+
+                setTimeout(() => {
+                    overlay.classList.remove('active');
+                    if (onComplete) onComplete();
+                }, 1100);
+            }
+
+            // Error detection for the iframe
+            gameFrame.onerror = function() {
+                showError('The game failed to load. The server may be unavailable.');
+            };
+
+            gameFrame.onload = function() {
+                try {
+                    // Try to access the iframe's content to check if it loaded properly
+                    const iframeDoc = gameFrame.contentDocument || gameFrame.contentWindow.document;
+                    
+                    // Check if we got an error page (this won't work for all cases due to CORS)
+                    // But we can at least check if the document exists
+                    if (!iframeDoc) {
+                        showError('The game failed to load. Please check your connection.');
+                        return;
+                    }
+
+                    // Check if the page is blank or has an error
+                    const bodyText = iframeDoc.body ? iframeDoc.body.textContent.trim() : '';
+                    const title = iframeDoc.title ? iframeDoc.title.toLowerCase() : '';
+                    
+                    // Common error page indicators
+                    if (title.includes('404') || title.includes('not found') || 
+                        title.includes('500') || title.includes('error') ||
+                        bodyText.includes('404') || bodyText.includes('Not Found') ||
+                        bodyText.includes('500') || bodyText.includes('Internal Server Error')) {
+                        showError('The game could not be found (Error 404). It may have been moved or removed.');
+                        return;
+                    }
+
+                    // If we got here, assume the page loaded successfully
+                    finishTransition();
+                } catch (e) {
+                    // CORS error - we can't access the iframe content
+                    // In this case, we'll assume it loaded successfully if onload fired
+                    // unless it's a same-origin error page
+                    console.warn('Cannot verify iframe content due to CORS:', e);
+                    finishTransition();
+                }
+            };
+
+            // Fallback: if the iframe never fires onload, finish after 8 seconds
+            setTimeout(() => {
+                if (!transitionComplete && !errorOccurred) {
+                    showError('The game took too long to load. The server may be unavailable.');
+                }
+            }, 8000);
         }
     },
 

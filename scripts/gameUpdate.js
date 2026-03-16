@@ -6,6 +6,9 @@ const simpleGit = require("simple-git");
 // Path to game.json
 const gameListPath = path.join(__dirname, "..", "Interlinked", "game.json");
 
+// Path to installed.json (written after successful installs/updates)
+const installedPath = path.join(__dirname, "..", "Interlinked", "games", "installed.json");
+
 // Directory setup
 const games = loadGameList();
 const gamesDir = path.join(__dirname, "..", "Interlinked", "games");
@@ -67,12 +70,26 @@ function getRemoteManifestUrl(game) {
     return `https://raw.githubusercontent.com/${owner}/${repoName}/main/manifest.json`;
 }
 
-// calls fetch on the raw manifest url, throws error if file doesn't exist, parses the JSON
+// calls fetch on the raw manifest url, returns null if file doesn't exist, parses the JSON
 async function fetchRemoteManifest(game) {
     const url = getRemoteManifestUrl(game);
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Failed to fetch remote manifest for "${game.name}" from ${url} (status ${response.status})`);
+        if (response.status === 404) {
+            // manifest.json is missing for this game
+            return null;
+        }
+        let errorText = "";
+        try {
+            errorText = await response.text();
+        } catch (e) {
+            // ignore errors while reading error response body
+        }
+        const details = errorText ? ` - ${errorText}` : "";
+        throw new Error(
+            `Failed to fetch remote manifest for "${game.name}" from ${url}: ` +
+            `${response.status} ${response.statusText}${details}`
+        );
     }
     const text = await response.text();
     return JSON.parse(text);
@@ -84,21 +101,21 @@ function getGameStatus(localManifest, remoteManifest) {
         if (!remoteManifest) {
             return "not-installed";
         }
-        if (!remoteManifest.version) {
+        if (!remoteManifest.InterlinkedCreations_Version) {
             return "remote-no-version";
         }
         return "not-installed";
     }
 
-    if (!localManifest.version) {
+    if (!localManifest.InterlinkedCreations_Version) {
         return "installed-no-version";
     }
 
-    if (!remoteManifest || !remoteManifest.version) {
+    if (!remoteManifest || !remoteManifest.InterlinkedCreations_Version) {
         return "remote-no-version";
     }
 
-    if (localManifest.version === remoteManifest.version) {
+    if (localManifest.InterlinkedCreations_Version === remoteManifest.InterlinkedCreations_Version) {
         return "up-to-date";
     }
 
@@ -171,12 +188,39 @@ function ensureGamesDir() {
 }
 
 
+// Saves metadata from installed games into installed.json
+function saveInstalledGames() {
+    const installedGames = [];
+
+    for (const game of games) {
+        const manifest = loadLocalManifest(game);
+        if (manifest) {
+            installedGames.push({
+                name: game.name,
+                title: game.name,
+                description: game.description || "No description provided.",
+                tags: game.tags || [],
+                creator: game.creator || "Unknown",
+                yearCreated: game.yearCreated || "????",
+                coverURL: manifest.coverURL || "missing.png",
+                InterlinkedCreations_Version: manifest.InterlinkedCreations_Version || "Unknown",
+                folderName: game.folderName
+            });
+        }
+    }
+
+    fs.writeFileSync(installedPath, JSON.stringify({ games: installedGames }, null, 4), "utf8");
+    console.log(`Saved ${installedGames.length} installed game(s) to installed.json`);
+}
+
+
 async function main() {
     console.log("=== Game Update Status Check ===");
     console.log("Loading game list...");
 
     if (games.length === 0) {
         console.log("No games found in game.json");
+        saveInstalledGames();
         return;
     }
 
@@ -196,12 +240,14 @@ async function main() {
         let remoteManifest = null;
 
         console.log("Fetching remote manifest...");
-        try {
-            remoteManifest = await fetchRemoteManifest(game);
-            console.log("Remote manifest:", remoteManifest);
-        } catch (err) {
-            console.error(`Failed to load remote manifest for "${game.name}":`, err.message);
+        remoteManifest = await fetchRemoteManifest(game);
+
+        if (!remoteManifest) {
+            console.log(`Skipping "${game.name}": no manifest.json found in remote repository`);
+            continue;
         }
+
+        console.log("Remote manifest:", remoteManifest);
 
         console.log("Comparing versions...");
         const status = getGameStatus(localManifest, remoteManifest);
@@ -216,6 +262,9 @@ async function main() {
 
         console.log(`Finished processing ${game.name}`);
     }
+
+    console.log("\nSaving installed games list...");
+    saveInstalledGames();
 
     console.log("\n=== Game update process complete ===");
 }

@@ -36,90 +36,120 @@ ImageLibrary.init({
     'goldButton': 'app/lib/icons/gold-button.png'
 });
 
-// Sample game data - in a real app, this would come from a database or API
-const gameData = {
-    "Wonder World": {
-        cover: "app/lib/covers/wonder-world.png",
-        developer: "Alex Fischer",
-        release: "2025",
-        rating: "???",
-        description: "Explore a vibrant world full of imagination and adventure. Wonder World takes you on a journey through magical landscapes and introduces you to unforgettable characters.",
-        tags: ["Adventure", "Family-friendly", "Open World", "Sandbox", "Fantasy"]
-    },
-    "Pixel Battles": {
-        cover: "app/lib/covers/pixel-battles.png",
-        developer: "InterLinked Creations",
-        release: "2024",
-        rating: "???",
-        description: "Jump into pixel-perfect arena battles against friends or AI. Master different weapons and power-ups in this fast-paced multiplayer game.",
-        tags: ["Action", "Multiplayer", "PvP", "Pixel Art"]
-    },
-    "Kart Battle": {
-        cover: "app/lib/covers/kart-battle.png",
-        developer: "Alex Fischer",
-        release: "2025",
-        rating: "???",
-        description: "Race through crazy tracks, collect power-ups, and battle your way to the finish line in this high-speed kart racing game.",
-        tags: ["Racing", "Multiplayer", "Family-friendly"]
-    },
-    "Sonic Hockey": {
-        cover: "app/lib/covers/sonic-hockey.png",
-        developer: "Alex Fischer",
-        release: "2024",
-        rating: "???",
-        description: "Experience the thrill of high-speed hockey with unique power moves and special abilities that make every match exciting.",
-        tags: ["Sports", "Arcade", "Action", "Multiplayer"]
-    },
-    "Block Lands": {
-        cover: "app/lib/covers/block-lands.png",
-        developer: "InterLinked Creations",
-        release: "2023",
-        rating: "???",
-        description: "Survive a series of challenging levels made entirely of blocks. Pull off unique moves, collect unique power-ups, and solve puzzles to progress through the game.",
-        tags: ["Survival", "Platformer", "Multiplayer", "Family-friendly"]
-    },
-    "Pixel Quest": {
-        cover: "app/lib/covers/pixel-quest.png",
-        developer: "InterLinked Creations",
-        release: "2024",
-        rating: "???",
-        description: "Embark on an epic retro-style adventure. Level up your characters, discover hidden treasures, and save the world from ancient evil. Free roam is also available, along with multiplayer co-op and free-for-all mode.",
-        tags: ["Pixel Art", "Adventure", "Story-rich", "Fantasy", "Action", "Multiplayer"]
-    },
-    "Tank Battle": {
-        cover: "app/lib/covers/tank-battle.png",
-        developer: "InterLinked Creations",
-        release: "2025",
-        rating: "???",
-        description: "Command your tank through challenging battlefields. Upgrade your arsenal and defeat enemy forces in this strategic combat game.",
-        tags: ["Strategy", "Action", "Military", "Multiplayer"]
-    },
-    "Wonder World Race": {
-        cover: "app/lib/covers/wonder-world-race.png",
-        developer: "Alex Fischer",
-        release: "2025",
-        rating: "???",
-        description: "Race through the magical realms of Wonder World with your favorite characters. Unlock special powers and discover shortcuts to victory.",
-        tags: ["Racing", "Family-friendly", "Fantasy"]
+// Game data loaded from the API
+let gameData = {};
+
+// Currently selected game URL for launching
+let currentGameURL = '';
+
+// Creates a game card DOM element
+function createGameCard(game) {
+    const card = document.createElement('div');
+    card.classList.add('game-card');
+
+    const imageDiv = document.createElement('div');
+    imageDiv.classList.add('game-card-image');
+    if (game.coverURL) {
+        imageDiv.style.backgroundImage = `url('${game.coverURL}')`;
     }
-};
+
+    const titleDiv = document.createElement('div');
+    titleDiv.classList.add('game-card-title');
+    const titleP = document.createElement('p');
+    titleP.textContent = game.title || game.name;
+    titleDiv.appendChild(titleP);
+
+    card.appendChild(imageDiv);
+    card.appendChild(titleDiv);
+
+    card.addEventListener('click', () => {
+        openGameOverlay(game.title || game.name);
+    });
+
+    return card;
+}
+
+// Populates a game ribbon element with game cards
+function populateRibbon(ribbonElement, games) {
+    ribbonElement.innerHTML = '';
+    if (!games || games.length === 0) {
+        const msg = document.createElement('p');
+        msg.classList.add('no-games-message');
+        msg.textContent = 'No games are currently available.';
+        ribbonElement.appendChild(msg);
+        return;
+    }
+
+    games.forEach(game => {
+        ribbonElement.appendChild(createGameCard(game));
+    });
+}
+
+// Fetches games from the API and populates all ribbons
+async function loadGames() {
+    try {
+        const response = await fetch('/api/games');
+        const data = await response.json();
+
+        if (!data.success || !data.games || data.games.length === 0) {
+            const newestRibbon = document.getElementById('newest-games-ribbon');
+            const popularRibbon = document.getElementById('popular-games-ribbon');
+
+            if (newestRibbon) {
+                populateRibbon(newestRibbon, []);
+            }
+            if (popularRibbon) {
+                populateRibbon(popularRibbon, []);
+            }
+            return;
+        }
+
+        // Build gameData lookup from API results
+        gameData = {};
+        data.games.forEach(game => {
+            const key = game.title || game.name;
+            gameData[key] = {
+                cover: game.coverURL || '',
+                developer: game.creator || '',
+                release: game.yearCreated || '',
+                rating: '???',
+                description: game.description || '',
+                tags: game.tags || [],
+                folderName: game.folderName || ''
+            };
+        });
+
+        // Populate ribbons
+        const newestRibbon = document.getElementById('newest-games-ribbon');
+        const popularRibbon = document.getElementById('popular-games-ribbon');
+
+        if (newestRibbon) {
+            populateRibbon(newestRibbon, data.games);
+        }
+        if (popularRibbon) {
+            populateRibbon(popularRibbon, data.games);
+        }
+
+        // Preload game covers
+        preloadGameCovers();
+    } catch (err) {
+        console.error('Failed to load games from API:', err);
+    }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
-    const gameCards = document.querySelectorAll('.game-card');
     const overlay = document.getElementById('game-overlay');
     const closeButton = document.querySelector('.overlay-close');
-    
-    // Add click event to all game cards
-    gameCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const title = card.querySelector('.game-card-title p').textContent;
-            openGameOverlay(title);
-        });
-    });
     
     // Close overlay when clicking the X button
     closeButton.addEventListener('click', () => {
         closeGameOverlay();
+    });
+
+    // Play Now button launches the game with transition
+    const playNowBtn = document.getElementById('play-now-btn');
+    playNowBtn.addEventListener('click', () => {
+        window.parent.mainFrame.page.launch(currentGameURL, closeGameOverlay);
     });
     
     // Close overlay when clicking outside the content
@@ -135,6 +165,9 @@ document.addEventListener('DOMContentLoaded', () => {
             closeGameOverlay();
         }
     });
+
+    // Load games from API
+    loadGames();
 });
 
 function openGameOverlay(gameTitle) {
@@ -153,6 +186,9 @@ function openGameOverlay(gameTitle) {
     document.getElementById('game-release').textContent = game.release;
     document.getElementById('game-description').textContent = game.description;
     document.getElementById('game-rating-number').textContent = game.rating === "???" ? "???" : game.rating.toFixed(1);
+
+    // Store the game URL for launching
+    currentGameURL = game.folderName ? ('/games/' + game.folderName + '/index.html') : '';
     
     // Create star rating
     if (game.rating === "???") {
@@ -247,9 +283,3 @@ function preloadGameCovers() {
     });
     console.log('Game covers preloaded');
 }
-
-// Call preload when document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-    // Preload game covers for better performance
-    preloadGameCovers();
-});

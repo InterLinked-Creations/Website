@@ -263,6 +263,15 @@ body {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.no-games-message {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2vw;
+    text-align: center;
+    width: 100%;
+    padding: 3vw 0;
+    margin: 0;
+}
+
 /* Game Overlay Styles */
 #game-overlay {
     position: fixed;
@@ -464,4 +473,131 @@ body {
     50% {
         transform: translateY(-50%) translateX(-0.2vw);
     }
+}
+
+/************** GAME LAUNCH TRANSITION **************/
+/* Full-screen black overlay used during game launch */
+#game-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+#game-transition-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* "Interlinked Creations" branding text shown during transition */
+#game-transition-branding {
+    position: absolute;
+    top: 1.5vw;
+    right: 2vw;
+    font-size: 1.4vw;
+    font-weight: bold;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+#game-transition-branding.visible {
+    opacity: 1;
+}
+
+#game-transition-branding.fade-out {
+    opacity: 0;
+}
+
+/* Full-screen iframe for playing games */
+#MainFrame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    z-index: 1500;
+    display: none;
+    background: black;
+}
+
+/************** GAME ERROR DIALOG **************/
+#game-error-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2500;
+    pointer-events: auto;
+}
+
+#game-error-dialog.hidden {
+    display: none;
+}
+
+.error-dialog-content {
+    background: linear-gradient(135deg, #2c2c2c, #1a1a1a);
+    border: 0.2vw solid #ff4444;
+    border-radius: 1vw;
+    padding: 3vw;
+    max-width: 35vw;
+    box-shadow: 0 1vw 3vw rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.error-dialog-content h2 {
+    color: #ff4444;
+    font-size: 2vw;
+    margin: 0 0 1.5vw 0;
+    font-weight: bold;
+}
+
+.error-dialog-content p {
+    color: #ffffff;
+    font-size: 1.2vw;
+    margin: 0 0 2vw 0;
+    line-height: 1.6;
+}
+
+.error-close-button {
+    background: linear-gradient(135deg, #ff4444, #cc0000);
+    color: white;
+    border: none;
+    border-radius: 0.5vw;
+    padding: 1vw 3vw;
+    font-size: 1.2vw;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0.3vw 0.6vw rgba(0, 0, 0, 0.3);
+}
+
+.error-close-button:hover {
+    transform: translateY(-0.2vw);
+    box-shadow: 0 0.5vw 1vw rgba(255, 68, 68, 0.5);
+}
+
+.error-close-button:active {
+    transform: translateY(0);
+    box-shadow: 0 0.2vw 0.4vw rgba(0, 0, 0, 0.3);
+}
+
+.warning-message{
+    background: rgba(76, 82, 0, 0.545);
+    padding: 2vw;
+    border-radius: 0.5vw;
+    text-align: center;
+    margin: 3vw;
 }
