@@ -6,7 +6,7 @@ This is the base of the Interlinked Creations website.
 This includes front-end and back-end activity with a local SQLite database.
 
 ## Overview
-The Interlinked Creations website is the main hub for the entire [Interlinked Creations](https://github.com/InterLinked-Creations) company, which includes family-friendly content like games, books, videos, and tools. There are many back-end services available like Online Rooms (for Online Multiplayer or Live Video Chat), Game Download and Update Management (of the Interlinked App), etc.
+The Interlinked Creations website is the main hub for the entire [Interlinked Creations](https://github.com/InterLinked-Creations) company, which includes family-friendly content like games, books, videos, and tools. There are many back-end services available like Online Rooms (for Online Multiplayer or Live Video Chat), Game Download and Update Management (only in the Interlinked App), etc.
 
 ## Features
 There are hopes for many amazing features, so here are the top three features that are coming very soon:
@@ -15,6 +15,34 @@ There are hopes for many amazing features, so here are the top three features th
 
 - Embedded Console-like screen: The embedded screen on the webpage maintains a consistent aspect ratio. This makes CSS a lot easier to work with and allows the website to be displayed the same way across **all** screen sizes. The screen will include many different aspect ratios so people who prefer their phone to be vertical, gamers who have wide monitor screens, or anyone with a unique screen size can still enjoy the website.
 - Special UI API: Included with the Embedded Screen is the Special UI that comes with it. When receiving messages or invites, completing achievements, or a bit of news you are following, you will get cool pop-ups. You can also suspend certain pages and change some settings, use shortcuts to certain apps, and access some apps mid-game, like chat, video, etc.
+
+## Images
+The Intro Screen when the page loads up:<br>
+<img src="Markdown%20Files/1.%20Intro.png" width="60%">
+
+The Home Screen when logged out:<br>
+<img src="Markdown%20Files/2.%20HomePage.png" width="60%">
+
+Login screen:<br>
+<img src="Markdown%20Files/3.%20LoginScreen.png" width="60%">
+
+Dark Mode:<br>
+<img src="Markdown%20Files/4.%20DarkMode.png" width="60%">
+
+Friends Page:<br>
+<img src="Markdown%20Files/5.%20FriendPage.png" width="60%">
+
+The Chat Dialog with some conversations on the sides:<br>
+<img src="Markdown%20Files/6.%20Chat.png" width="60%">
+
+A dialog screen that shows after selecting a game:<br>
+<img src="Markdown%20Files/7.%20GameDescription.png" width="60%">
+
+When the game fails to load (This one showing a 404 error):<br>
+<img src="Markdown%20Files/8.%20LoadingError.png" width="60%">
+
+An active game. Notice the MainFrame CSS with large side margins when the window is stretched:<br>
+<img src="Markdown%20Files/9.%20ActiveGame.png" width="60%">
 
 ## Target Users
 - **Primary Audience:** This website is for all families to act like a safe haven from all the non-family-friendly content out there. We also want to deeply integrate strong Parental Controls so parents can have full control over what their kids do on this site.
@@ -30,7 +58,7 @@ Outline the technologies, frameworks, and tools used.
 - Other tools: npm
 
 ## The First Run!
-First you will need Node.js on your machine. If you run `npm -v` and `node -v` without an error, chances are that you have Node.js. Otherwise, you need to [install Node.js](https://nodejs.org/en).
+First you will need Node.js on your machine. If you run `npm -v` and `node -v` without an error, chances are that you have everything you need. Otherwise, you need to [install Node.js](https://nodejs.org/en).
 
 Once you have Node.js installed, you will want to clone the project onto your device. Open your terminal in an empty folder and run these commands to clone the project:
 ```
@@ -55,6 +83,7 @@ If everything worked, you can open [localhost:3000](http://localhost:3000/) on y
 | `npm run db:setup` | Create/reset the database |
 | `npm run db:update` | Migrate data (backup → rebuild → restore) |
 | `npm run db:query` | Run ad-hoc database queries |
+| `npm run game:update` | Run the install/update script to add games to the library |
 
 ### Environment Variables
 
@@ -92,44 +121,57 @@ Inside you'll see there are three files:
 - main.js: The script that exposes the MainFrame API via the `window.mainFrame` object.
 
 ### The App Folder
-The `app` folder is content that the MainFrame shows. With it, it can run special methods using the MainFrame API to make notifications, Gamepad Controller and WebSocket connections, use Gamepad Mice to control the app through a single controller, etc.
+By default, the `app` folder is content that the MainFrame shows. With it, it can run special methods using the MainFrame API to make notifications, Gamepad Controller and WebSocket connections, use Gamepad Mice to control the app through a single controller, etc.
 
 ### The File Structure Graph
 ```
-├── src/                         # Source code (modular structure)
-│   ├── server.js               # Entry point: HTTP/WebSocket server
-│   ├── app.js                  # Express app config (middleware, routes)
-│   ├── config/                 # Configuration
-│   │   └── index.js            # Environment variables
-│   ├── db/                     # Database layer
-│   │   ├── connection.js       # SQLite connection singleton
-│   │   └── setup.js            # Table definitions
-│   ├── middleware/             # Express middleware
-│   │   └── auth.js             # Authentication middleware
-│   ├── modules/                # Feature modules
-│   │   ├── auth/               # Authentication (register, login, session)
-│   │   ├── users/              # User management (profile, avatars)
-│   │   ├── friends/            # Friend system (requests, list)
-│   │   └── conversations/      # Chat/messaging
-│   └── websocket/              # WebSocket handlers
-│       └── index.js            # Real-time status, chat, typing
-├── scripts/                    # CLI scripts
-│   ├── dbSetup.js              # Create fresh database
-│   ├── dbUpdate.js             # Migrate database
-│   └── dbQuery.js              # Run queries
-├── Interlinked/                # Frontend static files
-│   ├── index.html              # MainFrame page
-│   ├── main.css                # MainFrame styles
-│   ├── main.js                 # MainFrame API
-│   └── app/                    # App content
+├── docker-compose.yml
+├── Dockerfile
+├── package.json
+├── README.md
+├── Markdown Files/             # Images and docs used in README
 ├── database/                   # SQLite data (gitignored)
-├── .env.example                # Environment template
-├── package.json                # Dependencies and scripts
-└── README.md                   # This file
+├── Interlinked/                # Frontend static files
+│   ├── index.html
+│   ├── main.css
+│   ├── main.js
+│   ├── app/
+│   │   ├── index.html
+│   │   ├── intro.html
+│   │   └── lib/
+│   │       ├── avatars/
+│   │       ├── css/
+│   │       ├── icons/
+│   │       └── js/
+│   └── games/
+├── scripts/
+│   ├── dbQuery.js
+│   ├── dbSetup.js
+│   ├── dbUpdate.js
+│   └── gameUpdate.js
+└── src/                         # Source code (modular)
+    ├── server.js               # Entry point: HTTP/WebSocket server
+    ├── app.js                  # Express app config (middleware, routes)
+    ├── config/
+    │   └── index.js            # Environment variables
+    ├── db/
+    │   ├── connection.js       # SQLite connection singleton
+    │   ├── schema.json
+    │   └── setup.js            # Table definitions
+    ├── middleware/
+    │   └── auth.js             # Authentication middleware
+    ├── modules/                # Feature modules
+    │   ├── auth/
+    │   ├── users/
+    │   ├── friends/
+    │   ├── games/
+    │   └── conversations/
+    └── websocket/
+        └── index.js            # Real-time status, chat, typing
 ```
 
 ## Copyrights
-© Copyright 2026 Interlinked Creations, SuperGamer001 (Alex Fischer). All rights reserved.
+© Copyright 2024-2026 Interlinked Creations, SuperGamer001 (Alex Fischer). All rights reserved.
 
 ![Copyright Claim Gif](/Markdown%20Files/Copyright.gif)
 
