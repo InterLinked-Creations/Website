@@ -234,9 +234,9 @@ window.mainFrame = {
 
 }
 
-window.addEventListener('DOMContentLoaded', e => {
-    setTimeout(() => {window.mainFrame.page.shortcut('index.html');}, 250)
-});
+// window.addEventListener('DOMContentLoaded', e => {
+//     setTimeout(() => {window.mainFrame.page.shortcut('index.html');}, 250)
+// });
 
 document.getElementById('mainframe').src = "app/intro.html";
 
