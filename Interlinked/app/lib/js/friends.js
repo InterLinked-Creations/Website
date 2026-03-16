@@ -215,6 +215,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffHours = Math.round(diffMs / 3600000);
         const diffDays = Math.round(diffMs / 86400000);
 
+        if (isNaN(diffMins) || isNaN(diffHours) || isNaN(diffDays)) {
+            return "Unknown??";
+        }
+
         if (diffMins ) {
             return 'Just now';
         }
