@@ -112,7 +112,7 @@ MainFrame is an `<iframe id="mainframe">` element that shows content from `Inter
 
 
 ### The Interlinked folder
-The `Interlinked` folder contains all the files that the server will send to users. The server cannot send any file outside of this folder unless.
+The `Interlinked` folder contains all the files that the server will send to users. The server cannot send any file outside of this folder.
 
 Inside you'll see there are three files:
 
